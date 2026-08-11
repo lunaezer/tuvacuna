@@ -1,0 +1,23 @@
+.contenedor-contenido-pagina-secundaria {
+  background-color: #f2f6f9;
+  min-height: calc(100vh - 160px);
+  padding: 80px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.titulo-pagina-secundaria {
+  font-size: 48px;
+  color: #0f172a;
+  font-weight: 400;
+  margin-bottom: 16px;
+  letter-spacing: -1px;
+}
+
+.subtitulo-pagina-secundaria {
+  font-size: 16px;
+  color: #64748b;
+  max-width: 600px;
+}

@@ -1,0 +1,44 @@
+.contenedor-barra-navegacion {
+  background-color: #071521;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.barra-navegacion {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-marca-navegacion {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  text-decoration: none;
+}
+
+.menu-enlaces-navegacion {
+  display: flex;
+  gap: 36px;
+  align-items: center;
+}
+
+.enlace-navegacion {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 400;
+  transition: color 0.2s ease;
+}
+
+.enlace-navegacion:hover,
+.enlace-navegacion.activo {
+  color: #ffffff;
+}
