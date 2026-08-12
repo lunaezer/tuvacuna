@@ -14,8 +14,8 @@ export default function Navbar() {
           <NavLink to="/funciones" className={({ isActive }) => `enlace-navegacion ${isActive ? 'activo' : ''}`}>
             Funciones
           </NavLink>
-          <NavLink to="/vacunatorios" className={({ isActive }) => `enlace-navegacion ${isActive ? 'activo' : ''}`}>
-            Vacunatorios
+          <NavLink to="/mapa-de-centros" className={({ isActive }) => `enlace-navegacion ${isActive ? 'activo' : ''}`}>
+            Mapa de centros
           </NavLink>
           <NavLink to="/vacunas" className={({ isActive }) => `enlace-navegacion ${isActive ? 'activo' : ''}`}>
             Vacunas

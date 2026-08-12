@@ -6,7 +6,7 @@ import Footer from './components/Footer/Footer'
 import HomePage from './pages/Home/HomePage'
 import ComoFuncionaPage from './pages/ComoFunciona/ComoFuncionaPage'
 import FuncionesPage from './pages/Funciones/FuncionesPage'
-import VacunatoriosPage from './pages/Vacunatorios/VacunatoriosPage'
+import MapaDeCentrosPage from './pages/MapaDeCentros/MapaDeCentrosPage'
 import VacunasPage from './pages/Vacunas/VacunasPage'
 
 import './App.css'
@@ -20,7 +20,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/como-funciona" element={<ComoFuncionaPage />} />
           <Route path="/funciones" element={<FuncionesPage />} />
-          <Route path="/vacunatorios" element={<VacunatoriosPage />} />
+          <Route path="/mapa-de-centros" element={<MapaDeCentrosPage />} />
           <Route path="/vacunas" element={<VacunasPage />} />
         </Routes>
         <Footer />

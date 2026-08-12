@@ -1,7 +1,16 @@
 import React from 'react'
+import Button from '../../components/Button/Button'
 import './HomePage.css'
 
+const Saludar = (nombre) => {
+  console.log("Hola " + nombre)
+}
+
+
+
 export default function HomePage() {
+  const completar = "hola"
+
   return (
     <div className="pagina-inicio">
       {/* Sección Héroe (Encabezado Oscuro) */}
@@ -12,8 +21,9 @@ export default function HomePage() {
           <p className="subtitulo-seccion-heroe">Texto</p>
 
           <div className="grupo-botones-accion">
-            <button className="boton-redondeado-blanco">Boton</button>
-            <button className="boton-redondeado-blanco">Boton</button>
+            <Button text={completar} onClick={() => Saludar(completar)} variant="primary" />
+            <Button text={"Luna"} onClick={() => Saludar("Luna")} variant="primary" />
+            <Button text="asoduhaiuhdf" variant="secondary" />
           </div>
 
           <div className="grupo-subtextos-inferiores">
@@ -55,7 +65,7 @@ export default function HomePage() {
       <section className="seccion-grilla-tarjetas">
         <div className="contenedor-grilla-tarjetas">
           <div className="linea-divisoria-seccion"></div>
-          
+
           <div className="encabezado-seccion-tarjetas">
             <span className="etiqueta-seccion-clara">Texto</span>
             <h2 className="titulo-seccion-clara" style={{ textAlign: 'left' }}>Texto</h2>
@@ -79,8 +89,8 @@ export default function HomePage() {
         <p className="subtitulo-llamado-accion">Texto</p>
 
         <div className="grupo-botones-llamado-accion">
-          <button className="boton-redondeado-secundario">Boton</button>
-          <button className="boton-redondeado-secundario">Boton</button>
+          <Button text="Boton" variant="secondary" />
+          <Button text="Boton" variant="secondary" />
         </div>
 
         <div className="linea-divisoria-inferior-cta"></div>
