@@ -1,11 +1,12 @@
 import React from 'react'
-import '../ComoFunciona/ComoFuncionaPage.css'
+import './FuncionesPage.css'
 
 export default function FuncionesPage() {
   return (
-    <div className="contenedor-contenido-pagina-secundaria">
-      <h1 className="titulo-pagina-secundaria">Funciones</h1>
-      <p className="subtitulo-pagina-secundaria">Texto</p>
+    <div className="contenedor-funciones">
+      <h1 className="titulo-funciones">Funciones</h1>
+      <p className="subtitulo-funciones">Texto</p>
     </div>
   )
 }
+

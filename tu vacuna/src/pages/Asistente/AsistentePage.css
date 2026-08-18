@@ -1,0 +1,20 @@
+/* Estilos de la página Asistente */
+.contenedor-asistente {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.titulo-asistente {
+  font-size: 36px;
+  color: #0f172a;
+  font-weight: 500;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.subtitulo-asistente {
+  font-size: 15px;
+  color: #64748b;
+  margin-bottom: 32px;
+}

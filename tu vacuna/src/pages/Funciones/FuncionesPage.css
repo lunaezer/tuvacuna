@@ -1,4 +1,5 @@
-.contenedor-contenido-pagina-secundaria {
+/* Estilos de la página Funciones */
+.contenedor-funciones {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -6,9 +7,7 @@
   text-align: center;
 }
 
-
-
-.titulo-pagina-secundaria {
+.titulo-funciones {
   font-size: 48px;
   color: #0f172a;
   font-weight: 400;
@@ -16,7 +15,7 @@
   letter-spacing: -1px;
 }
 
-.subtitulo-pagina-secundaria {
+.subtitulo-funciones {
   font-size: 16px;
   color: #64748b;
   max-width: 600px;

@@ -1,0 +1,20 @@
+/* Estilos de la página Centros */
+.contenedor-centros {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.titulo-centros {
+  font-size: 36px;
+  color: #0f172a;
+  font-weight: 500;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.subtitulo-centros {
+  font-size: 15px;
+  color: #64748b;
+  margin-bottom: 32px;
+}

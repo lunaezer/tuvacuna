@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from '../../components/Button/Button'
+import Cards from '../../components/Cards/Cards'
 import './HomePage.css'
 
 const Saludar = (nombre) => {
@@ -23,7 +24,7 @@ export default function HomePage() {
           <div className="grupo-botones-accion">
             <Button text={completar} onClick={() => Saludar(completar)} variant="primary" />
             <Button text={"Luna"} onClick={() => Saludar("Luna")} variant="primary" />
-            <Button text="asoduhaiuhdf" variant="secondary" />
+            
           </div>
 
           <div className="grupo-subtextos-inferiores">
@@ -72,12 +73,12 @@ export default function HomePage() {
           </div>
 
           <div className="grilla-tarjetas-contenido">
-            <div className="tarjeta-blanca-individual"></div>
-            <div className="tarjeta-blanca-individual"></div>
-            <div className="tarjeta-blanca-individual"></div>
-            <div className="tarjeta-blanca-individual"></div>
-            <div className="tarjeta-blanca-individual"></div>
-            <div className="tarjeta-blanca-individual"></div>
+            <Cards />
+            <Cards />
+            <Cards />
+            <Cards />
+            <Cards />
+            <Cards />
           </div>
         </div>
       </section>

@@ -198,19 +198,7 @@
   gap: 24px;
 }
 
-.tarjeta-blanca-individual {
-  background-color: #ffffff;
-  border-radius: 16px;
-  height: 190px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
 
-.tarjeta-blanca-individual:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
-}
 
 /* Sección Llamado a la Acción (CTA) */
 .seccion-llamado-accion {
