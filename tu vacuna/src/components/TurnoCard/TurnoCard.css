@@ -1,0 +1,97 @@
+/* Estilos del componente TurnoCard */
+.turno-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid var(--border-color);
+  background: #ffffff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.turno-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+/* Variante atrasado — borde rojo suave */
+.turno-card--atrasado {
+  border-color: #fca5a5;
+  background: #fff5f5;
+}
+
+/* Badge de fecha */
+.turno-card-fecha {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: var(--primary-cyan-light);
+  flex-shrink: 0;
+}
+
+.turno-card-fecha--atrasado {
+  background: #fee2e2;
+}
+
+.turno-card-dia {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary-cyan);
+  line-height: 1.1;
+}
+
+.turno-card-fecha--atrasado .turno-card-dia {
+  color: #ef4444;
+}
+
+.turno-card-mes {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--primary-cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.turno-card-fecha--atrasado .turno-card-mes {
+  color: #ef4444;
+}
+
+/* Info */
+.turno-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.turno-card-etiqueta {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #ef4444;
+  margin-bottom: 2px;
+}
+
+.turno-card-titulo {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.turno-card-detalle {
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.turno-card-icono {
+  font-size: 11px;
+}

@@ -5,16 +5,81 @@
   flex-direction: column;
 }
 
-.titulo-calendario {
-  font-size: 36px;
-  color: #0f172a;
-  font-weight: 500;
-  margin-bottom: 8px;
-  letter-spacing: -0.5px;
+/* Layout de dos columnas: calendario + turnos */
+.calendario-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 28px;
+  align-items: flex-start;
 }
 
-.subtitulo-calendario {
-  font-size: 15px;
-  color: #64748b;
-  margin-bottom: 32px;
+/* Columna izquierda */
+.calendario-col-izq {
+  min-width: 0;
+}
+
+/* Columna derecha */
+.calendario-col-der {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Header de próximos turnos */
+.calendario-turnos-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.calendario-turnos-titulo {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.calendario-turnos-count {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+/* Lista de tarjetas de turnos */
+.calendario-turnos-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Botón "Ver todo el año" */
+.calendario-ver-anio {
+  padding: 12px 24px;
+  border-radius: var(--border-radius-pill);
+  border: 1px solid var(--border-color);
+  background: #ffffff;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+  text-align: center;
+}
+
+.calendario-ver-anio:hover {
+  background: var(--bg-main);
+  border-color: var(--primary-cyan);
+  transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .calendario-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .calendario-col-der {
+    order: -1;
+  }
 }

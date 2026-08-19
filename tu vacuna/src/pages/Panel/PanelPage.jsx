@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PageHeader from '../../components/PageHeader/PageHeader'
 import Button from '../../components/Button/Button'
 import FamilySelector from '../../components/FamilySelector/FamilySelector'
 import Cards from '../../components/Cards/Cards'
@@ -13,13 +14,12 @@ export default function PanelPage() {
   return (
     <div className="contenedor-panel">
       {/* Header: saludo + botón */}
-      <div className="panel-header">
-        <div className="panel-header-texto">
-          <h1 className="titulo-panel">Hola, {familiares[familiarActivo]}!</h1>
-          <p className="subtitulo-panel">Revisá el estado de tus vacunas y próximos turnos.</p>
-        </div>
+      <PageHeader
+        titulo={`Hola, ${familiares[familiarActivo]}!`}
+        subtitulo="Revisá el estado de tus vacunas y próximos turnos."
+      >
         <Button text="Botón" variant="celeste" />
-      </div>
+      </PageHeader>
 
       {/* Selector de familiares */}
       <FamilySelector

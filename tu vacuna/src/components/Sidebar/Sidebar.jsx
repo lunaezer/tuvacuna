@@ -7,7 +7,7 @@ import './Sidebar.css'
 function Sidebar({ activeItem = 'Panel', className = '' }) {
   return (
     <aside className={`sidebar ${className}`.trim()}>
-      <SidebarHeader>
+      <SidebarHeader >
         <h1 className='titulo-sidebar'>TuVacuna</h1>
         </SidebarHeader>
 
