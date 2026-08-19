@@ -5,16 +5,48 @@
   flex-direction: column;
 }
 
+/* Header: saludo a la izquierda, botón a la derecha */
+.panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 28px; 
+}
+
+.panel-header-texto {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
 .titulo-panel {
   font-size: 36px;
-  color: #0f172a;
-  font-weight: 500;
-  margin-bottom: 8px;
+  color: var(--text-primary);
+  font-weight: 600;
+  margin-bottom: 6px;
   letter-spacing: -0.5px;
 }
 
 .subtitulo-panel {
   font-size: 15px;
-  color: #64748b;
-  margin-bottom: 32px;
+  color: var(--text-secondary);
+}
+
+/* Grid de cards: 2 columnas */
+.panel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Responsive: 1 columna en pantallas chicas */
+@media (max-width: 768px) {
+  .panel-header {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .panel-grid {
+    grid-template-columns: 1fr;
+  }
 }

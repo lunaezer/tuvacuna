@@ -50,3 +50,13 @@
   transform: translateY(-2px);
 }
 
+.btn-celeste{
+  background-color: #3BB8E8;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.4;
+  letter-spacing: 0;
+
+}
+

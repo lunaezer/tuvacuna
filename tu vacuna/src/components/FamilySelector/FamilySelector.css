@@ -1,0 +1,51 @@
+/* Estilos del componente FamilySelector */
+.family-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.family-pill {
+  padding: 10px 22px;
+  border-radius: var(--border-radius-pill);
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid var(--border-color);
+  background-color: var(--card-bg-light);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.family-pill:hover {
+  border-color: var(--text-muted);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Pill activo — fondo oscuro */
+.family-pill-activo {
+  background-color: var(--card-bg-dark);
+  color: #ffffff;
+  border-color: var(--card-bg-dark);
+}
+
+.family-pill-activo:hover {
+  background-color: var(--sidebar-hover);
+  border-color: var(--sidebar-hover);
+}
+
+/* Botón agregar familiar */
+.family-pill-agregar {
+  background: transparent;
+  border: 1px dashed var(--text-muted);
+  color: var(--text-secondary);
+}
+
+.family-pill-agregar:hover {
+  border-color: var(--primary-cyan);
+  color: var(--primary-cyan);
+  background: var(--primary-cyan-light);
+}

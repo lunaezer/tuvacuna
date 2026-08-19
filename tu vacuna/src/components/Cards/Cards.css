@@ -30,3 +30,21 @@
   line-height: 1.5;
 }
 
+/* Variante oscura */
+.card-dark {
+  background-color: var(--card-bg-dark);
+  border-color: transparent;
+}
+
+.card-dark .card-titulo {
+  color: #ffffff;
+}
+
+.card-dark .card-texto {
+  color: var(--text-muted);
+}
+
+.card-dark:hover {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+

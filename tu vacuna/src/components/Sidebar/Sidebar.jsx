@@ -7,7 +7,9 @@ import './Sidebar.css'
 function Sidebar({ activeItem = 'Panel', className = '' }) {
   return (
     <aside className={`sidebar ${className}`.trim()}>
-      <SidebarHeader />
+      <SidebarHeader>
+        <h1 className='titulo-sidebar'>TuVacuna</h1>
+        </SidebarHeader>
 
       <nav className="sidebar-nav">
         <SidebarItem text="Panel" to="/panel" active={activeItem === 'Panel'} />
@@ -18,7 +20,12 @@ function Sidebar({ activeItem = 'Panel', className = '' }) {
         <SidebarItem text="Asistente" to="/asistente" active={activeItem === 'Asistente'} />
       </nav>
 
-      <SidebarFooter />
+      <SidebarFooter >
+        <SidebarItem text="Cerrar Sesion"/>
+        <SidebarItem text="nombre_usuario"/>
+      </SidebarFooter>
+      
+      
     </aside>
   )
 }
