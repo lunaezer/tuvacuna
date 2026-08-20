@@ -2,7 +2,7 @@ import React from 'react'
 import PageHeader from '../../components/PageHeader/PageHeader'
 import Button from '../../components/Button/Button'
 import CalendarioWidget from '../../components/CalendarioWidget/CalendarioWidget'
-import TurnoCard from '../../components/TurnoCard/TurnoCard'
+import TurnoCard from '../../components/TurnoCardCalendario/TurnoCard'
 import './CalendarioPage.css'
 
 export default function CalendarioPage() {

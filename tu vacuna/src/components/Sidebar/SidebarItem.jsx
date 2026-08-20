@@ -3,7 +3,12 @@ import { Link } from 'react-router-dom'
 import './SidebarItem.css'
 
 function SidebarItem({ text, to, children, onClick, active = false, className = '' }) {
-  const content = text || children
+  const content = (
+    <>
+      {children}
+      {text && <span>{text}</span>}
+    </>
+  )
 
   if (to) {
     return (

@@ -1,0 +1,148 @@
+/* Estilos del componente CarnetCard */
+.carnet-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 1.5rem;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1.25rem;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.02);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.carnet-card:hover {
+  box-shadow: 0 0.25rem 0.875rem rgba(0, 0, 0, 0.05);
+}
+
+.carnet-card-contenido-izq {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  min-width: 0;
+}
+
+/* Íconos circulares */
+.carnet-card-icono {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.carnet-card-icono svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* Variante Atrasada (Rojo) */
+.carnet-card-icono--atrasada {
+  border: 2px solid #f87171;
+  background-color: #fef2f2;
+  color: #ef4444;
+}
+
+/* Variante Pendiente (Ámbar / Naranja) */
+.carnet-card-icono--pendiente {
+  border: 2px solid #fbbf24;
+  background-color: #fffbeb;
+  color: #d97706;
+}
+
+/* Variante Aplicada (Verde) */
+.carnet-card-icono--aplicada {
+  border: 2px solid #34d399;
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+/* Info del texto */
+.carnet-card-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.carnet-card-titulo {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.3;
+}
+
+.carnet-card-subtitulo {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #94a3b8;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Acciones y Badges */
+.carnet-card-acciones {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  flex-shrink: 0;
+}
+
+.carnet-card-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 0.4rem 0.875rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.carnet-card-badge--atrasada {
+  background-color: #fee2e2;
+  color: #ef4444;
+}
+
+.carnet-card-badge--pendiente {
+  background-color: #fef3c7;
+  color: #b45309;
+}
+
+.carnet-card-badge--aplicada {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.carnet-card-btn-agendar {
+  padding: 0.45rem 1.1rem;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 9999px;
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: #1e293b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.carnet-card-btn-agendar:hover {
+  background-color: #f8fafc;
+  border-color: #94a3b8;
+}
+
+@media (max-width: 640px) {
+  .carnet-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .carnet-card-acciones {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
