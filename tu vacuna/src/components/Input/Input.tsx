@@ -6,16 +6,20 @@ export type InputVariant =
 | "large"
 | "small";
 
-interface inputProps{
+interface inputProps {
     placeholder: string;
-    variant: InputVariant
+    variant: InputVariant;
+    onClick?: (event: React.MouseEvent<HTMLInputElement>) => void;
+    name: string;
+    value: string;
+    onChange?: React.ChangeEventHandler<HTMLInputElement>;
+    type?: string;
 }
 
-function input({placeholder, variant}: inputProps){
-    return(
-        <input></input>
-
-    )
+function input({ placeholder, variant, onClick, onChange, value, name, type = "text" }: inputProps) {
+    return (
+        <input type={type} placeholder={placeholder} onClick={onClick} name={name} value={value} onChange={onChange}></input>
+    );
 }
 
 export default input
