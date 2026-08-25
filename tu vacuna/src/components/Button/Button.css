@@ -60,13 +60,17 @@
   transform: translateY(-2px);
 }
 
-.btn-celeste{
-  background-color: #3BB8E8;
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 1.4;
-  letter-spacing: 0;
-
+/* Celeste variant — sky blue action button (same as Carnet) */
+.btn-celeste {
+  background-color: #38bdf8;
+  color: #0f172a;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 0.25rem 0.75rem rgba(56, 189, 248, 0.25);
 }
 
+.btn-celeste:hover {
+  background-color: #0ea5e9;
+  color: #ffffff;
+  transform: translateY(-1px);
+}

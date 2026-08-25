@@ -18,7 +18,7 @@ export default function PanelPage() {
         titulo={`Hola, ${familiares[familiarActivo]}!`}
         subtitulo="Revisá el estado de tus vacunas y próximos turnos."
       >
-        <Button text="Botón" variant="celeste" />
+        <Button text="+ Agendar turno" variant="celeste" />
       </PageHeader>
 
       {/* Selector de familiares */}
