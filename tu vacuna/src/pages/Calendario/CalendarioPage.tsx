@@ -1,8 +1,8 @@
-import React from 'react'
 import PageHeader from '../../components/PageHeader/PageHeader'
 import Button from '../../components/Button/Button'
 import CalendarioWidget from '../../components/CalendarioWidget/CalendarioWidget'
 import TurnoCard from '../../components/TurnoCardCalendario/TurnoCard'
+import type { DiaMarcado, Turno } from '../../types'
 import './CalendarioPage.css'
 
 export default function CalendarioPage() {
@@ -22,12 +22,12 @@ export default function CalendarioPage() {
   // ══════════════════════════════════════════════════════════
 
   // Datos de ejemplo — reemplazar con datos reales
-  const diasMarcados = [
+  const diasMarcados: DiaMarcado[] = [
     { dia: 14, tipo: 'turno' },
     { dia: 30, tipo: 'turno' },
   ]
 
-  const proximosTurnos = [
+  const proximosTurnos: Turno[] = [
     {
       dia: '14',
       mes: 'AGO',
@@ -60,7 +60,7 @@ export default function CalendarioPage() {
     console.log('Nuevo turno')
   }
 
-  const handleDiaClick = (dia, mes, anio) => {
+  const handleDiaClick = (dia: number, mes: number, anio: number) => {
     // TODO: Mostrar detalle del día o abrir agenda
     console.log(`Día clickeado: ${dia}/${mes + 1}/${anio}`)
   }

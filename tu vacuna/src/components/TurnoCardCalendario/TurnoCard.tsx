@@ -1,18 +1,17 @@
-import React from 'react'
+import type { EstadoTurno } from '../../types'
 import './TurnoCard.css'
 
-/**
- * Tarjeta de turno de vacunación.
- *
- * @param {string} dia - Día numérico (ej: "14")
- * @param {string} mes - Abreviatura del mes (ej: "AGO")
- * @param {string} titulo - Nombre de la vacuna + persona (ej: "Antigripal — Tomás")
- * @param {string} lugar - Centro de vacunación (ej: "Vacunatorio Municipal")
- * @param {string} hora - Horario del turno (ej: "10:30 H")
- * @param {string} estado - "agendado" | "sin-agendar" | "atrasado"
- * @param {string} etiqueta - Texto extra (ej: "SIN AGENDAR", "ATRASADA 34 DÍAS")
- */
-function TurnoCard({ dia, mes, titulo, lugar, hora, estado = 'agendado', etiqueta }) {
+interface TurnoCardProps {
+  dia: string
+  mes: string
+  titulo: string
+  lugar?: string | null
+  hora?: string | null
+  estado?: EstadoTurno
+  etiqueta?: string
+}
+
+function TurnoCard({ dia, mes, titulo, lugar, hora, estado = 'agendado', etiqueta }: TurnoCardProps) {
   return (
     <div className={`turno-card turno-card--${estado}`}>
       <div className={`turno-card-fecha turno-card-fecha--${estado}`}>

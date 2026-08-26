@@ -1,6 +1,10 @@
-import React from 'react'
+import type { EstadoDosis } from '../../types'
 
-export default function CarnetIcon({ estado }) {
+interface CarnetIconProps {
+  estado: EstadoDosis
+}
+
+export default function CarnetIcon({ estado }: CarnetIconProps) {
   switch (estado) {
     case 'atrasada':
       return (

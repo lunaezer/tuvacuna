@@ -1,16 +1,25 @@
-import React from 'react'
 import CarnetIcon from './CarnetIcon'
 import Button from '../Button/Button'
+import type { EstadoDosis } from '../../types'
 import './CarnetCard.css'
+
+interface CarnetCardProps {
+  titulo?: string
+  subtitulo?: string
+  estado?: EstadoDosis
+  etiqueta?: string
+  mostrarAgendar?: boolean
+  onAgendar?: () => void
+}
 
 function CarnetCard({
   titulo = '',
   subtitulo = '',
-  estado = 'aplicada', // 'atrasada' | 'pendiente' | 'aplicada'
+  estado = 'aplicada',
   etiqueta = '',
   mostrarAgendar = false,
   onAgendar
-}) {
+}: CarnetCardProps) {
   return (
     <div className={`carnet-card carnet-card--${estado}`}>
       <div className="carnet-card-contenido-izq">

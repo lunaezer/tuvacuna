@@ -1,4 +1,3 @@
-import React from 'react'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar/Navbar'
 import Footer from './components/Footer/Footer'
@@ -11,6 +10,7 @@ import CalendarioPage from './pages/Calendario/CalendarioPage'
 import CentrosPage from './pages/Centros/CentrosPage'
 import FamiliaPage from './pages/Familia/FamiliaPage'
 import AsistentePage from './pages/Asistente/AsistentePage'
+import InicioSesion1 from './pages/InicioSesion/InicioSesion1'
 
 import './App.css'
 
@@ -32,7 +32,7 @@ function LayoutWrapper() {
   }
 
   // Mapeo automático de ruta a ítem activo en la Sidebar
-  const mapaRutas = {
+  const mapaRutas: Record<string, string> = {
     '/panel': 'Panel',
     '/mi-carnet': 'Mi carnet',
     '/calendario': 'Calendario',

@@ -1,12 +1,20 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
+import type { ReactNode } from 'react'
 import './Modal.css'
 
-export default function Modal({ isOpen, onClose, titulo, children }) {
+interface ModalProps {
+  isOpen: boolean
+  onClose?: () => void
+  titulo?: string
+  children?: ReactNode
+}
+
+export default function Modal({ isOpen, onClose, titulo, children }: ModalProps) {
   // Cerrar el modal al presionar la tecla Escape
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        onClose && onClose()
+        onClose?.()
       }
     }
     if (isOpen) {

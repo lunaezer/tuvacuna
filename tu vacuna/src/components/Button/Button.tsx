@@ -1,7 +1,17 @@
-import React from 'react'
+import type { ReactNode } from 'react'
+import type { ButtonVariant } from '../../types'
 import './Button.css'
 
-function Button({ text, icon, children, onClick, variant = 'primary', className = '' }) {
+interface ButtonProps {
+  text?: string
+  icon?: ReactNode
+  children?: ReactNode
+  onClick?: () => void
+  variant?: ButtonVariant
+  className?: string
+}
+
+function Button({ text, icon, children, onClick, variant = 'primary', className = '' }: ButtonProps) {
   return (
     <button
       className={`btn btn-${variant} ${className}`.trim()}

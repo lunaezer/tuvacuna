@@ -1,4 +1,3 @@
-import React from 'react'
 import './CentrosPage.css'
 
 export default function CentrosPage() {

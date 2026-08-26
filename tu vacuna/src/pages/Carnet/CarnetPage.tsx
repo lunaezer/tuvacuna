@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
+import type { FormEvent } from 'react'
 import PageHeader from '../../components/PageHeader/PageHeader'
 import FamilySelector from '../../components/FamilySelector/FamilySelector'
 import CarnetCard from '../../components/CarnetCard/CarnetCard'
 import Button from '../../components/Button/Button'
 import Modal from '../../components/Modal/Modal'
+import type { Familiar, SeccionHistorial } from '../../types'
 import './CarnetPage.css'
 
 // Simulación de respuesta de la API: Lista de familiares del usuario autenticado
-const MOCK_FAMILIARES_API = [
+const MOCK_FAMILIARES_API: Familiar[] = [
   { id: 'usr-1', nombre: 'Sofía', esVos: true, iniciales: 'SG', colorBg: '#2dd4bf' },
   { id: 'usr-2', nombre: 'Tomás', esVos: false, iniciales: 'TG', colorBg: '#fcb354' },
   { id: 'usr-3', nombre: 'Mamá', esVos: false, iniciales: 'MR', colorBg: '#38bdf8' },
 ]
 
 // Simulación de respuesta de la API: Dosis por el ID de cada familiar
-const MOCK_DOSIS_POR_FAMILIAR_API = {
+const MOCK_DOSIS_POR_FAMILIAR_API: Record<string, SeccionHistorial[]> = {
   'usr-1': [
     {
       grupo: 'PENDIENTES',
@@ -126,9 +128,9 @@ const MOCK_DOSIS_POR_FAMILIAR_API = {
 }
 
 export default function CarnetPage() {
-  const [familiares, setFamiliares] = useState([])
+  const [familiares, setFamiliares] = useState<Familiar[]>([])
   const [indexFamiliarActivo, setIndexFamiliarActivo] = useState(0)
-  const [seccionesHistorial, setSeccionesHistorial] = useState([])
+  const [seccionesHistorial, setSeccionesHistorial] = useState<SeccionHistorial[]>([])
   const [cargando, setCargando] = useState(true)
 
   // Estado para los modales (popups)
@@ -151,18 +153,18 @@ export default function CarnetPage() {
     if (familiares.length > 0) {
       const familiarSeleccionado = familiares[indexFamiliarActivo]
       if (familiarSeleccionado) {
-        const dosisFamiliar = MOCK_DOSIS_POR_FAMILIAR_API[familiarSeleccionado.id] || []
+        const dosisFamiliar = MOCK_DOSIS_POR_FAMILIAR_API[familiarSeleccionado.id ?? ''] || []
         setSeccionesHistorial(dosisFamiliar)
       }
     }
   }, [indexFamiliarActivo, familiares])
 
-  const handleAgendar = (idDosis) => {
+  const handleAgendar = (idDosis: string) => {
     console.log(`Agendar dosis con ID: ${idDosis}`)
   }
 
-  const handleGuardarDosis = (e) => {
-    e.preventDefault()
+  const handleGuardarDosis = (e?: FormEvent<HTMLFormElement>) => {
+    e?.preventDefault()
     console.log('Guardar dosis:', formDosis)
     // Cerrar modal tras guardar
     setModalCargarDosisAbierto(false)

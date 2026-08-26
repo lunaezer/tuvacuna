@@ -1,8 +1,15 @@
-import React from 'react';
 import Iniciales from '../Iniciales/Iniciales';
+import type { Familiar } from '../../types';
 import './FamilySelector.css';
 
-function FamilySelector({ familiares = [], activoIndex = 0, onSelect, onAgregar }) {
+interface FamilySelectorProps {
+  familiares?: (string | Familiar)[]
+  activoIndex?: number
+  onSelect?: (index: number) => void
+  onAgregar?: () => void
+}
+
+function FamilySelector({ familiares = [], activoIndex = 0, onSelect, onAgregar }: FamilySelectorProps) {
   return (
     <div className="family-selector">
       {familiares.map((familiar, index) => {

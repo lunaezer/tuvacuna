@@ -1,4 +1,3 @@
-import React from 'react'
 import SidebarHeader from './SidebarHeader'
 import SidebarItem from './SidebarItem'
 import SidebarFooter from './SidebarFooter'
@@ -10,7 +9,12 @@ import CentrosLogoWhite from '../../assets/CentrosLogoWhite.png'
 import FamiliaLogoWhite from '../../assets/FamiliaLogoWhite.png'
 import IALogoWhite from '../../assets/IALogoWhite.png'
 
-function Sidebar({ activeItem = 'Panel', className = '' }) {
+interface SidebarProps {
+  activeItem?: string
+  className?: string
+}
+
+function Sidebar({ activeItem = 'Panel', className = '' }: SidebarProps) {
   return (
     <aside className={`sidebar ${className}`.trim()}>
       <SidebarHeader to="/">

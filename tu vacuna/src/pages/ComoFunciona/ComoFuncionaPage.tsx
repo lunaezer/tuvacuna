@@ -1,4 +1,3 @@
-import React from 'react'
 import './ComoFuncionaPage.css'
 
 export default function ComoFuncionaPage() {

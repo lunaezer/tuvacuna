@@ -1,16 +1,13 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+import type { DiaMarcado } from '../../types'
 import './CalendarioWidget.css'
 
-/**
- * Widget de calendario mensual.
- * Muestra una grilla con los días del mes, navegación mes a mes,
- * y resalta días que tienen turnos agendados.
- *
- * @param {Array} diasMarcados - Array de objetos { dia, tipo } para resaltar días
- *   tipo: "turno" (punto verde) | "hoy" (fondo oscuro) | "atrasado" (punto rojo)
- * @param {function} onDiaClick - Callback al clickear un día: (dia, mes, anio) => {}
- */
-function CalendarioWidget({ diasMarcados = [], onDiaClick }) {
+interface CalendarioWidgetProps {
+  diasMarcados?: DiaMarcado[]
+  onDiaClick?: (dia: number, mes: number, anio: number) => void
+}
+
+function CalendarioWidget({ diasMarcados = [], onDiaClick }: CalendarioWidgetProps) {
   const hoy = new Date()
   const [mesActual, setMesActual] = useState(hoy.getMonth())
   const [anioActual, setAnioActual] = useState(hoy.getFullYear())
@@ -71,7 +68,7 @@ function CalendarioWidget({ diasMarcados = [], onDiaClick }) {
   }
 
   // ── Helpers ─────────────────────────────────────────────
-  const esHoy = (dia) => {
+  const esHoy = (dia: number) => {
     return (
       dia === hoy.getDate() &&
       mesActual === hoy.getMonth() &&
@@ -79,7 +76,7 @@ function CalendarioWidget({ diasMarcados = [], onDiaClick }) {
     )
   }
 
-  const obtenerMarca = (dia) => {
+  const obtenerMarca = (dia: number) => {
     return diasMarcados.find((m) => m.dia === dia)
   }
 

@@ -1,4 +1,3 @@
-import React from 'react'
 import './MapaDeCentrosPage.css'
 
 export default function VacunatoriosPage() {

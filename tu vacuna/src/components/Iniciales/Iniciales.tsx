@@ -1,4 +1,3 @@
-import React from 'react'
 import './Iniciales.css'
 
 // Extrae automáticamente las iniciales a partir de un nombre
@@ -47,7 +46,16 @@ function obtenerColorPorNombre(nombre = '') {
   return COLORES_PALETA[index]
 }
 
-export default function Iniciales({ nombre, texto, colorBg, colorTexto, size = 'medium', className = '' }) {
+interface InicialesProps {
+  nombre?: string
+  texto?: string
+  colorBg?: string
+  colorTexto?: string
+  size?: string
+  className?: string
+}
+
+export default function Iniciales({ nombre, texto, colorBg, colorTexto, size = 'medium', className = '' }: InicialesProps) {
   const iniciales = texto || obtenerIniciales(nombre)
   const estiloAuto = obtenerColorPorNombre(nombre || texto || 'avatar')
 

@@ -1,8 +1,17 @@
-import React from 'react'
+import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import './SidebarItem.css'
 
-function SidebarItem({ text, to, children, onClick, active = false, className = '' }) {
+interface SidebarItemProps {
+  text?: string
+  to?: string
+  children?: ReactNode
+  onClick?: () => void
+  active?: boolean
+  className?: string
+}
+
+function SidebarItem({ text, to, children, onClick, active = false, className = '' }: SidebarItemProps) {
   const content = (
     <>
       {children}

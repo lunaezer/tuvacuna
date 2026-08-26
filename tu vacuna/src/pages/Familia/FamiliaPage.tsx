@@ -1,4 +1,3 @@
-import React from 'react'
 import './FamiliaPage.css'
 
 export default function FamiliaPage() {

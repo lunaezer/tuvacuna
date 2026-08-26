@@ -1,8 +1,13 @@
-import React from 'react'
+import type { ReactNode } from 'react'
 import Sidebar from '../Sidebar/Sidebar'
 import './DashboardLayout.css'
 
-function DashboardLayout({ activeItem, children }) {
+interface DashboardLayoutProps {
+  activeItem: string
+  children?: ReactNode
+}
+
+function DashboardLayout({ activeItem, children }: DashboardLayoutProps) {
   return (
     <div className="layout-dashboard">
       <Sidebar activeItem={activeItem} />

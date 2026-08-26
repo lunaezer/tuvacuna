@@ -1,5 +1,5 @@
-import React from "react";
-import 'Input.css'
+import type React from "react";
+import './Input.css'
 
 
 export type InputVariant =
@@ -14,12 +14,18 @@ interface inputProps {
     value: string;
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
     type?: string;
+    label: string;
+    required?: boolean;
+
 }
 
-function input({ placeholder, variant, onClick, onChange, value, name, type = "text" }: inputProps) {
+function Input({ placeholder, variant, onClick, onChange, value, name, type = "text", required, label }: inputProps) {
     return (
-        <input type={type} placeholder={placeholder} onClick={onClick} name={name} value={value} onChange={onChange}></input>
+        <label className="input-label">
+            {label}
+            <input type={type} placeholder={placeholder} onClick={onClick} name={name} value={value} onChange={onChange} required={required} className={`input input--${variant}`.trim()} ></input>
+        </label>
     );
 }
 
-export default input
+export default Input

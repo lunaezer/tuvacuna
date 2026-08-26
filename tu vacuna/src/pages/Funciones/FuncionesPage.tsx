@@ -1,4 +1,3 @@
-import React from 'react'
 import './FuncionesPage.css'
 
 export default function FuncionesPage() {

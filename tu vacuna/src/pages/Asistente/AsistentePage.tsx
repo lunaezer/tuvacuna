@@ -1,4 +1,3 @@
-import React from 'react'
 import './AsistentePage.css'
 
 export default function AsistentePage() {

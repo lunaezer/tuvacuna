@@ -1,4 +1,3 @@
-import React from 'react'
 import './VacunasPage.css'
 
 export default function VacunasPage() {

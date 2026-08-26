@@ -1,8 +1,13 @@
-import React from 'react'
+import type { ReactNode } from 'react'
 import './PageHeader.css'
-import Button from '../Button/Button'
 
-function PageHeader({ titulo, subtitulo, children }) {
+interface PageHeaderProps {
+  titulo: string
+  subtitulo?: string
+  children?: ReactNode
+}
+
+function PageHeader({ titulo, subtitulo, children }: PageHeaderProps) {
   return (
     <div className="page-header">
       <div className="page-header-texto">

@@ -1,9 +1,8 @@
-import React from 'react'
 import Button from '../../components/Button/Button'
 import Cards from '../../components/Cards/Cards'
 import './HomePage.css'
 
-const Saludar = (nombre) => {
+const Saludar = (nombre: string) => {
   console.log("Hola " + nombre)
 }
 
