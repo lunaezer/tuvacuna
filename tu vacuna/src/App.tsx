@@ -17,6 +17,7 @@ import './App.css'
 function LayoutWrapper() {
   const location = useLocation()
   const esHome = location.pathname === '/'
+  const esInicioSesion = location.pathname === '/inicio-sesion'
 
   // Si estamos en la página principal (Home), renderiza Navbar + HomePage + Footer
   if (esHome) {
@@ -28,6 +29,15 @@ function LayoutWrapper() {
         </Routes>
         <Footer />
       </div>
+    )
+  }
+
+  // La página de inicio de sesión no lleva Sidebar ni Navbar/Footer
+  if (esInicioSesion) {
+    return (
+      <Routes>
+        <Route path="/inicio-sesion" element={<InicioSesion1 />} />
+      </Routes>
     )
   }
 

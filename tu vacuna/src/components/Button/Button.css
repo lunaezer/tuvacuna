@@ -74,3 +74,19 @@
   color: #ffffff;
   transform: translateY(-1px);
 }
+
+/* Big variant — full-width primary action (e.g. login/submit) */
+.btn-big {
+  width: 100%;
+  background-color: var(--primary-cyan);
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 8px 20px rgba(52, 179, 230, 0.3);
+}
+
+.btn-big:hover {
+  background-color: var(--primary-cyan-hover);
+  transform: translateY(-2px);
+}

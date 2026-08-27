@@ -1,6 +1,8 @@
 import Button from '../../components/Button/Button'
 import Cards from '../../components/Cards/Cards'
 import './HomePage.css'
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Saludar = (nombre: string) => {
   console.log("Hola " + nombre)
@@ -10,6 +12,10 @@ const Saludar = (nombre: string) => {
 
 export default function HomePage() {
   const completar = "hola"
+  const navigate = useNavigate();
+  function YaTengoCuenta(){
+    navigate("/inicio-sesion");
+  }
 
   return (
     <div className="pagina-inicio">
@@ -22,7 +28,7 @@ export default function HomePage() {
 
           <div className="grupo-botones-accion">
             <Button text={completar} onClick={() => Saludar(completar)} variant="primary" />
-            <Button text={"Luna"} onClick={() => Saludar("Luna")} variant="primary" />
+            <Button text={"Ya tengo cuenta"} onClick={YaTengoCuenta} variant="primary" />
             
           </div>
 

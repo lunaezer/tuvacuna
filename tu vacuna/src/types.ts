@@ -1,4 +1,4 @@
-export type ButtonVariant = 'primary' | 'secondary' | 'celeste' | 'outline'
+export type ButtonVariant = 'primary' | 'secondary' | 'celeste' | 'outline' | 'big'
 
 export type CardVariant = 'white' | 'dark'
 
