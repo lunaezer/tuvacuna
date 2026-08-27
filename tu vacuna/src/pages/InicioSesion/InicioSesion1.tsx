@@ -2,8 +2,14 @@ import { useState } from "react";
 import Input from "../../components/Input/Input";
 
 export default function InicioSesion1() {
-    const [form, setForm] = useState=({email: "", password: ""});
-    function handleChange(event) // TENGO QUE SEGUIR DESDE ACA LA FUNCION LA EXPLIQEU DESDE CLAUDE
+    const [form, setForm] = useState({email: "", password: ""});
+
+    
+    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+        const { name, value } = event.target;
+         setForm((prevForm) => ({ ...prevForm, [name]: value }));
+}
+   
 
     return (
         <article>
@@ -17,8 +23,8 @@ export default function InicioSesion1() {
                     variant="large"
                     label="Correo electronico"
                     name="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={form.email}
+                    onChange={handleChange}
                     required
                 />
                 <Input
@@ -27,10 +33,9 @@ export default function InicioSesion1() {
                 variant="large"
                 label="Contraseña"
                 name="password"
-                value={password}
-                onChange={}
+                value={form.password}
+                onChange={handleChange}
                 required
-                
                 />
             </form>
         </article>
