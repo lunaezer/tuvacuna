@@ -9,15 +9,16 @@ interface ButtonProps {
   onClick?: () => void
   variant?: ButtonVariant
   className?: string
+  type?:  'button' | 'submit' | 'reset'
   
 }
 
-function Button({ text, icon, children, onClick, variant = 'primary', className = ''}: ButtonProps) {
+function Button({ text, icon, children, onClick, variant = 'primary', className = '', type}: ButtonProps) {
   return (
     <button
       className={`btn btn-${variant} ${className}`.trim()}
       onClick={onClick}
-      
+      type={type}
     >
       {icon && <span className="btn-icon">{icon}</span>}
       {text || children}

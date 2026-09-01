@@ -43,3 +43,16 @@ export interface DiaMarcado {
   dia: number
   tipo: 'turno' | 'hoy' | 'atrasado'
 }
+
+export interface RegistroData {
+    name: string;
+    surname: string;
+    email: string;
+    id: string;
+    password: string;
+    profile: "paciente" | "medico" | "";
+    birthDate: string;
+    sex: string;
+    obraSocial: string;
+    condiciones: string;
+}
