@@ -11,7 +11,7 @@ const Saludar = (nombre: string) => {
 
 
 export default function HomePage() {
-  const completar = "hola"
+  
   const navigate = useNavigate();
   function YaTengoCuenta(){
     navigate("/inicio-sesion");
@@ -27,7 +27,7 @@ export default function HomePage() {
           <p className="subtitulo-seccion-heroe">Texto</p>
 
           <div className="grupo-botones-accion">
-            <Button text={completar} onClick={() => Saludar(completar)} variant="primary" />
+            <Button text={"Registrarse"} onClick={() => Saludar("hola")} variant="primary" />
             <Button text={"Ya tengo cuenta"} onClick={YaTengoCuenta} variant="primary" />
             
           </div>

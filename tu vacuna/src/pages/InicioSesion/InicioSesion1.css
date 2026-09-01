@@ -7,7 +7,7 @@
 .login-panel-left {
     flex: 1 1 50%;
     background-color: var(--bg-main);
-    padding: 3rem clamp(2rem, 6vw, 6rem);
+    padding: 3.5rem clamp(2.5rem, 7vw, 7.5rem);
     display: flex;
     flex-direction: column;
 }
@@ -37,28 +37,28 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    max-width: 420px;
+    max-width: 480px;
     width: 100%;
     margin: 0 auto;
 }
 
 .login-title {
-    font-size: 2.5rem;
+    font-size: 2.75rem;
     font-weight: 800;
     color: var(--text-primary);
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
 }
 
 .login-subtitle {
     color: var(--text-secondary);
-    font-size: 1rem;
-    margin-bottom: 2.5rem;
+    font-size: 1.05rem;
+    margin-bottom: 3rem;
 }
 
 .login-form {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.75rem;
 }
 
 .login-error {
@@ -87,11 +87,11 @@
     flex: 1 1 50%;
     background-color: var(--sidebar-bg);
     color: #ffffff;
-    padding: 3rem clamp(2rem, 6vw, 6rem);
+    padding: 3.5rem clamp(2.5rem, 7vw, 7.5rem);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 1.5rem;
+    gap: 1.75rem;
 }
 
 .login-badge {
@@ -115,10 +115,10 @@
 }
 
 .login-panel-title {
-    font-size: 2.25rem;
+    font-size: 2.5rem;
     font-weight: 800;
     line-height: 1.25;
-    max-width: 500px;
+    max-width: 520px;
 }
 
 .login-panel-text {

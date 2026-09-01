@@ -11,6 +11,7 @@ import CentrosPage from './pages/Centros/CentrosPage'
 import FamiliaPage from './pages/Familia/FamiliaPage'
 import AsistentePage from './pages/Asistente/AsistentePage'
 import InicioSesion1 from './pages/InicioSesion/InicioSesion1'
+import Registrarse1 from './pages/Registrarse/Registrarse1'
 
 import './App.css'
 
@@ -18,6 +19,7 @@ function LayoutWrapper() {
   const location = useLocation()
   const esHome = location.pathname === '/'
   const esInicioSesion = location.pathname === '/inicio-sesion'
+  const esRegistrarse1 = location.pathname === '/registrarse1'
 
   // Si estamos en la página principal (Home), renderiza Navbar + HomePage + Footer
   if (esHome) {
@@ -37,6 +39,13 @@ function LayoutWrapper() {
     return (
       <Routes>
         <Route path="/inicio-sesion" element={<InicioSesion1 />} />
+      </Routes>
+    )
+  }
+  if (esRegistrarse1) {
+    return (
+      <Routes>
+        <Route path='/registrarse1' element={<Registrarse1 />} />
       </Routes>
     )
   }
