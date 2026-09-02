@@ -55,4 +55,7 @@ export interface RegistroData {
     sex: string;
     obraSocial: string;
     condiciones: string;
+    matricula: string;
+    especialidad: string;
+    carnetPhoto: File | null;
 }

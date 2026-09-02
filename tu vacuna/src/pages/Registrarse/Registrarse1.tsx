@@ -3,22 +3,10 @@ import { Link } from "react-router-dom";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import Registrarse1Form from "../../components/RegistrarseForm1/RegistrarseForm1";
+import type { RegistroData } from "../../types";
+import RegistrarseForm2 from "../../components/RegistrarseForm2/RegistrarseForm2";
 
 function Registrarse1() {
-  type RegistroData = {
-    // paso 1
-    name: string;
-    surname: string;
-    email: string;
-    id: string;
-    password: string;
-    // paso 2
-    profile: "paciente" | "medico" | "";
-    birthDate: string;
-    sex: string;
-    // paso 3
-    carnetPhoto: File | null;
-  };
   const [step, setStep] = useState(1);
 
   const [formData, setFormData] = useState<RegistroData>({
@@ -30,10 +18,14 @@ function Registrarse1() {
     profile: "",
     birthDate: "",
     sex: "",
+    obraSocial: "",
+    condiciones: "",
+    matricula: "",
+    especialidad: "",
     carnetPhoto: null,
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement >) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -51,13 +43,25 @@ function Registrarse1() {
   };
 
   return (
-    <form action="" onSubmit={handleSubmit}>
-    <Registrarse1Form
-      formData={formData}
-      handleChange={handleChange}
-      handleSubmit={handleNextStep}
-    />
-    </form>
+    <>
+    <button type="button" onClick={goBack}>‹ Volver</button>
+    {step === 1 && (
+      <Registrarse1Form
+        formData={formData}
+        handleChange={handleChange}
+        handleSubmit={handleNextStep}
+      />
+    )}
+
+    {step === 2 && (
+      <RegistrarseForm2
+        formData={formData}
+        setFormData={setFormData}
+        handleChange={handleChange}
+        handleSubmit={handleNextStep}
+      />
+    )}
+  </>
   );
 }
 
