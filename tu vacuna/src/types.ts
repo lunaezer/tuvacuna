@@ -58,4 +58,5 @@ export interface RegistroData {
     matricula: string;
     especialidad: string;
     carnetPhoto: File | null;
+    institucion: string;
 }
