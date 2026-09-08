@@ -16,28 +16,30 @@ export default function FormPaciente({
 }: PacienteFieldsProps) {
   return (
     <>
-      <Input
-        variant="small"
-        label="Fecha de nacimiento"
-        name="birthDate"
-        type="date"
-        required
-        value={formData.birthDate}
-        onChange={handleChange}
-        placeholder="18/07/1982"
-      />
-      <Select
-        variant="small"
-        label="Sexo"
-        name="sex"
-        required
-        value={formData.sex}
-        onChange={handleChange}
-        options={[
-          { value: "femenino", label: "Femenino" },
-          { value: "masculino", label: "Masculino" },
-        ]}
-      />
+      <div className="registro-grid-2">
+        <Input
+          variant="small"
+          label="Fecha de nacimiento"
+          name="birthDate"
+          type="date"
+          required
+          value={formData.birthDate}
+          onChange={handleChange}
+          placeholder="18/07/1982"
+        />
+        <Select
+          variant="small"
+          label="Sexo"
+          name="sex"
+          required
+          value={formData.sex}
+          onChange={handleChange}
+          options={[
+            { value: "femenino", label: "Femenino" },
+            { value: "masculino", label: "Masculino" },
+          ]}
+        />
+      </div>
       <Select
       variant="large"
       label="Obra social o prepaga"

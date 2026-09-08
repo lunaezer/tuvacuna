@@ -16,28 +16,30 @@ export default function FormMedico({
 }: MedicoFieldsProps) {
   return (
     <>
-      <Input
-        variant="small"
-        label="Matricula profesional"
-        name="matricula"
-        required
-        value={formData.matricula}
-        onChange={handleChange}
-        placeholder="12345"
-      />
-      <Select
-        variant="large"
-        label="Especialidad"
-        name="especialidad"
-        required
-        value={formData.especialidad}
-        onChange={handleChange}
-        options={[
-          { value: "clinica", label: "Clinica medica" },
-          { value: "pediatria", label: "Pediatria" },
-          { value: "vacunatorio", label: "Vacunatorio" },
-        ]}
-      />
+      <div className="registro-grid-2">
+        <Input
+          variant="small"
+          label="Matricula profesional"
+          name="matricula"
+          required
+          value={formData.matricula}
+          onChange={handleChange}
+          placeholder="12345"
+        />
+        <Select
+          variant="small"
+          label="Especialidad"
+          name="especialidad"
+          required
+          value={formData.especialidad}
+          onChange={handleChange}
+          options={[
+            { value: "clinica", label: "Clinica medica" },
+            { value: "pediatria", label: "Pediatria" },
+            { value: "vacunatorio", label: "Vacunatorio" },
+          ]}
+        />
+      </div>
     </>
   );
 }

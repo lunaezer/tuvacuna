@@ -26,16 +26,44 @@ export default function RegistrarseForm2({
   };
 
   return (
-    <article>
-        <h1>Tu perfil de salud</h1>
-        <h2>
+    <div className="registro-form-wrapper">
+        <h1 className="registro-title">Tu perfil de salud.</h1>
+        <p className="registro-subtitle">
           Paso 2 de 3. Después te pedimos tu carnet asi que anda preparandolo.
-        </h2>
+        </p>
 
-      <form action="" onSubmit={handleSubmit} >
-        <Button type="button" onClick={() => selectProfile("paciente")}> Paciente </Button>
-        <Button type="button" onClick={() => selectProfile("medico")} >Medico</Button>
-        
+      <form className="registro-form" onSubmit={handleSubmit}>
+        <p className="registro-perfil-label">¿Que perfil vas a usar?</p>
+        <div className="registro-perfil-toggle">
+          <Button
+            type="button"
+            className={`registro-perfil-btn ${formData.profile === "paciente" ? "is-active" : ""}`}
+            onClick={() => selectProfile("paciente")}
+            icon={
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4 21v-1a8 8 0 0 1 16 0v1" />
+              </svg>
+            }
+          >
+            Paciente
+          </Button>
+          <Button
+            type="button"
+            className={`registro-perfil-btn ${formData.profile === "medico" ? "is-active" : ""}`}
+            onClick={() => selectProfile("medico")}
+            icon={
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M6 3v6a4 4 0 0 0 8 0V3" />
+                <path d="M10 15v1a4 4 0 0 0 8 0v-1a5 5 0 0 0-5-5" />
+                <circle cx="20" cy="10" r="2" />
+              </svg>
+            }
+          >
+            Medico
+          </Button>
+        </div>
+
         {formData.profile === "paciente" && (
           <FormPaciente formData={formData} handleChange={handleChange} />
         )}
@@ -44,9 +72,11 @@ export default function RegistrarseForm2({
           <FormMedico formData={formData} handleChange={handleChange} />
         )}
 
-        <Button>Continuar</Button>
+        <Button type="submit" variant="big">
+          Continuar →
+        </Button>
 
       </form>
-    </article>
+    </div>
   );
 }
