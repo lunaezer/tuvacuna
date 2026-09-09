@@ -5,47 +5,36 @@ import Button from "../Button/Button";
 interface RegistrarseForm3MedicoProps{
 formData: RegistroData;
 handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+handleSubmit: (e: React.ChangeEvent<HTMLInputElement>) => void;
 
 
 }
 
-export default function RegistrarseForm3Medico ({handleChange, formData}:RegistrarseForm3MedicoProps) {
+export default function RegistrarseForm3Medico ({handleChange, formData, handleSubmit}:RegistrarseForm3MedicoProps) {
 
     return(
         <div>
             <h1>Tus pacientes</h1>
-            <h2>Paso 2 de 3. Después te pedimos tu carnet asi que anda preparandolo.</h2>
+            <h2>Paso 3 de 3. Cada invitación le llega a la persona, que decide si te da acceso a su carnet.</h2>
+           <form action="" onSubmit={handleSubmit}>
+            <form action="">
             <Input 
             required
-            label="Matricula"
-            placeholder="MN 123.456"
+            label="Correo electronico"
+            placeholder="Paciente@gmail.com"
             variant="small"
             onChange={handleChange}
             name="matricula"
-            value={formData.matricula}
+            value={formData.pacientes}
             />
+            <Button variant="medium" >Invitar</Button>
+            </form>
+            
 
-            <Input 
-            required
-            label="Especialidad"
-            placeholder="Pediatría"
-            variant="small"
-            onChange={handleChange}
-            name="especialidad"
-            value={formData.especialidad}
-            />
-
-            <Input 
-            required
-            label="Institucion donde atendes"
-            placeholder="Hospital Mater day"
-            variant="large"
-            onChange={handleChange}
-            name="institucion"
-            value={formData.institucion}
-            />
+            
 
             <Button variant="big">Continuar</Button>
+            </form>
         </div>
     );
 }

@@ -11,7 +11,7 @@ interface inputProps {
     variant: InputVariant;
     onClick?: (event: React.MouseEvent<HTMLInputElement>) => void;
     name: string;
-    value: string;
+    value?: string;
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
     type?: string;
     label: string;
