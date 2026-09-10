@@ -50,6 +50,7 @@ export default function RegistrarseForm2({
           </Button>
           <Button
             type="button"
+            variant="perfil"
             className={`registro-perfil-btn ${formData.profile === "medico" ? "is-active" : ""}`}
             onClick={() => selectProfile("medico")}
             icon={

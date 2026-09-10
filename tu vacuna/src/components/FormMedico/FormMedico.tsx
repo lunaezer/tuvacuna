@@ -39,6 +39,17 @@ export default function FormMedico({
             { value: "vacunatorio", label: "Vacunatorio" },
           ]}
         />
+        </div>
+        <div>
+        <Input 
+          variant="large"
+          label="Institucion donde atendes"
+          name="institucion"
+          required
+          placeholder="Hospital Mater Day"
+          onChange={handleChange}
+          value={formData.institucion}
+        />
       </div>
     </>
   );

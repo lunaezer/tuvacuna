@@ -4,6 +4,14 @@ import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import "./InicioSesion1.css";
 
+const CALENDARIO_ITEMS = [
+    { edad: "Recien nacido", vacunas: "BCG · Hepatitis B" },
+    { edad: "2 Meses", vacunas: "Pentavalente · Salk · Neumococo" },
+    { edad: "12 Meses", vacunas: "Triple viral · Hepatitis A" },
+    { edad: "11 Años", vacunas: "VPH · dTpa · Meningococo" },
+    { edad: "65 Años", vacunas: "Antigripal · Neumococo" },
+];
+
 export default function InicioSesion1() {
     const [form, setForm] = useState({ email: "", password: "" });
     const [error, setError] = useState("");
@@ -89,8 +97,22 @@ export default function InicioSesion1() {
                     <span className="login-badge-dot" />
                     Calendario nacional
                 </span>
-                <h2 className="login-panel-title">Título principal acá</h2>
-                <p className="login-panel-text">Texto descriptivo para completar acá.</p>
+                <h2 className="login-panel-title">
+                    Gratuito y obligatorio, desde el primer día de vida hasta el ultimo.
+                </h2>
+                <p className="login-panel-text">
+                    A partir de ahí TuVacuna calcula sola qué dosis te corresponden y
+                    cuándo, según el Calendario Nacional.
+                </p>
+
+                <div className="login-calendario-card">
+                    {CALENDARIO_ITEMS.map((item) => (
+                        <div key={item.edad} className="login-calendario-row">
+                            <span className="login-calendario-edad">{item.edad}</span>
+                            <span className="login-calendario-vacunas">{item.vacunas}</span>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     );
