@@ -59,5 +59,6 @@ export interface RegistroData {
     especialidad: string;
     carnetPhoto: File | null;
     institucion: string;
-    pacientes: string;
+    pacientes: string[];
+
 }

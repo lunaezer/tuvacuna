@@ -8,6 +8,7 @@ import RegistrarseForm2 from "../../components/RegistrarseForm2/RegistrarseForm2
 import RegistrarseForm3Paciente from "../../components/RegistrarseForm3Paciente/RegistrarseForm3Paciente";
 import { useNavigate } from "react-router-dom";
 import "./Registrarse1.css";
+import RegistrarseForm3Medico from "../../components/RegistrarseForm3Medico/RegistrarseForm3Medico";
 
 const PANEL_CONTENT: Record<number, { badge: string; title: string; text: string }> = {
   1: {
@@ -44,12 +45,31 @@ function Registrarse1() {
     matricula: "",
     especialidad: "",
     carnetPhoto: null,
+    institucion: "",
+    pacientes: [],
   });
+
+const [pacienteInput, setPacienteInput] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement >) => {
     const { name, value } = e.target;
+
     setFormData((prev) => ({ ...prev, [name]: value }));
+    
   };
+
+  const handlePacienteInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  setPacienteInput(e.target.value);
+};
+
+const handleAddPaciente = () => {
+  if (!pacienteInput) return;
+  setFormData((prev) => ({
+    ...prev,
+    pacientes: [...prev.pacientes, pacienteInput],
+  }));
+  setPacienteInput("");
+};
 
   const handleNextStep = (e: React.FormEvent) => {
     e.preventDefault();
@@ -150,6 +170,16 @@ function Registrarse1() {
           <RegistrarseForm3Paciente
             formData={formData}
             setFormData={setFormData}
+            handleSubmit={handleSubmit}
+          />
+        )}
+
+        {step === 3 && formData.profile === "medico" && (
+          <RegistrarseForm3Medico
+            pacienteInput={pacienteInput}
+            handlePacienteInputChange={handlePacienteInputChange}
+            handleAddPaciente={handleAddPaciente}
+            pacientes={formData.pacientes}
             handleSubmit={handleSubmit}
           />
         )}

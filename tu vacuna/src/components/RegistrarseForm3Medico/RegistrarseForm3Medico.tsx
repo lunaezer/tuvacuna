@@ -2,38 +2,45 @@ import Input from "../Input/Input";
 import type { RegistroData } from "../../types";
 import Button from "../Button/Button";
 
-interface RegistrarseForm3MedicoProps{
-formData: RegistroData;
-handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-handleSubmit: (e: React.ChangeEvent<HTMLInputElement>) => void;
-
-
+interface RegistrarseForm3MedicoProps {
+  pacienteInput: string;
+  handlePacienteInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleAddPaciente: () => void;
+  pacientes: string[];
+  handleSubmit: (e: React.FormEvent) => void;
 }
 
-export default function RegistrarseForm3Medico ({handleChange, formData, handleSubmit}:RegistrarseForm3MedicoProps) {
+export default function RegistrarseForm3Medico ({pacienteInput,
+  handlePacienteInputChange,
+  handleAddPaciente,
+  pacientes,
+  handleSubmit,}:RegistrarseForm3MedicoProps) {
 
     return(
-        <div>
-            <h1>Tus pacientes</h1>
-            <h2>Paso 3 de 3. Cada invitación le llega a la persona, que decide si te da acceso a su carnet.</h2>
-           <form action="" onSubmit={handleSubmit}>
-            <form action="">
-            <Input 
-            required
+        <div className="registro-form-wrapper">
+            <h1 className="registro-title">Tus pacientes</h1>
+            <p className="registro-subtitle">Paso 3 de 3. Cada invitación le llega a la persona, que decide si te da acceso a su carnet.</p>
+           <form className="registro-form" onSubmit={handleSubmit}>
+            <Input
             label="Correo electronico"
             placeholder="Paciente@gmail.com"
-            variant="small"
-            onChange={handleChange}
-            name="matricula"
-            value={formData.pacientes}
+            variant="large"
+            onChange={handlePacienteInputChange}
+            name="pacienteInput"
+            value={pacienteInput}
             />
-            <Button variant="medium" >Invitar</Button>
-            </form>
-            
+            <Button variant="medium" type="button" onClick={handleAddPaciente}>Invitar</Button>
 
-            
+            {pacientes.length > 0 && (
+              <ul className="registro-pacientes-list">
+                {pacientes.map((email, i) => (
+                  <li key={i} className="registro-pacientes-chip">{email}</li>
+                ))}
+              </ul>
+            )}
 
-            <Button variant="big">Continuar</Button>
+            <Button variant="big">Continuar →</Button>
+            <p className="registro-skip-link" onClick={handleSubmit}>Prefiero completarlo despues</p>
             </form>
         </div>
     );

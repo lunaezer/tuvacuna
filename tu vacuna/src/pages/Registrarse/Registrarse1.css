@@ -212,6 +212,27 @@
   text-align: center;
 }
 
+/* Paso 3 medico: lista de pacientes invitados */
+
+.registro-pacientes-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: -0.5rem 0 0;
+}
+
+.registro-pacientes-chip {
+  background-color: var(--card-bg-light);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-pill);
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
 .registro-skip-link {
   align-self: center;
   margin-top: 1.5rem;

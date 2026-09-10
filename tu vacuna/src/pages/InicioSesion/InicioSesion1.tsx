@@ -78,7 +78,7 @@ export default function InicioSesion1() {
                         <Button variant="big">Ingresar →</Button>
 
                         <p className="login-register">
-                            ¿No tenés cuenta? <Link to="/registro">REGISTRATE</Link>
+                            ¿No tenés cuenta? <Link to="/registrarse1">REGISTRATE</Link>
                         </p>
                     </form>
                 </div>
