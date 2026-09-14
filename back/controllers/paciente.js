@@ -6,12 +6,24 @@ import { query } from "../db.js";
  */
 
 const getPacientes = async (_, res) => {
-    const result = await query("SELECT * FROM pacientes");
+    const result = await query("SELECT * FROM paciente");
     res.json(result.rows);
 };
 
+/**
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ */
+const getPaciente = async (req, res) => {
+    const result = await query(
+        "SELECT * FROM paciente WHERE id_paciente = $1",
+        [req.params.id]
+    );
+    res.json(result.rows[0]);
+};
 const pacientes = {
-    getPacientes
+    getPacientes,
+    getPaciente
 };
 
 export default pacientes;
