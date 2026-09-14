@@ -1,4 +1,4 @@
-export type ButtonVariant = 'primary' | 'secondary' | 'celeste' | 'outline' | 'big'
+export type ButtonVariant = 'primary' | 'secondary' | 'celeste' | 'outline' | 'big' | 'medium' | 'perfil'
 
 export type CardVariant = 'white' | 'dark'
 
@@ -58,4 +58,7 @@ export interface RegistroData {
     matricula: string;
     especialidad: string;
     carnetPhoto: File | null;
+    institucion: string;
+    pacientes: string[];
+
 }

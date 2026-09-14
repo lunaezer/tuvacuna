@@ -1,0 +1,360 @@
+.registro-page {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.registro-panel-left {
+  flex: 1 1 50%;
+  background-color: var(--bg-main);
+  padding: 3rem clamp(2rem, 6vw, 6rem);
+  display: flex;
+  flex-direction: column;
+}
+
+.registro-volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  align-self: flex-start;
+  background: none;
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.registro-volver:hover {
+  color: var(--text-primary);
+}
+
+.registro-stepper {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1.75rem 0 2.5rem;
+}
+
+.registro-stepper-segment {
+  flex: 1;
+  height: 5px;
+  border-radius: var(--border-radius-pill);
+  background-color: var(--border-color);
+}
+
+.registro-stepper-segment.is-completed {
+  background-color: #34d399;
+}
+
+.registro-stepper-segment.is-active {
+  background: linear-gradient(90deg, var(--primary-cyan), #34d399);
+}
+
+.registro-form-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.registro-title {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.registro-subtitle {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin-bottom: 2.25rem;
+}
+
+.registro-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.registro-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.registro-footer-link {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-top: 1.75rem;
+}
+
+.registro-footer-link a {
+  color: var(--primary-cyan-hover);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.registro-footer-link a:hover {
+  text-decoration: underline;
+}
+
+/* Selector de perfil (paciente / medico) */
+
+.registro-perfil-label {
+  text-align: center;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.registro-perfil-toggle {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn.registro-perfil-btn {
+  flex: 1;
+  background-color: var(--card-bg-light);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  font-weight: 700;
+  box-shadow: none;
+}
+
+.btn.registro-perfil-btn:hover {
+  transform: none;
+  border-color: var(--primary-cyan);
+}
+
+.btn.registro-perfil-btn.is-active {
+  background-color: var(--sidebar-bg);
+  color: #ffffff;
+  border-color: var(--sidebar-bg);
+}
+
+/* Carnet: caja de subida de foto */
+
+.registro-upload-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  padding: 2.5rem 1.5rem;
+  border: 2px dashed var(--border-color);
+  border-radius: var(--border-radius-lg);
+  background-color: var(--card-bg-light);
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.registro-upload-box:hover {
+  border-color: var(--primary-cyan);
+}
+
+.registro-upload-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.registro-upload-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-cyan-light);
+  color: var(--primary-cyan);
+}
+
+.registro-upload-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.registro-file-name {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.btn.registro-manual-btn {
+  width: 100%;
+  background-color: var(--card-bg-light);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  font-weight: 700;
+  box-shadow: none;
+}
+
+.btn.registro-manual-btn:hover {
+  transform: none;
+  border-color: var(--primary-cyan);
+}
+
+.registro-manual-placeholder {
+  border: 1px dashed var(--border-color);
+  border-radius: var(--border-radius-md);
+  padding: 1.25rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* Paso 3 medico: lista de pacientes invitados */
+
+.registro-pacientes-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: -0.5rem 0 0;
+}
+
+.registro-pacientes-chip {
+  background-color: var(--card-bg-light);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-pill);
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.registro-skip-link {
+  align-self: center;
+  margin-top: 1.5rem;
+  background: none;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-decoration: underline;
+}
+
+.registro-skip-link:hover {
+  color: var(--text-primary);
+}
+
+/* Panel derecho (decorativo) */
+
+.registro-panel-right {
+  flex: 1 1 50%;
+  background-color: var(--sidebar-bg);
+  color: #ffffff;
+  padding: 3rem clamp(2rem, 6vw, 6rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.registro-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: flex-start;
+  background-color: rgba(52, 211, 153, 0.12);
+  color: #34d399;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--border-radius-pill);
+}
+
+.registro-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #34d399;
+}
+
+.registro-panel-title {
+  font-size: 2.1rem;
+  font-weight: 800;
+  line-height: 1.3;
+  max-width: 480px;
+}
+
+.registro-panel-text {
+  color: #94a3b8;
+  font-size: 1rem;
+  max-width: 460px;
+}
+
+.registro-steps-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  max-width: 420px;
+  margin-top: 0.5rem;
+  padding: 1.5rem;
+  border-radius: var(--border-radius-lg);
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.registro-steps-card-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.registro-steps-card-row:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.registro-steps-card-num {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--sidebar-text);
+  width: 1.5rem;
+}
+
+.registro-steps-card-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--sidebar-text);
+}
+
+.registro-steps-card-row.is-completed .registro-steps-card-num,
+.registro-steps-card-row.is-completed .registro-steps-card-label {
+  color: #34d399;
+}
+
+.registro-steps-card-row.is-active .registro-steps-card-num,
+.registro-steps-card-row.is-active .registro-steps-card-label {
+  color: var(--primary-cyan);
+}
+
+@media (max-width: 860px) {
+  .registro-page {
+    flex-direction: column;
+  }
+
+  .registro-panel-right {
+    order: -1;
+    padding: 2rem;
+  }
+
+  .registro-panel-left {
+    padding: 2rem;
+  }
+
+  .registro-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}

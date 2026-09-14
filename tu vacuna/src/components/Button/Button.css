@@ -19,6 +19,11 @@
   justify-content: center;
 }
 
+.btn-icon svg {
+  width: 1.1em;
+  height: 1.1em;
+}
+
 .btn:active {
   transform: translateY(0) scale(0.97);
 }
@@ -75,6 +80,22 @@
   transform: translateY(-1px);
 }
 
+/* Medium variant — centered secondary action (e.g. Invitar) */
+.btn-medium {
+  align-self: center;
+  background-color: #ffffff;
+  color: #071521;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.85rem 3rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.btn-medium:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+}
+
 /* Big variant — full-width primary action (e.g. login/submit) */
 .btn-big {
   width: 100%;
@@ -89,4 +110,9 @@
 .btn-big:hover {
   background-color: var(--primary-cyan-hover);
   transform: translateY(-2px);
+}
+
+
+.btn-perfil {
+  height: 4rem;
 }

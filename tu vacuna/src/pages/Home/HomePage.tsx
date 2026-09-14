@@ -16,6 +16,9 @@ export default function HomePage() {
   function YaTengoCuenta(){
     navigate("/inicio-sesion");
   }
+  function Registrarse() {
+    navigate("/registrarse1");
+  }
 
   return (
     <div className="pagina-inicio">
@@ -27,7 +30,7 @@ export default function HomePage() {
           <p className="subtitulo-seccion-heroe">Texto</p>
 
           <div className="grupo-botones-accion">
-            <Button text={"Registrarse"} onClick={() => Saludar("hola")} variant="primary" />
+            <Button text={"Registrarse"} onClick={Registrarse} variant="primary" />
             <Button text={"Ya tengo cuenta"} onClick={YaTengoCuenta} variant="primary" />
             
           </div>
