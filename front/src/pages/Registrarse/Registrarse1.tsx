@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { data, Link } from "react-router-dom";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import Registrarse1Form from "../../components/RegistrarseForm1/RegistrarseForm1";
@@ -92,7 +92,7 @@ const handleAddPaciente = () => {
 
     try {
       const body = new FormData();
-      Object.entries(formData).forEach(([key, value]) => {
+       Object.entries(formData).forEach(([key, value]) => {
         if (value !== null) body.append(key, value as string | Blob);
       });
 
@@ -108,10 +108,13 @@ const handleAddPaciente = () => {
         return;
       }
 
-      console.log("Registro exitoso", data);
+      alert("Registro exitoso");
+      console.log(data);
+      navigate("/panel")
       // acá después: guardar el token, redirigir al panel, etc.
     } catch (err) {
       console.error("No se pudo conectar con el servidor");
+      
     }
   };
 

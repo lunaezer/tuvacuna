@@ -40,6 +40,8 @@ export default function InicioSesion1() {
             }
 
             console.log("Login correcto", data);
+            const token = data.token
+            sessionStorage.setItem("token", token)
             // acá después: guardar el token, redirigir al panel, etc.
         } catch (err) {
             setError("No se pudo conectar con el servidor");
