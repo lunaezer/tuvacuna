@@ -5,7 +5,7 @@ interface UserNameProps{
 
 const UserName = ({token}:UserNameProps) => {
 
-    fetch(""){
+    fetch(""),{
         method: "get",
 
 
