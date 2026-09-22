@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import "./InicioSesion1.css";
+import { useUsuario } from "../../context/UsuarioContext/useUsuario";
+import { useNavigate } from "react-router-dom";
 
 const CALENDARIO_ITEMS = [
     { edad: "Recien nacido", vacunas: "BCG · Hepatitis B" },
@@ -15,6 +17,8 @@ const CALENDARIO_ITEMS = [
 export default function InicioSesion1() {
     const [form, setForm] = useState({ email: "", password: "" });
     const [error, setError] = useState("");
+    const { login } = useUsuario();
+    const navigate = useNavigate();
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         const { name, value } = event.target;
@@ -40,9 +44,10 @@ export default function InicioSesion1() {
             }
 
             console.log("Login correcto", data);
-            const token = data.token
-            sessionStorage.setItem("token", token)
-            // acá después: guardar el token, redirigir al panel, etc.
+            await login(data.token);
+            navigate("/panel");
+// acá después: redirigir al panel, ej. navigate("/panel")
+            
         } catch (err) {
             setError("No se pudo conectar con el servidor");
         }

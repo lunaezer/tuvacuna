@@ -9,6 +9,7 @@ import RegistrarseForm3Paciente from "../../components/RegistrarseForm3Paciente/
 import { useNavigate } from "react-router-dom";
 import "./Registrarse1.css";
 import RegistrarseForm3Medico from "../../components/RegistrarseForm3Medico/RegistrarseForm3Medico";
+import { useUsuario } from "../../context/UsuarioContext/useUsuario";
 
 const PANEL_CONTENT: Record<number, { badge: string; title: string; text: string }> = {
   1: {
@@ -79,6 +80,7 @@ const handleAddPaciente = () => {
   const goNext = () => setStep((s) => s + 1);
 
   const navigate = useNavigate();
+  const { login } = useUsuario();
 
   const goBack = () => {
   if (step === 1) {
@@ -109,9 +111,8 @@ const handleAddPaciente = () => {
       }
 
       alert("Registro exitoso");
-      console.log(data);
+      await login(data.token);
       navigate("/panel")
-      // acá después: guardar el token, redirigir al panel, etc.
     } catch (err) {
       console.error("No se pudo conectar con el servidor");
       

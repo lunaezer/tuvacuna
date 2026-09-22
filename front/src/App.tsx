@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
+import { UsuarioProvider } from './context/UsuarioContext/UsuarioContext'
 import Navbar from './components/Navbar/Navbar'
 import Footer from './components/Footer/Footer'
 import DashboardLayout from './components/DashboardLayout/DashboardLayout'
@@ -78,9 +79,11 @@ function LayoutWrapper() {
 
 function App() {
   return (
-    <Router>
-      <LayoutWrapper />
-    </Router>
+    <UsuarioProvider>
+      <Router>
+        <LayoutWrapper />
+      </Router>
+    </UsuarioProvider>
   )
 }
 
