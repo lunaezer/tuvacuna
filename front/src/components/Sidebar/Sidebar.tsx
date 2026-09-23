@@ -8,6 +8,7 @@ import CalendarioLogoWhite from '../../assets/CalendarioLogoWhite.png'
 import CentrosLogoWhite from '../../assets/CentrosLogoWhite.png'
 import FamiliaLogoWhite from '../../assets/FamiliaLogoWhite.png'
 import IALogoWhite from '../../assets/IALogoWhite.png'
+import { useUsuario } from '../../context/UsuarioContext/useUsuario'
 
 interface SidebarProps {
   activeItem?: string
@@ -15,6 +16,8 @@ interface SidebarProps {
 }
 
 function Sidebar({ activeItem = 'Panel', className = '' }: SidebarProps) {
+
+  const { usuario } = useUsuario()
   return (
     <aside className={`sidebar ${className}`.trim()}>
       <SidebarHeader to="/">
@@ -44,7 +47,7 @@ function Sidebar({ activeItem = 'Panel', className = '' }: SidebarProps) {
 
       <SidebarFooter >
         <SidebarItem text="Cerrar Sesion"/>
-        <SidebarItem text="nombre_usuario"/>
+        <SidebarItem text={usuario?.nombre}/>
       </SidebarFooter>
       
       

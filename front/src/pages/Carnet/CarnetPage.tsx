@@ -6,128 +6,12 @@ import CarnetCard from '../../components/CarnetCard/CarnetCard'
 import Button from '../../components/Button/Button'
 import Modal from '../../components/Modal/Modal'
 import type { Familiar, SeccionHistorial } from '../../types'
+import { useUsuario } from '../../context/UsuarioContext/useUsuario'
 import './CarnetPage.css'
 
-// Simulación de respuesta de la API: Lista de familiares del usuario autenticado
-const MOCK_FAMILIARES_API: Familiar[] = [
-  { id: 'usr-1', nombre: 'Sofía', esVos: true, iniciales: 'SG', colorBg: '#2dd4bf' },
-  { id: 'usr-2', nombre: 'Tomás', esVos: false, iniciales: 'TG', colorBg: '#fcb354' },
-  { id: 'usr-3', nombre: 'Mamá', esVos: false, iniciales: 'MR', colorBg: '#38bdf8' },
-]
-
-// Simulación de respuesta de la API: Dosis por el ID de cada familiar
-const MOCK_DOSIS_POR_FAMILIAR_API: Record<string, SeccionHistorial[]> = {
-  'usr-1': [
-    {
-      grupo: 'PENDIENTES',
-      esPendiente: true,
-      dosis: [
-        {
-          id: 'dosis-101',
-          titulo: 'Antitetánica · refuerzo',
-          subtitulo: 'VENCIÓ 02·JUL·2026 · CADA 10 AÑOS',
-          estado: 'atrasada',
-          etiqueta: 'ATRASADA',
-          mostrarAgendar: true,
-        },
-        {
-          id: 'dosis-102',
-          titulo: 'HPV · 2ª dosis',
-          subtitulo: 'RECOMENDADA 30·AGO·2026 · SEGÚN TU EDAD',
-          estado: 'pendiente',
-          etiqueta: 'EN 25 DÍAS',
-          mostrarAgendar: true,
-        },
-      ],
-    },
-    {
-      grupo: '2026',
-      esPendiente: false,
-      dosis: [
-        {
-          id: 'dosis-103',
-          titulo: 'Antigripal',
-          subtitulo: '03·ABR·2026 · VACUNATORIO MUNICIPAL CENTRO',
-          estado: 'aplicada',
-          etiqueta: 'APLICADA',
-          mostrarAgendar: false,
-        },
-        {
-          id: 'dosis-104',
-          titulo: 'Triple viral · 2ª dosis',
-          subtitulo: '12·MAR·2026 · HOSPITAL REGIONAL',
-          estado: 'aplicada',
-          etiqueta: 'APLICADA',
-          mostrarAgendar: false,
-        },
-      ],
-    },
-    {
-      grupo: '2019',
-      esPendiente: false,
-      dosis: [
-        {
-          id: 'dosis-105',
-          titulo: 'VPH · 1ª dosis',
-          subtitulo: '20·SEP·2019 · CAMPAÑA ESCOLAR NACIONAL',
-          estado: 'aplicada',
-          etiqueta: 'APLICADA',
-          mostrarAgendar: false,
-        },
-      ],
-    },
-  ],
-
-  'usr-2': [
-    {
-      grupo: 'PENDIENTES',
-      esPendiente: true,
-      dosis: [
-        {
-          id: 'dosis-201',
-          titulo: 'Fiebre Amarilla',
-          subtitulo: 'RECOMENDADA PARA VIAJES',
-          estado: 'pendiente',
-          etiqueta: 'EN 10 DÍAS',
-          mostrarAgendar: true,
-        },
-      ],
-    },
-    {
-      grupo: '2025',
-      esPendiente: false,
-      dosis: [
-        {
-          id: 'dosis-202',
-          titulo: 'Antigripal 2025',
-          subtitulo: '15·MAY·2025 · CENTRO DE SALUD N°3',
-          estado: 'aplicada',
-          etiqueta: 'APLICADA',
-          mostrarAgendar: false,
-        },
-      ],
-    },
-  ],
-
-  'usr-3': [
-    {
-      grupo: '2026',
-      esPendiente: false,
-      dosis: [
-        {
-          id: 'dosis-301',
-          titulo: 'Neumococo 23 valente',
-          subtitulo: '10·ENE·2026 · HOSPITAL CENTRAL',
-          estado: 'aplicada',
-          etiqueta: 'APLICADA',
-          mostrarAgendar: false,
-        },
-      ],
-    },
-  ],
-}
-
 export default function CarnetPage() {
+  const { token, usuario } = useUsuario()
+
   const [familiares, setFamiliares] = useState<Familiar[]>([])
   const [indexFamiliarActivo, setIndexFamiliarActivo] = useState(0)
   const [seccionesHistorial, setSeccionesHistorial] = useState<SeccionHistorial[]>([])
@@ -145,28 +29,71 @@ export default function CarnetPage() {
   })
 
   useEffect(() => {
-    setFamiliares(MOCK_FAMILIARES_API)
-    setCargando(false)
+    async function cargarFamiliares() {
+      const response = await fetch('https://tu-backend.com/api/familia', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      const data = await response.json()
+      setFamiliares(data)
+    }
+    cargarFamiliares()
   }, [])
 
-  useEffect(() => {
-    if (familiares.length > 0) {
-      const familiarSeleccionado = familiares[indexFamiliarActivo]
-      if (familiarSeleccionado) {
-        const dosisFamiliar = MOCK_DOSIS_POR_FAMILIAR_API[familiarSeleccionado.id ?? ''] || []
-        setSeccionesHistorial(dosisFamiliar)
-      }
-    }
-  }, [indexFamiliarActivo, familiares])
+  async function cargarCarnet(idFamiliar?: string) {
+    if (!usuario) return
 
-  const handleAgendar = (idDosis: string) => {
-    console.log(`Agendar dosis con ID: ${idDosis}`)
+    const url = idFamiliar
+      ? `https://tu-backend.com/api/carnet/${usuario.id}/${idFamiliar}`
+      : `https://tu-backend.com/api/carnet/${usuario.id}`
+
+    const response = await fetch(url, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    const data = await response.json()
+    setSeccionesHistorial(data)
+    setCargando(false)
   }
 
-  const handleGuardarDosis = (e?: FormEvent<HTMLFormElement>) => {
+  useEffect(() => {
+    if (familiares.length === 0 || !usuario) return
+    const familiarSeleccionado = familiares[indexFamiliarActivo]
+    if (!familiarSeleccionado) return
+
+    cargarCarnet(familiarSeleccionado.esVos ? undefined : familiarSeleccionado.id)
+  }, [indexFamiliarActivo, familiares, usuario])
+
+  const handleAgendar = async (idDosis: string) => {
+    await fetch('https://tu-backend.com/api/turnos', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ dosisId: idDosis }),
+    })
+  }
+
+  const handleGuardarDosis = async (e?: FormEvent<HTMLFormElement>) => {
     e?.preventDefault()
-    console.log('Guardar dosis:', formDosis)
-    // Cerrar modal tras guardar
+    const familiarSeleccionado = familiares[indexFamiliarActivo]
+    if (!familiarSeleccionado || !usuario) return
+
+    const url = familiarSeleccionado.esVos
+      ? `https://tu-backend.com/api/carnet/${usuario.id}/dosis`
+      : `https://tu-backend.com/api/carnet/${usuario.id}/${familiarSeleccionado.id}/dosis`
+
+    await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(formDosis),
+    })
+
+    // Refresca el carnet para que aparezca la dosis recién cargada
+    await cargarCarnet(familiarSeleccionado.esVos ? undefined : familiarSeleccionado.id)
+
     setModalCargarDosisAbierto(false)
     setFormDosis({ nombreVacuna: '', fecha: '', lugar: '' })
   }

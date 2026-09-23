@@ -10,7 +10,7 @@ export interface Familiar {
   colorBg?: string
 }
 
-export type EstadoDosis = 'atrasada' | 'pendiente' | 'aplicada'
+export type EstadoDosis = 'atrasada' | 'pendiente' | 'aplicada' | 'recomendada'
 
 export interface Dosis {
   id: string
@@ -27,7 +27,7 @@ export interface SeccionHistorial {
   dosis: Dosis[]
 }
 
-export type EstadoTurno = 'agendado' | 'sin-agendar' | 'atrasado'
+export type EstadoTurno = 'agendado' | 'sin-agendar' | 'atrasado' | 'recomendado'
 
 export interface Turno {
   dia: string
@@ -41,7 +41,7 @@ export interface Turno {
 
 export interface DiaMarcado {
   dia: number
-  tipo: 'turno' | 'hoy' | 'atrasado'
+  tipo: 'turno' | 'hoy' | 'atrasado' | 'recomendado'
 }
 
 export interface RegistroData {
