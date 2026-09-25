@@ -1,59 +1,76 @@
+import { useEffect, useState } from 'react'
 import PageHeader from '../../components/PageHeader/PageHeader'
 import Button from '../../components/Button/Button'
 import CalendarioWidget from '../../components/CalendarioWidget/CalendarioWidget'
 import TurnoCard from '../../components/TurnoCardCalendario/TurnoCard'
 import type { DiaMarcado, Turno } from '../../types'
+import { useUsuario } from '../../context/UsuarioContext/useUsuario'
 import './CalendarioPage.css'
 
 export default function CalendarioPage() {
+  const { token } = useUsuario()
 
-  // ══════════════════════════════════════════════════════════
-  // TODO: Acá va la lógica principal del calendario.
-  //
-  // Esta función debería:
-  //   1. Traer los turnos del usuario y su grupo familiar (backend / contexto)
-  //   2. Armar el array de diasMarcados para el CalendarioWidget
-  //   3. Armar el array de próximos turnos para las TurnoCards
-  //   4. Manejar "Nuevo turno" — abrir modal o navegar
-  //   5. Manejar click en un día del calendario
-  //   6. Manejar "Ver todo el año"
-  //
-  // Por ahora usamos datos de ejemplo hardcodeados abajo.
-  // ══════════════════════════════════════════════════════════
+  const hoy = new Date()
+  const [mesActual, setMesActual] = useState(hoy.getMonth())
+  const [anioActual, setAnioActual] = useState(hoy.getFullYear())
 
-  // Datos de ejemplo — reemplazar con datos reales
-  const diasMarcados: DiaMarcado[] = [
-    { dia: 14, tipo: 'turno' },
-    { dia: 30, tipo: 'turno' },
-  ]
+  const [diasMarcados, setDiasMarcados] = useState<DiaMarcado[]>([])
+  const [proximosTurnos, setProximosTurnos] = useState<Turno[]>([])
+  const [errorTurnos, setErrorTurnos] = useState(false)
 
-  const proximosTurnos: Turno[] = [
-    {
-      dia: '14',
-      mes: 'AGO',
-      titulo: 'Antigripal — Tomás',
-      lugar: 'Vacunatorio Municipal',
-      hora: '10:30 H',
-      estado: 'agendado',
-    },
-    {
-      dia: '30',
-      mes: 'AGO',
-      titulo: 'HPV 2ª dosis — Sofía',
-      lugar: 'Hospital Regional',
-      hora: '09:00 H',
-      estado: 'agendado',
-    },
-    {
-      dia: '02',
-      mes: 'JUL',
-      titulo: 'Antitetánica — Sofía',
-      lugar: null,
-      hora: null,
-      estado: 'atrasado',
-      etiqueta: 'SIN AGENDAR',
-    },
-  ]
+  const irMesAnterior = () => {
+    if (mesActual === 0) {
+      setMesActual(11)
+      setAnioActual(anioActual - 1)
+    } else {
+      setMesActual(mesActual - 1)
+    }
+  }
+
+  const irMesSiguiente = () => {
+    if (mesActual === 11) {
+      setMesActual(0)
+      setAnioActual(anioActual + 1)
+    } else {
+      setMesActual(mesActual + 1)
+    }
+  }
+
+  useEffect(() => {
+    async function cargarMarcados() {
+      try {
+        const response = await fetch(
+          `https://tu-backend.com/api/calendario/marcados?mes=${mesActual}&anio=${anioActual}`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        )
+        if (!response.ok) throw new Error()
+        const data = await response.json()
+        setDiasMarcados(data)
+      } catch {
+        setDiasMarcados([])
+      }
+    }
+    cargarMarcados()
+  }, [mesActual, anioActual])
+
+  useEffect(() => {
+    async function cargarTurnos() {
+      try {
+        const response = await fetch(
+          `https://tu-backend.com/api/turnos?mes=${mesActual}&anio=${anioActual}`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        )
+        if (!response.ok) throw new Error()
+        const data = await response.json()
+        setProximosTurnos(data)
+        setErrorTurnos(false)
+      } catch {
+        setProximosTurnos([])
+        setErrorTurnos(true)
+      }
+    }
+    cargarTurnos()
+  }, [mesActual, anioActual])
 
   const handleNuevoTurno = () => {
     // TODO: Abrir modal o navegar a la página de agendar turno
@@ -83,6 +100,10 @@ export default function CalendarioPage() {
         {/* Columna izquierda: calendario mensual */}
         <div className="calendario-col-izq">
           <CalendarioWidget
+            mesActual={mesActual}
+            anioActual={anioActual}
+            onMesAnteriorClick={irMesAnterior}
+            onMesSiguienteClick={irMesSiguiente}
             diasMarcados={diasMarcados}
             onDiaClick={handleDiaClick}
           />
@@ -92,22 +113,30 @@ export default function CalendarioPage() {
         <div className="calendario-col-der">
           <div className="calendario-turnos-header">
             <h2 className="calendario-turnos-titulo">Próximos turnos</h2>
-            <span className="calendario-turnos-count">{proximosTurnos.length} ESTE MES</span>
+            {!errorTurnos && (
+              <span className="calendario-turnos-count">{proximosTurnos.length} ESTE MES</span>
+            )}
           </div>
 
           <div className="calendario-turnos-lista">
-            {proximosTurnos.map((turno, index) => (
-              <TurnoCard
-                key={index}
-                dia={turno.dia}
-                mes={turno.mes}
-                titulo={turno.titulo}
-                lugar={turno.lugar}
-                hora={turno.hora}
-                estado={turno.estado}
-                etiqueta={turno.etiqueta}
-              />
-            ))}
+            {errorTurnos ? (
+              <p className="calendario-turnos-vacio">No se pudo conectar con el servidor.</p>
+            ) : proximosTurnos.length === 0 ? (
+              <p className="calendario-turnos-vacio">No tenés turnos agendados este mes.</p>
+            ) : (
+              proximosTurnos.map((turno, index) => (
+                <TurnoCard
+                  key={index}
+                  dia={turno.dia}
+                  mes={turno.mes}
+                  titulo={turno.titulo}
+                  lugar={turno.lugar}
+                  hora={turno.hora}
+                  estado={turno.estado}
+                  etiqueta={turno.etiqueta}
+                />
+              ))
+            )}
           </div>
 
           <button className="calendario-ver-anio" onClick={handleVerTodoElAnio}>

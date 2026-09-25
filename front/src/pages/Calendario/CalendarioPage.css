@@ -34,8 +34,9 @@
 
 .calendario-turnos-titulo {
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 800;
   color: var(--text-primary);
+  display: flex;
 }
 
 .calendario-turnos-count {
@@ -51,6 +52,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  align-items: flex-start;
 }
 
 /* Botón "Ver todo el año" */

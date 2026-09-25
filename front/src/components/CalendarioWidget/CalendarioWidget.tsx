@@ -1,41 +1,30 @@
-import { useState } from 'react'
 import type { DiaMarcado } from '../../types'
 import './CalendarioWidget.css'
 
 interface CalendarioWidgetProps {
+  mesActual: number
+  anioActual: number
+  onMesAnteriorClick: () => void
+  onMesSiguienteClick: () => void
   diasMarcados?: DiaMarcado[]
   onDiaClick?: (dia: number, mes: number, anio: number) => void
 }
 
-function CalendarioWidget({ diasMarcados = [], onDiaClick }: CalendarioWidgetProps) {
+function CalendarioWidget({
+  mesActual,
+  anioActual,
+  onMesAnteriorClick,
+  onMesSiguienteClick,
+  diasMarcados = [],
+  onDiaClick,
+}: CalendarioWidgetProps) {
   const hoy = new Date()
-  const [mesActual, setMesActual] = useState(hoy.getMonth())
-  const [anioActual, setAnioActual] = useState(hoy.getFullYear())
 
   const nombresMeses = [
     'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
     'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
   ]
   const diasSemana = ['LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB', 'DOM']
-
-  // ── Navegación ──────────────────────────────────────────
-  const irMesAnterior = () => {
-    if (mesActual === 0) {
-      setMesActual(11)
-      setAnioActual(anioActual - 1)
-    } else {
-      setMesActual(mesActual - 1)
-    }
-  }
-
-  const irMesSiguiente = () => {
-    if (mesActual === 11) {
-      setMesActual(0)
-      setAnioActual(anioActual + 1)
-    } else {
-      setMesActual(mesActual + 1)
-    }
-  }
 
   // ── Generar grilla de días ──────────────────────────────
   const primerDiaMes = new Date(anioActual, mesActual, 1)
@@ -49,22 +38,27 @@ function CalendarioWidget({ diasMarcados = [], onDiaClick }: CalendarioWidgetPro
   // Días del mes anterior para rellenar la primera semana
   const diasMesAnterior = new Date(anioActual, mesActual, 0).getDate()
 
+  const mesAnterior = mesActual === 0 ? 11 : mesActual - 1
+  const anioMesAnterior = mesActual === 0 ? anioActual - 1 : anioActual
+  const mesSiguiente = mesActual === 11 ? 0 : mesActual + 1
+  const anioMesSiguiente = mesActual === 11 ? anioActual + 1 : anioActual
+
   const celdas = []
 
   // Días del mes anterior (grises)
   for (let i = diaInicio - 1; i >= 0; i--) {
-    celdas.push({ dia: diasMesAnterior - i, esMesActual: false })
+    celdas.push({ dia: diasMesAnterior - i, esMesActual: false, mes: mesAnterior, anio: anioMesAnterior })
   }
 
   // Días del mes actual
   for (let d = 1; d <= totalDias; d++) {
-    celdas.push({ dia: d, esMesActual: true })
+    celdas.push({ dia: d, esMesActual: true, mes: mesActual, anio: anioActual })
   }
 
-  // Días del mes siguiente para completar la grilla (hasta 42 celdas = 6 filas)
-  const restantes = 42 - celdas.length
+  // Días del mes siguiente para completar la grilla (hasta 35 celdas = 5 filas)
+  const restantes = 35 - celdas.length
   for (let i = 1; i <= restantes; i++) {
-    celdas.push({ dia: i, esMesActual: false })
+    celdas.push({ dia: i, esMesActual: false, mes: mesSiguiente, anio: anioMesSiguiente })
   }
 
   // ── Helpers ─────────────────────────────────────────────
@@ -76,21 +70,9 @@ function CalendarioWidget({ diasMarcados = [], onDiaClick }: CalendarioWidgetPro
     )
   }
 
-  const obtenerMarca = (dia: number) => {
-    return diasMarcados.find((m) => m.dia === dia)
+  const obtenerMarca = (dia: number, mes: number, anio: number) => {
+    return diasMarcados.find((m) => m.dia === dia && m.mes === mes && m.anio === anio)
   }
-
-  // ══════════════════════════════════════════════════════════
-  // TODO: Acá va la lógica de conexión con datos reales.
-  //
-  // Esta función debería:
-  //   1. Recibir los turnos del backend o del contexto global
-  //   2. Filtrar los turnos correspondientes al mesActual / anioActual
-  //   3. Armar el array diasMarcados automáticamente
-  //   4. Manejar el click en un día para mostrar detalle o agendar turno
-  //
-  // Por ahora los diasMarcados se reciben por props.
-  // ══════════════════════════════════════════════════════════
 
   return (
     <div className="calendario-widget">
@@ -100,10 +82,10 @@ function CalendarioWidget({ diasMarcados = [], onDiaClick }: CalendarioWidgetPro
           {nombresMeses[mesActual]} {anioActual}
         </span>
         <div className="calendario-widget-nav">
-          <button className="calendario-widget-nav-btn" onClick={irMesAnterior} aria-label="Mes anterior">
+          <button className="calendario-widget-nav-btn" onClick={onMesAnteriorClick} aria-label="Mes anterior">
             ‹
           </button>
-          <button className="calendario-widget-nav-btn" onClick={irMesSiguiente} aria-label="Mes siguiente">
+          <button className="calendario-widget-nav-btn" onClick={onMesSiguienteClick} aria-label="Mes siguiente">
             ›
           </button>
         </div>
@@ -119,21 +101,21 @@ function CalendarioWidget({ diasMarcados = [], onDiaClick }: CalendarioWidgetPro
       {/* Grilla de días */}
       <div className="calendario-widget-grilla">
         {celdas.map((celda, index) => {
-          const marca = celda.esMesActual ? obtenerMarca(celda.dia) : null
+          const marca = obtenerMarca(celda.dia, celda.mes, celda.anio)
           const clases = [
             'calendario-widget-celda',
             !celda.esMesActual && 'calendario-widget-celda--fuera',
             celda.esMesActual && esHoy(celda.dia) && 'calendario-widget-celda--hoy',
             marca?.tipo === 'turno' && 'calendario-widget-celda--turno',
             marca?.tipo === 'atrasado' && 'calendario-widget-celda--atrasado',
+            marca?.tipo === 'recomendado' && 'calendario-widget-celda--recomendado',
           ].filter(Boolean).join(' ')
 
           return (
             <button
               key={index}
               className={clases}
-              onClick={() => celda.esMesActual && onDiaClick?.(celda.dia, mesActual, anioActual)}
-              disabled={!celda.esMesActual}
+              onClick={() => onDiaClick?.(celda.dia, celda.mes, celda.anio)}
             >
               <span className="calendario-widget-celda-numero">{celda.dia}</span>
               {marca && <span className={`calendario-widget-punto calendario-widget-punto--${marca.tipo}`} />}

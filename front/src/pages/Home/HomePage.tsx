@@ -26,7 +26,7 @@ export default function HomePage() {
       <section className="seccion-principal-heroe">
         <div className="contenido-seccion-heroe">
           <div className="etiqueta-insignia-destacada">texto</div>
-          <h1 className="titulo-principal-heroe">Tu Vacuna</h1>
+          <h1 className="titulo-principal-heroe">Cada dosis,registrada y verificable.</h1>
           <p className="subtitulo-seccion-heroe">Texto</p>
 
           <div className="grupo-botones-accion">

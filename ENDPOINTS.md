@@ -134,9 +134,11 @@ Acá se trae todo el grupo familiar junto (uno mismo + los familiares vinculados
 
 ```
 GET /api/calendario/marcados?mes=&anio=
-  → DiaMarcado[]   // { dia, tipo: 'turno' | 'hoy' | 'atrasado' | 'recomendado' }
+  → DiaMarcado[]   // { dia, mes, anio, tipo: 'turno' | 'hoy' | 'atrasado' | 'recomendado' }
 ```
 Data mínima para pintar los puntos de colores en la grilla del mes (`CalendarioWidget`). No trae detalle, solo qué día tiene algo y de qué tipo.
+
+`mes` y `anio` van en **cada item**, no solo en el query — porque la grilla del widget muestra de relleno algunos días del mes anterior y del siguiente (para completar las semanas), y sin saber a qué mes/año pertenece cada marca, un día "29" del mes pasado podría pintarse mal por pura coincidencia de número con un día "29" marcado del mes actual. Por eso el back devuelve, para el `mes`/`anio` pedido, también las marcas del mes anterior y el siguiente (una ventana de 3 meses), cada una con su propio `mes`/`anio` para que el frontend pueda matchear exacto. `mes` usa la misma convención que `Date` de JS: 0 = enero, 11 = diciembre.
 
 ```
 GET /api/turnos?mes=&anio=

@@ -41,6 +41,8 @@ export interface Turno {
 
 export interface DiaMarcado {
   dia: number
+  mes: number
+  anio: number
   tipo: 'turno' | 'hoy' | 'atrasado' | 'recomendado'
 }
 
