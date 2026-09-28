@@ -6,6 +6,8 @@ import TurnoCard from '../../components/TurnoCardCalendario/TurnoCard'
 import type { DiaMarcado, Turno } from '../../types'
 import { useUsuario } from '../../context/UsuarioContext/useUsuario'
 import './CalendarioPage.css'
+import type { formDataTurno } from '../../types'
+import AgregarTurnoModal from '../../components/AgregarTurnoModal/AgregarTurnoModal'
 
 export default function CalendarioPage() {
   const { token } = useUsuario()
@@ -17,6 +19,22 @@ export default function CalendarioPage() {
   const [diasMarcados, setDiasMarcados] = useState<DiaMarcado[]>([])
   const [proximosTurnos, setProximosTurnos] = useState<Turno[]>([])
   const [errorTurnos, setErrorTurnos] = useState(false)
+
+  const[formDataTurno, setFormDataTurno] = useState<formDataTurno> (
+    {
+      vacuna: "",
+      fecha: "",
+      hora: "",
+      lugar: "",
+    }
+  ); 
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => { 
+  const { name, value } = e.target;
+  setFormDataTurno((prev) => ({ ...prev, [name]: value }));
+  } // VER SI ANDA PARA GUARDAR LOS VALORES DEL FORM
+
+  const handleSubmit = () // HACER ESTA FUNCION PARA SUBIR LOS DATOS DEL NUEVO TURNO
 
   const irMesAnterior = () => {
     if (mesActual === 0) {
@@ -74,6 +92,9 @@ export default function CalendarioPage() {
 
   const handleNuevoTurno = () => {
     // TODO: Abrir modal o navegar a la página de agendar turno
+    return(
+      <AgregarTurnoModal handleChange={handleChange} handleSubmit={handleSubmit} />
+    )
     console.log('Nuevo turno')
   }
 
@@ -86,12 +107,13 @@ export default function CalendarioPage() {
     // TODO: Navegar a vista anual o expandir calendario
     console.log('Ver todo el año')
   }
+  
 
   return (
     <div className="contenedor-calendario">
       <PageHeader
         titulo="Calendario"
-        subtitulo="Turnos agendados y dosis recomendadas de todo el grupo familiar."
+        subtitulo="Turnos agendadofs y dosis recomendadas de todo el grupo familiar."
       >
         <Button text="+ Nuevo turno" variant="celeste" onClick={handleNuevoTurno} />
       </PageHeader>

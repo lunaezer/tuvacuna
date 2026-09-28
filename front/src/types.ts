@@ -64,3 +64,11 @@ export interface RegistroData {
     pacientes: string[];
 
 }
+
+export interface formDataTurno {
+  vacuna: string;
+  fecha: string;
+  hora: string | null;
+  lugar: string;
+
+}

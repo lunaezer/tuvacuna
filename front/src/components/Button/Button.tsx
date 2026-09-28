@@ -11,16 +11,18 @@ interface ButtonProps {
   className?: string
   type?:  'button' | 'submit' | 'reset'
   disabled?: boolean
+  onSubmit?: () => void
 
 }
 
-function Button({ text, icon, children, onClick, variant = 'primary', className = '', type, disabled}: ButtonProps) {
+function Button({ text, icon, children, onClick, variant = 'primary', className = '', type, disabled, onSubmit}: ButtonProps) {
   return (
     <button
       className={`btn btn-${variant} ${className}`.trim()}
       onClick={onClick}
       type={type}
       disabled={disabled}
+      onSubmit={onSubmit}
     >
       {icon && <span className="btn-icon">{icon}</span>}
       {text || children}
