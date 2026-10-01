@@ -7,8 +7,8 @@ export const familiaMock: Familiar[] = [
   { id: '3', nombre: 'Maru', iniciales: 'MG', colorBg: '#34d399' },
 ]
 
-// Respuesta hardcodeada de GET /api/carnet/:id
-export const carnetMock: SeccionHistorial[] = [
+// Respuesta hardcodeada de GET /api/carnet/:id (carnet propio)
+const carnetPropio: SeccionHistorial[] = [
   {
     grupo: 'Pendientes',
     esPendiente: true,
@@ -41,3 +41,39 @@ export const carnetMock: SeccionHistorial[] = [
     ],
   },
 ]
+
+// GET /api/carnet/:id/:idFamiliar
+const carnetTomi: SeccionHistorial[] = [
+  {
+    grupo: 'Pendientes',
+    esPendiente: true,
+    dosis: [
+      { id: 't1', titulo: 'Triple viral — Refuerzo', subtitulo: 'Vence el 10 de Dic de 2026', estado: 'recomendada', etiqueta: 'Recomendada', mostrarAgendar: true },
+    ],
+  },
+  {
+    grupo: '2024',
+    esPendiente: false,
+    dosis: [
+      { id: 't2', titulo: 'Antigripal', subtitulo: '12 de abril de 2024', estado: 'aplicada', etiqueta: 'Aplicada', mostrarAgendar: false },
+    ],
+  },
+]
+
+const carnetMaru: SeccionHistorial[] = [
+  {
+    grupo: '2025',
+    esPendiente: false,
+    dosis: [
+      { id: 'm1', titulo: 'Doble adultos', subtitulo: '3 de marzo de 2025', estado: 'aplicada', etiqueta: 'Aplicada', mostrarAgendar: false },
+      { id: 'm2', titulo: 'Hepatitis B — Tercera dosis', subtitulo: '20 de enero de 2025', estado: 'aplicada', etiqueta: 'Aplicada', mostrarAgendar: false },
+    ],
+  },
+]
+
+// Clave: id del familiar, o 'yo' para el carnet propio
+export const carnetsMock: Record<string, SeccionHistorial[]> = {
+  yo: carnetPropio,
+  '2': carnetTomi,
+  '3': carnetMaru,
+}

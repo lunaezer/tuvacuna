@@ -7,7 +7,7 @@ import Button from '../../components/Button/Button'
 import Modal from '../../components/Modal/Modal'
 import type { Familiar, SeccionHistorial } from '../../types'
 import { useUsuario } from '../../context/UsuarioContext/useUsuario'
-import { familiaMock, carnetMock } from '../../mocks/carnetMock'
+import { familiaMock, carnetsMock } from '../../mocks/carnetMock'
 import './CarnetPage.css'
 
 // Poner en false para usar el back real
@@ -49,7 +49,7 @@ export default function CarnetPage() {
 
   async function cargarCarnet(idFamiliar?: string) {
     if (USAR_MOCK) {
-      setSeccionesHistorial(carnetMock)
+      setSeccionesHistorial(carnetsMock[idFamiliar ?? 'yo'] ?? [])
       setCargando(false)
       return
     }
@@ -146,7 +146,9 @@ export default function CarnetPage() {
 
       {/* Selector de familiares */}
       <FamilySelector
-        familiares={familiares}
+        familiares={familiares.map((f) =>
+          f.esVos && usuario ? { ...f, nombre: usuario.nombre } : f
+        )}
         activoIndex={indexFamiliarActivo}
         onSelect={setIndexFamiliarActivo}
         onAgregar={() => console.log('Agregar familiar')}

@@ -20,7 +20,7 @@ function FamilySelector({ familiares = [], activoIndex = 0, onSelect, onAgregar 
         const textoIniciales = esObjeto ? familiar.iniciales : undefined
         const colorBg = esObjeto ? familiar.colorBg : undefined
 
-        const etiquetaMostrar = `${nombre}${esVos ? ' (vos)' : ''}`
+        const etiquetaMostrar = `${nombre}${esVos ? ' (yo)' : ''}`
 
         return (
           <button
