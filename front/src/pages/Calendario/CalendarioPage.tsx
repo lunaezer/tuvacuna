@@ -19,6 +19,7 @@ export default function CalendarioPage() {
   const [diasMarcados, setDiasMarcados] = useState<DiaMarcado[]>([])
   const [proximosTurnos, setProximosTurnos] = useState<Turno[]>([])
   const [errorTurnos, setErrorTurnos] = useState(false)
+  const [modalNuevoTurnoAbierto, setModalNuevoTurnoAbierto] = useState(false)
 
   const[formDataTurno, setFormDataTurno] = useState<formDataTurno> (
     {
@@ -34,7 +35,31 @@ export default function CalendarioPage() {
   setFormDataTurno((prev) => ({ ...prev, [name]: value }));
   } // VER SI ANDA PARA GUARDAR LOS VALORES DEL FORM
 
-  const handleSubmit = () // HACER ESTA FUNCION PARA SUBIR LOS DATOS DEL NUEVO TURNO
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("https://tu-backend.com/api/turnos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(formDataTurno),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        console.error(data.message || "Error al agregar el turno");
+        return;
+      }
+      alert("Turno agregado");
+      setModalNuevoTurnoAbierto(false);
+      cargarTurnos();
+    } catch (err) {
+      console.error("No se pudo conectar con el servidor");
+    }
+  }
 
   const irMesAnterior = () => {
     if (mesActual === 0) {
@@ -71,32 +96,29 @@ export default function CalendarioPage() {
     cargarMarcados()
   }, [mesActual, anioActual])
 
-  useEffect(() => {
-    async function cargarTurnos() {
-      try {
-        const response = await fetch(
-          `https://tu-backend.com/api/turnos?mes=${mesActual}&anio=${anioActual}`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        )
-        if (!response.ok) throw new Error()
-        const data = await response.json()
-        setProximosTurnos(data)
-        setErrorTurnos(false)
-      } catch {
-        setProximosTurnos([])
-        setErrorTurnos(true)
-      }
+  async function cargarTurnos() {
+    try {
+      const response = await fetch(
+        `https://tu-backend.com/api/turnos?mes=${mesActual}&anio=${anioActual}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      if (!response.ok) throw new Error()
+      const data = await response.json()
+      setProximosTurnos(data)
+      setErrorTurnos(false)
+    } catch {
+      setProximosTurnos([])
+      setErrorTurnos(true)
     }
+  }
+
+  useEffect(() => {
     cargarTurnos()
   }, [mesActual, anioActual])
 
-  const handleNuevoTurno = () => {
-    // TODO: Abrir modal o navegar a la página de agendar turno
-    return(
-      <AgregarTurnoModal handleChange={handleChange} handleSubmit={handleSubmit} />
-    )
-    console.log('Nuevo turno')
-  }
+ const handleNuevoTurno = () => {
+  setModalNuevoTurnoAbierto(true)
+}
 
   const handleDiaClick = (dia: number, mes: number, anio: number) => {
     // TODO: Mostrar detalle del día o abrir agenda
@@ -113,7 +135,7 @@ export default function CalendarioPage() {
     <div className="contenedor-calendario">
       <PageHeader
         titulo="Calendario"
-        subtitulo="Turnos agendadofs y dosis recomendadas de todo el grupo familiar."
+        subtitulo="Turnos agendados y dosis recomendadas de todo el grupo familiar."
       >
         <Button text="+ Nuevo turno" variant="celeste" onClick={handleNuevoTurno} />
       </PageHeader>
@@ -130,6 +152,13 @@ export default function CalendarioPage() {
             onDiaClick={handleDiaClick}
           />
         </div>
+
+     <AgregarTurnoModal
+      isOpen={modalNuevoTurnoAbierto}
+      onClose={() => setModalNuevoTurnoAbierto(false)}
+      handleChange={handleChange}
+      handleSubmit={handleSubmit}
+    />
 
         {/* Columna derecha: próximos turnos */}
         <div className="calendario-col-der">

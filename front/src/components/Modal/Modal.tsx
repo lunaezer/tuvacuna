@@ -31,14 +31,10 @@ export default function Modal({ isOpen, onClose, titulo, children }: ModalProps)
         className="modal-contenedor" 
         onClick={(e) => e.stopPropagation()} // Evita cerrar el modal al hacer clic adentro
       >
-        <div className="modal-header">
-          {titulo && <h2 className="modal-titulo">{titulo}</h2>}
-          <button className="modal-btn-cerrar" onClick={onClose} aria-label="Cerrar modal">
-            &times;
-          </button>
-        </div>
+        
 
         <div className="modal-contenido">
+          <button className="modal-btn-cerrar" onClick={onClose} aria-label="Cerrar modal">&times;</button>
           {children}
         </div>
       </div>

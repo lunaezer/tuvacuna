@@ -66,6 +66,8 @@
 
 .modal-contenido {
   padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Formularios dentro de Modales */

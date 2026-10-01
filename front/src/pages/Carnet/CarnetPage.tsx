@@ -7,7 +7,11 @@ import Button from '../../components/Button/Button'
 import Modal from '../../components/Modal/Modal'
 import type { Familiar, SeccionHistorial } from '../../types'
 import { useUsuario } from '../../context/UsuarioContext/useUsuario'
+import { familiaMock, carnetMock } from '../../mocks/carnetMock'
 import './CarnetPage.css'
+
+// Poner en false para usar el back real
+const USAR_MOCK = true
 
 export default function CarnetPage() {
   const { token, usuario } = useUsuario()
@@ -29,6 +33,10 @@ export default function CarnetPage() {
   })
 
   useEffect(() => {
+    if (USAR_MOCK) {
+      setFamiliares(familiaMock)
+      return
+    }
     async function cargarFamiliares() {
       const response = await fetch('https://tu-backend.com/api/familia', {
         headers: { Authorization: `Bearer ${token}` },
@@ -40,7 +48,13 @@ export default function CarnetPage() {
   }, [])
 
   async function cargarCarnet(idFamiliar?: string) {
+    if (USAR_MOCK) {
+      setSeccionesHistorial(carnetMock)
+      setCargando(false)
+      return
+    }
     if (!usuario) return
+    setCargando(true)
 
     const url = idFamiliar
       ? `https://tu-backend.com/api/carnet/${usuario.id}/${idFamiliar}`
@@ -55,7 +69,7 @@ export default function CarnetPage() {
   }
 
   useEffect(() => {
-    if (familiares.length === 0 || !usuario) return
+    if (familiares.length === 0 || (!usuario && !USAR_MOCK)) return
     const familiarSeleccionado = familiares[indexFamiliarActivo]
     if (!familiarSeleccionado) return
 

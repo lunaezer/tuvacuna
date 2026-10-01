@@ -55,6 +55,13 @@
   color: #d97706;
 }
 
+/* Variante Recomendada (Marrón / Ocre) */
+.carnet-card-icono--recomendada {
+  border: 2px solid #a16207;
+  background-color: #fffbeb;
+  color: #a16207;
+}
+
 /* Variante Aplicada (Verde) */
 .carnet-card-icono--aplicada {
   border: 2px solid #34d399;
@@ -79,10 +86,8 @@
 
 .carnet-card-subtitulo {
   font-size: 0.75rem;
-  font-weight: 600;
-  color: #94a3b8;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  font-weight: 400;
+  color: #0f172a;
 }
 
 /* Acciones y Badges */
@@ -94,12 +99,10 @@
 }
 
 .carnet-card-badge {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
   padding: 0.4rem 0.875rem;
   border-radius: 9999px;
-  text-transform: uppercase;
   white-space: nowrap;
 }
 
@@ -111,6 +114,11 @@
 .carnet-card-badge--pendiente {
   background-color: #fef3c7;
   color: #b45309;
+}
+
+.carnet-card-badge--recomendada {
+  background-color: #ffedd5;
+  color: #a16207;
 }
 
 .carnet-card-badge--aplicada {

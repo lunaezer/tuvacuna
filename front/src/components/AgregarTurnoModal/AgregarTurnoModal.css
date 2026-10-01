@@ -1,0 +1,30 @@
+.agregar-turno-titulo {
+  margin: 0 0 1rem;
+  font-size: 1.85rem;
+  font-weight: 800;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.agregar-turno-fila {
+  display: flex;
+  gap: 1rem;
+}
+
+.agregar-turno-fila > * {
+  flex: 1;
+}
+
+.agregar-turno-acciones {
+  display: flex;
+  gap: 1rem;
+ margin-top: 0.5rem; 
+}
+
+.agregar-turno-acciones > * {
+  flex: 1;
+}
+
+.agregar-turno-acciones .btn {
+  padding: 1.4375rem 1.5rem;
+}
