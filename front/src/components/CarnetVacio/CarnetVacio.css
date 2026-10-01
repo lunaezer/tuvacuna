@@ -1,0 +1,91 @@
+.carnet-vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 38rem;
+  margin: 1.5rem auto 0;
+  text-align: center;
+}
+
+.carnet-vacio-icono {
+  width: 6.5rem;
+  height: 6.5rem;
+  border-radius: 50%;
+  background-color: #d7edf5;
+  color: #0e7490;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carnet-vacio-titulo {
+  margin: 1.5rem 0 0.75rem;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.carnet-vacio-texto {
+  margin: 0 0 2rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: #475569;
+}
+
+.carnet-vacio-input {
+  display: none;
+}
+
+.carnet-vacio-subir {
+  width: 100%;
+  min-height: 12rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background-color: #f3f8fb;
+  border: 3px dashed #cbd5e1;
+  border-radius: 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.carnet-vacio-subir:hover {
+  border-color: #38bdf8;
+  background-color: #eaf5fb;
+}
+
+.carnet-vacio-camara {
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carnet-vacio-linea {
+  width: 100%;
+  margin: 2rem 0 1.5rem;
+  border: 0;
+  border-top: 1px solid #cbd5e1;
+}
+
+.carnet-vacio-manual {
+  width: 100%;
+  padding: 1.25rem;
+  background-color: #f8fbfd;
+  border: 1px solid #e2e8f0;
+  border-radius: 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+}

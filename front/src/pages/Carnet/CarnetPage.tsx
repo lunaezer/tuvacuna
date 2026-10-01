@@ -4,6 +4,7 @@ import PageHeader from '../../components/PageHeader/PageHeader'
 import FamilySelector from '../../components/FamilySelector/FamilySelector'
 import CarnetCard from '../../components/CarnetCard/CarnetCard'
 import Button from '../../components/Button/Button'
+import CarnetVacio from '../../components/CarnetVacio/CarnetVacio'
 import Modal from '../../components/Modal/Modal'
 import type { Familiar, SeccionHistorial } from '../../types'
 import { useUsuario } from '../../context/UsuarioContext/useUsuario'
@@ -53,12 +54,11 @@ export default function CarnetPage() {
       setCargando(false)
       return
     }
-    if (!usuario) return
     setCargando(true)
 
     const url = idFamiliar
-      ? `https://tu-backend.com/api/carnet/${usuario.id}/${idFamiliar}`
-      : `https://tu-backend.com/api/carnet/${usuario.id}`
+      ? `https://tu-backend.com/api/carnet/${idFamiliar}`
+      : `https://tu-backend.com/api/carnet`
 
     const response = await fetch(url, {
       headers: { Authorization: `Bearer ${token}` },
@@ -69,12 +69,28 @@ export default function CarnetPage() {
   }
 
   useEffect(() => {
-    if (familiares.length === 0 || (!usuario && !USAR_MOCK)) return
+    if (familiares.length === 0) return
     const familiarSeleccionado = familiares[indexFamiliarActivo]
     if (!familiarSeleccionado) return
 
     cargarCarnet(familiarSeleccionado.esVos ? undefined : familiarSeleccionado.id)
-  }, [indexFamiliarActivo, familiares, usuario])
+  }, [indexFamiliarActivo, familiares])
+
+  const handleSubirFoto = async (archivo: File) => {
+    if (USAR_MOCK) {
+      console.log('Foto seleccionada:', archivo.name)
+      return
+    }
+    const formData = new FormData()
+    formData.append('imagen', archivo)
+
+    await fetch(`https://tu-backend.com/api/carnet/foto`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}` },
+      body: formData,
+    })
+    await cargarCarnet()
+  }
 
   const handleAgendar = async (idDosis: string) => {
     await fetch('https://tu-backend.com/api/turnos', {
@@ -90,11 +106,11 @@ export default function CarnetPage() {
   const handleGuardarDosis = async (e?: FormEvent<HTMLFormElement>) => {
     e?.preventDefault()
     const familiarSeleccionado = familiares[indexFamiliarActivo]
-    if (!familiarSeleccionado || !usuario) return
+    if (!familiarSeleccionado) return
 
     const url = familiarSeleccionado.esVos
-      ? `https://tu-backend.com/api/carnet/${usuario.id}/dosis`
-      : `https://tu-backend.com/api/carnet/${usuario.id}/${familiarSeleccionado.id}/dosis`
+      ? `https://tu-backend.com/api/carnet/dosis`
+      : `https://tu-backend.com/api/carnet/${familiarSeleccionado.id}/dosis`
 
     await fetch(url, {
       method: 'POST',
@@ -119,14 +135,18 @@ export default function CarnetPage() {
     </svg>
   )
 
+  const familiarActivo = familiares[indexFamiliarActivo]
+  // La pantalla "Traé tu carnet" es solo para el carnet propio: los familiares todavía no se pueden cargar
+  const mostrarCarnetVacio =
+    !cargando && seccionesHistorial.length === 0 && Boolean(familiarActivo?.esVos)
+
   return (
     <div className="contenedor-carnet">
       {/* Header */}
       <PageHeader
         titulo="Carnet"
-        subtitulo="Consulta tu historial de vacunación y certificados."
       >
-        <div className="carnet-header-acciones">
+        {!mostrarCarnetVacio && <div className="carnet-header-acciones">
           <Button
             text="Subir foto del carnet"
             icon={CameraIcon}
@@ -141,7 +161,7 @@ export default function CarnetPage() {
             className="btn-cargar-dosis"
             onClick={() => setModalCargarDosisAbierto(true)}
           />
-        </div>
+        </div>}
       </PageHeader>
 
       {/* Selector de familiares */}
@@ -154,8 +174,15 @@ export default function CarnetPage() {
         onAgregar={() => console.log('Agregar familiar')}
       />
 
+      {mostrarCarnetVacio && (
+        <CarnetVacio
+          onSubirFoto={handleSubirFoto}
+          onCargarManual={() => setModalCargarDosisAbierto(true)}
+        />
+      )}
+
       {/* Línea de tiempo */}
-      <div className="carnet-timeline">
+      {!mostrarCarnetVacio && <div className="carnet-timeline">
         <div className="carnet-timeline-linea" />
 
         {cargando ? (
@@ -192,7 +219,7 @@ export default function CarnetPage() {
             </div>
           ))
         )}
-      </div>
+      </div>}
 
       {/* PopUp 1: Cargar Dosis */}
       <Modal

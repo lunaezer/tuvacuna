@@ -34,7 +34,7 @@ POST /api/auth/login
 GET /api/usuario/me
   → { id, nombre }
 ```
-Dado un token, devuelve el id y el nombre de la cuenta dueña de ese token. Se usa en dos momentos: (1) justo después de loguearse/registrarse, para tener el nombre a mano en el frontend, y (2) al recargar la página, para recuperar la sesión sin volver a pedir usuario/contraseña (el token persiste en `sessionStorage`, pero el estado de React se pierde en cada refresh). El `id` hace falta porque los endpoints de Carnet (`/api/carnet/:id`, `/api/carnet/:id/:idFamiliar`) lo necesitan explícito en la URL — el token identifica la sesión, pero no alcanza para armar la ruta cuando además hay que pasar el id de un familiar.
+Dado un token, devuelve el id y el nombre de la cuenta dueña de ese token. Se usa en dos momentos: (1) justo después de loguearse/registrarse, para tener el nombre a mano en el frontend, y (2) al recargar la página, para recuperar la sesión sin volver a pedir usuario/contraseña (el token persiste en `sessionStorage`, pero el estado de React se pierde en cada refresh). Los endpoints de Carnet ya no necesitan el `id` en la URL: identifican la cuenta por el token.
 
 ---
 
@@ -89,38 +89,38 @@ Dejo de poder ver a esa persona (borro el vínculo que yo tengo hacia ella).
 El carnet no es solo el historial de dosis aplicadas: también incluye datos del perfil (fecha de nacimiento, sexo, condiciones) que el back cruza contra el Calendario Nacional de Vacunación para calcular qué dosis corresponden (eso arma el grupo "PENDIENTES").
 
 ```
-GET /api/carnet/:id
+GET /api/carnet
   → SeccionHistorial[]   // { grupo, esPendiente, dosis: Dosis[] }
 ```
-Mi propio carnet: perfil + historial de dosis aplicadas + pendientes calculadas.
+Mi propio carnet (la cuenta se saca del token, no va id en la URL): perfil + historial de dosis aplicadas + pendientes calculadas.
 
 ```
-GET /api/carnet/:id/:idFamiliar
+GET /api/carnet/:idFamiliar
   → SeccionHistorial[]
 ```
-El carnet de un familiar, visto desde mi cuenta (`:id`). El back valida que `:id` tenga un vínculo aceptado hacia `:idFamiliar` (ver sección Familia) antes de devolver nada.
+El carnet de un familiar, visto desde mi cuenta (la que identifica el token). El back valida que mi cuenta tenga un vínculo aceptado hacia `:idFamiliar` (ver sección Familia) antes de devolver nada.
 
 ```
-POST /api/carnet/:id/dosis
+POST /api/carnet/dosis
   body: { nombreVacuna, fecha, lugar }
   → Dosis
 ```
 Cargo a mano una vacuna que ya me di (no viene de un catálogo, se tipea). Dispara el modal "Cargar dosis" de `CarnetPage`.
 
 ```
-POST /api/carnet/:id/:idFamiliar/dosis
+POST /api/carnet/:idFamiliar/dosis
 ```
 Igual al anterior, pero cargando una dosis para un familiar sobre el que tengo permiso.
 
 ```
-POST /api/carnet/:id/foto
+POST /api/carnet/foto
   body: multipart (imagen: jpg/png/pdf, máx 5MB)
   → { url }
 ```
 Sube la foto del carnet físico. Por ahora solo se guarda — el análisis automático de la imagen (leer las vacunas de la foto) queda para más adelante.
 
 ```
-POST /api/carnet/:id/:idFamiliar/foto
+POST /api/carnet/:idFamiliar/foto
 ```
 Igual al anterior, para un familiar.
 

@@ -71,9 +71,12 @@ const carnetMaru: SeccionHistorial[] = [
   },
 ]
 
+// Poner en true para ver la pantalla "Traé tu carnet"
+const YO_SIN_VACUNAS = true
+
 // Clave: id del familiar, o 'yo' para el carnet propio
 export const carnetsMock: Record<string, SeccionHistorial[]> = {
-  yo: carnetPropio,
+  yo: YO_SIN_VACUNAS ? [] : carnetPropio,
   '2': carnetTomi,
   '3': carnetMaru,
 }
