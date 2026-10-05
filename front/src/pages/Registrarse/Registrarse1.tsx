@@ -98,7 +98,7 @@ const handleAddPaciente = () => {
         if (value !== null) body.append(key, value as string | Blob);
       });
 
-      const response = await fetch("https://tu-backend.com/api/registro", {
+      const response = await fetch("https://tu-backend.com/api/auth/registro", {
         method: "POST",
         body,
       });

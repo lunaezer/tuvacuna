@@ -109,8 +109,8 @@ export default function CarnetPage() {
     if (!familiarSeleccionado) return
 
     const url = familiarSeleccionado.esVos
-      ? `https://tu-backend.com/api/carnet/dosis`
-      : `https://tu-backend.com/api/carnet/${familiarSeleccionado.id}/dosis`
+      ? `https://tu-backend.com/api/carnet`
+      : `https://tu-backend.com/api/carnet/${familiarSeleccionado.id}`
 
     await fetch(url, {
       method: 'POST',

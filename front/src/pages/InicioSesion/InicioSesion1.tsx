@@ -30,7 +30,7 @@ export default function InicioSesion1() {
         setError("");
 
         try {
-            const response = await fetch("https://tu-backend.com/api/login", {
+            const response = await fetch("https://tu-backend.com/api/auth/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(form),
