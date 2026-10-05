@@ -10,6 +10,7 @@ import type { Familiar, SeccionHistorial } from '../../types'
 import { useUsuario } from '../../context/UsuarioContext/useUsuario'
 import { familiaMock, carnetsMock } from '../../mocks/carnetMock'
 import './CarnetPage.css'
+import { API_URL } from "../../config";
 
 // Poner en false para usar el back real
 const USAR_MOCK = true
@@ -39,7 +40,7 @@ export default function CarnetPage() {
       return
     }
     async function cargarFamiliares() {
-      const response = await fetch('https://tu-backend.com/api/familia', {
+      const response = await fetch(`${API_URL}/api/familia`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       const data = await response.json()
@@ -57,8 +58,8 @@ export default function CarnetPage() {
     setCargando(true)
 
     const url = idFamiliar
-      ? `https://tu-backend.com/api/carnet/${idFamiliar}`
-      : `https://tu-backend.com/api/carnet`
+      ? `${API_URL}/api/carnet/${idFamiliar}`
+      : `${API_URL}/api/carnet`
 
     const response = await fetch(url, {
       headers: { Authorization: `Bearer ${token}` },
@@ -84,7 +85,7 @@ export default function CarnetPage() {
     const formData = new FormData()
     formData.append('imagen', archivo)
 
-    await fetch(`https://tu-backend.com/api/carnet/foto`, {
+    await fetch(`${API_URL}/api/carnet/foto`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}` },
       body: formData,
@@ -93,7 +94,7 @@ export default function CarnetPage() {
   }
 
   const handleAgendar = async (idDosis: string) => {
-    await fetch('https://tu-backend.com/api/turnos', {
+    await fetch(`${API_URL}/api/turnos`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -109,8 +110,8 @@ export default function CarnetPage() {
     if (!familiarSeleccionado) return
 
     const url = familiarSeleccionado.esVos
-      ? `https://tu-backend.com/api/carnet`
-      : `https://tu-backend.com/api/carnet/${familiarSeleccionado.id}`
+      ? `${API_URL}/api/carnet`
+      : `${API_URL}/api/carnet/${familiarSeleccionado.id}`
 
     await fetch(url, {
       method: 'POST',

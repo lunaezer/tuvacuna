@@ -100,41 +100,6 @@
   text-decoration: underline;
 }
 
-/* Selector de perfil (paciente / medico) */
-
-.registro-perfil-label {
-  text-align: center;
-  font-weight: 600;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-}
-
-.registro-perfil-toggle {
-  display: flex;
-  gap: 0.75rem;
-}
-
-.btn.registro-perfil-btn {
-  flex: 1;
-  background-color: var(--card-bg-light);
-  color: var(--text-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius-md);
-  font-weight: 700;
-  box-shadow: none;
-}
-
-.btn.registro-perfil-btn:hover {
-  transform: none;
-  border-color: var(--primary-cyan);
-}
-
-.btn.registro-perfil-btn.is-active {
-  background-color: var(--sidebar-bg);
-  color: #ffffff;
-  border-color: var(--sidebar-bg);
-}
-
 /* Carnet: caja de subida de foto */
 
 .registro-upload-box {

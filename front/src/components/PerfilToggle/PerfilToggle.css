@@ -1,0 +1,35 @@
+/* Selector de perfil (paciente / medico), usado en registro y login */
+
+.perfil-label {
+  text-align: center;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.perfil-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.btn.perfil-btn {
+  flex: 1;
+  background-color: var(--card-bg-light);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  font-weight: 700;
+  box-shadow: none;
+}
+
+.btn.perfil-btn:hover {
+  transform: none;
+  border-color: var(--primary-cyan);
+}
+
+.btn.perfil-btn.is-active {
+  background-color: var(--sidebar-bg);
+  color: #ffffff;
+  border-color: var(--sidebar-bg);
+}

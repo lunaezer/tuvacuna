@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { data, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import Registrarse1Form from "../../components/RegistrarseForm1/RegistrarseForm1";
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import "./Registrarse1.css";
 import RegistrarseForm3Medico from "../../components/RegistrarseForm3Medico/RegistrarseForm3Medico";
 import { useUsuario } from "../../context/UsuarioContext/useUsuario";
+import { API_URL } from "../../config";
 
 const PANEL_CONTENT: Record<number, { badge: string; title: string; text: string }> = {
   1: {
@@ -45,12 +46,15 @@ function Registrarse1() {
     condiciones: "",
     matricula: "",
     especialidad: "",
-    carnetPhoto: null,
     institucion: "",
-    pacientes: [],
   });
 
-const [pacienteInput, setPacienteInput] = useState("");
+  const [error, setError] = useState("");
+
+  // Paso 3
+  const [carnetPhoto, setCarnetPhoto] = useState<File | null>(null);
+  const [pacientes, setPacientes] = useState<string[]>([]);
+  const [pacienteInput, setPacienteInput] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement >) => {
     const { name, value } = e.target;
@@ -64,23 +68,19 @@ const [pacienteInput, setPacienteInput] = useState("");
 };
 
 const handleAddPaciente = () => {
-  if (!pacienteInput) return;
-  setFormData((prev) => ({
-    ...prev,
-    pacientes: [...prev.pacientes, pacienteInput],
-  }));
+  const email = pacienteInput.trim();
+  if (!email || pacientes.includes(email)) return;
+  setPacientes((prev) => [...prev, email]);
   setPacienteInput("");
 };
 
   const handleNextStep = (e: React.FormEvent) => {
     e.preventDefault();
     setStep((s) => s + 1);
-    console.log(formData)
   };
-  const goNext = () => setStep((s) => s + 1);
 
   const navigate = useNavigate();
-  const { login } = useUsuario();
+  const { login, token } = useUsuario();
 
   const goBack = () => {
   if (step === 1) {
@@ -89,33 +89,75 @@ const handleAddPaciente = () => {
     setStep((s) => s - 1);
   }
 };
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleCrearCuenta = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
+
+    const body = {
+      rol: formData.profile,
+      nombre: formData.name,
+      apellido: formData.surname,
+      mail: formData.email,
+      dni: formData.id,
+      password: formData.password,
+      fecha_de_nacimiento: formData.birthDate,
+      sexo: formData.sex,
+      obra_social: formData.obraSocial,
+      condiciones: formData.condiciones,
+      matricula: formData.matricula,
+      especialidad: formData.especialidad,
+      institucion: formData.institucion,
+    };
 
     try {
-      const body = new FormData();
-       Object.entries(formData).forEach(([key, value]) => {
-        if (value !== null) body.append(key, value as string | Blob);
-      });
-
-      const response = await fetch("https://tu-backend.com/api/auth/registro", {
+      const response = await fetch(`${API_URL}/api/auth/registro`, {
         method: "POST",
-        body,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        console.error(data.message || "Error al registrar");
+        setError(data.mensaje || data.message || "Error al registrar");
         return;
       }
 
-      alert("Registro exitoso");
       await login(data.token);
-      navigate("/panel")
-    } catch (err) {
-      console.error("No se pudo conectar con el servidor");
-      
+      setStep(3);
+    } catch {
+      setError("No se pudo conectar con el servidor");
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+
+    const body = new FormData();
+    if (formData.profile === "paciente") {
+      if (carnetPhoto) body.append("carnetPhoto", carnetPhoto);
+    } else {
+      pacientes.forEach((p) => body.append("pacientes", p));
+    }
+
+    try {
+      // TODO: reemplazar por el endpoint real del paso 3
+      const response = await fetch(`${API_URL}/api/ENDPOINT_PASO_3`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body,
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        setError(data.mensaje || data.message || "Error al guardar");
+        return;
+      }
+
+      navigate("/panel");
+    } catch {
+      setError("No se pudo conectar con el servidor");
     }
   };
 
@@ -166,14 +208,16 @@ const handleAddPaciente = () => {
             formData={formData}
             setFormData={setFormData}
             handleChange={handleChange}
-            handleSubmit={handleNextStep}
+            handleSubmit={handleCrearCuenta}
           />
         )}
 
+        {error && <p className="registro-error">{error}</p>}
+
         {step === 3 && formData.profile === "paciente" && (
           <RegistrarseForm3Paciente
-            formData={formData}
-            setFormData={setFormData}
+            carnetPhoto={carnetPhoto}
+            setCarnetPhoto={setCarnetPhoto}
             handleSubmit={handleSubmit}
           />
         )}
@@ -183,7 +227,7 @@ const handleAddPaciente = () => {
             pacienteInput={pacienteInput}
             handlePacienteInputChange={handlePacienteInputChange}
             handleAddPaciente={handleAddPaciente}
-            pacientes={formData.pacientes}
+            pacientes={pacientes}
             handleSubmit={handleSubmit}
           />
         )}

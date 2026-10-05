@@ -5,6 +5,8 @@ import Button from "../../components/Button/Button";
 import "./InicioSesion1.css";
 import { useUsuario } from "../../context/UsuarioContext/useUsuario";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../../config";
+import PerfilToggle, { type Perfil } from "../../components/PerfilToggle/PerfilToggle";
 
 const CALENDARIO_ITEMS = [
     { edad: "Recien nacido", vacunas: "BCG · Hepatitis B" },
@@ -15,7 +17,11 @@ const CALENDARIO_ITEMS = [
 ];
 
 export default function InicioSesion1() {
-    const [form, setForm] = useState({ email: "", password: "" });
+    const [form, setForm] = useState<{ email: string; password: string; rol: Perfil }>({
+        email: "",
+        password: "",
+        rol: "paciente",
+    });
     const [error, setError] = useState("");
     const { login } = useUsuario();
     const navigate = useNavigate();
@@ -30,16 +36,20 @@ export default function InicioSesion1() {
         setError("");
 
         try {
-            const response = await fetch("https://tu-backend.com/api/auth/login", {
+            const response = await fetch(`${API_URL}/api/auth/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(form),
+                body: JSON.stringify({
+                    mail: form.email,
+                    password: form.password,
+                    rol: form.rol,
+                }),
             });
 
             const data = await response.json();
 
             if (!response.ok) {
-                setError(data.message || "Usuario o contraseña incorrectos");
+                setError(data.mensaje || data.message || "Usuario o contraseña incorrectos");
                 return;
             }
 
@@ -86,6 +96,11 @@ export default function InicioSesion1() {
                             value={form.password}
                             onChange={handleChange}
                             required
+                        />
+
+                        <PerfilToggle
+                            value={form.rol}
+                            onChange={(rol) => setForm((prev) => ({ ...prev, rol }))}
                         />
 
                         {error && <p className="login-error">{error}</p>}

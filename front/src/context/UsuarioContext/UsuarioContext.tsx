@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState, type ReactNode } from "react";
+import { API_URL } from "../../config";
 
 interface Usuario {
     id: string;
@@ -21,7 +22,7 @@ export const UsuarioProvider = ({ children }: { children: ReactNode }) => {
     const [cargando, setCargando] = useState(true);
 
     async function obtenerUsuario(token: string) {
-        const response = await fetch("https://tu-backend.com/api/usuario/me", {
+        const response = await fetch(`${API_URL}/api/usuario/me`, {
             headers: { Authorization: `Bearer ${token}` },
         });
 

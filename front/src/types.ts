@@ -59,10 +59,7 @@ export interface RegistroData {
     condiciones: string;
     matricula: string;
     especialidad: string;
-    carnetPhoto: File | null;
     institucion: string;
-    pacientes: string[];
-
 }
 
 export interface formDataTurno {

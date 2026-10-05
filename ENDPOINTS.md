@@ -11,24 +11,32 @@ Convención general: salvo `/api/auth/*`, todos los endpoints requieren el heade
 Registro e inicio de sesión. Son los únicos endpoints que no requieren token, porque son los que lo generan.
 
 ```
-POST /api/auth/registro/paciente
-  body: { name, surname, email, id, password, birthDate, sex, obraSocial, condiciones, carnetPhoto? } (multipart)
+POST /api/auth/registro
+  body (JSON): {
+    rol: "paciente" | "medico",
+    nombre, apellido, mail, dni, password,
+    // paciente:
+    fecha_de_nacimiento, sexo, obra_social, condiciones,
+    // medico:
+    matricula, especialidad, institucion
+  }
   → { token, usuario: { nombre } }
 ```
-Registra una cuenta de paciente. `carnetPhoto` es opcional — se puede subir después desde Carnet.
+Crea la cuenta (paso 2 del registro). El campo `rol` decide si se registra un paciente o un médico. Devuelve el `token`, así que el front queda logueado y pasa al paso 3. Errores: `400` faltan datos u `rol` inválido, `409` ya existe el DNI/mail/matrícula, con `{ mensaje }`.
 
 ```
-POST /api/auth/registro/medico
-  body: { name, surname, email, id, password, matricula, especialidad, institucion, pacientes: string[] }
-  → { token, usuario: { nombre } }
+POST /api/auth/registro/completar        (nombre provisorio, requiere token)
+  paciente → body (multipart): { carnetPhoto? }
+  medico   → body (JSON):      { pacientes: string[] }   // emails
 ```
-Registra una cuenta de médico.
+Paso 3 del registro. Se hace con la cuenta ya creada. `carnetPhoto` es opcional: se puede subir después desde Carnet.
 
 ```
 POST /api/auth/login
-  body: { email, password }
+  body: { mail, password, rol: "paciente" | "medico" }
   → { token }
 ```
+El `rol` es el perfil elegido en la pantalla de login (el mismo selector que en el registro). Error `401` con `{ mensaje }` si el mail o la contraseña no coinciden.
 
 ```
 GET /api/usuario/me

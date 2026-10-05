@@ -8,6 +8,7 @@ import { useUsuario } from '../../context/UsuarioContext/useUsuario'
 import './CalendarioPage.css'
 import type { formDataTurno } from '../../types'
 import AgregarTurnoModal from '../../components/AgregarTurnoModal/AgregarTurnoModal'
+import { API_URL } from "../../config";
 
 export default function CalendarioPage() {
   const { token } = useUsuario()
@@ -38,7 +39,7 @@ export default function CalendarioPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch("https://tu-backend.com/api/turnos", {
+      const response = await fetch(`${API_URL}/api/turnos`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -83,7 +84,7 @@ export default function CalendarioPage() {
     async function cargarMarcados() {
       try {
         const response = await fetch(
-          `https://tu-backend.com/api/calendario/marcados?mes=${mesActual}&anio=${anioActual}`,
+          `${API_URL}/api/calendario/marcados?mes=${mesActual}&anio=${anioActual}`,
           { headers: { Authorization: `Bearer ${token}` } }
         )
         if (!response.ok) throw new Error()
@@ -99,7 +100,7 @@ export default function CalendarioPage() {
   async function cargarTurnos() {
     try {
       const response = await fetch(
-        `https://tu-backend.com/api/turnos?mes=${mesActual}&anio=${anioActual}`,
+        `${API_URL}/api/turnos?mes=${mesActual}&anio=${anioActual}`,
         { headers: { Authorization: `Bearer ${token}` } }
       )
       if (!response.ok) throw new Error()

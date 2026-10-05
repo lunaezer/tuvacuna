@@ -1,26 +1,25 @@
 import { useState } from "react";
 import type React from "react";
 import Button from "../Button/Button";
-import type { RegistroData } from "../../types";
 
 interface RegistrarseForm3PacienteProps {
-  formData: RegistroData;
-  setFormData: React.Dispatch<React.SetStateAction<RegistroData>>;
+  carnetPhoto: File | null;
+  setCarnetPhoto: (file: File | null) => void;
   handleSubmit: (e: React.FormEvent) => void;
 }
 
 export default function RegistrarseForm3Paciente({
-  formData,
-  setFormData,
+  carnetPhoto,
+  setCarnetPhoto,
   handleSubmit,
 }: RegistrarseForm3PacienteProps) {
   const [modoManual, setModoManual] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData((prev) => ({ ...prev, carnetPhoto: e.target.files?.[0] ?? null }));
+    setCarnetPhoto(e.target.files?.[0] ?? null);
   };
 
-  const puedeEnviar = formData.carnetPhoto !== null || modoManual;
+  const puedeEnviar = carnetPhoto !== null || modoManual;
 
   return (
     <div className="registro-form-wrapper">
@@ -48,8 +47,8 @@ export default function RegistrarseForm3Paciente({
           <span>Subi una foto de tu carnet</span>
         </label>
 
-        {formData.carnetPhoto && (
-          <p className="registro-file-name">{formData.carnetPhoto.name}</p>
+        {carnetPhoto && (
+          <p className="registro-file-name">{carnetPhoto.name}</p>
         )}
 
         <Button

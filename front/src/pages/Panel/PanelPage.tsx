@@ -6,6 +6,7 @@ import Cards from '../../components/Cards/Cards'
 import './PanelPage.css'
 import type { Familiar } from '../../types'
 import { useUsuario } from '../../context/UsuarioContext/useUsuario'
+import { API_URL } from "../../config";
 
 export default function PanelPage() {
   const [familiarActivo, setFamiliarActivo] = useState(0)
@@ -16,7 +17,7 @@ export default function PanelPage() {
 
   useEffect(() => {
     async function cargarFamiliares() {
-    const response = await fetch("https://tu-backend.com/api/familia", {
+    const response = await fetch(`${API_URL}/api/familia`, {
       headers: { Authorization: `Bearer ${token}` },
     })
     const data = await response.json()
