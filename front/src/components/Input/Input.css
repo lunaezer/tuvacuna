@@ -39,3 +39,25 @@
     font-size: 1.1rem;
     height: 4rem;
 }
+
+.input--error,
+.input--error:focus {
+    border: 2px solid #c62828;
+    background-color: #f1e0e0;
+    box-shadow: none;
+}
+
+.input-error {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #c62828;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.input-error svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    flex-shrink: 0;
+}

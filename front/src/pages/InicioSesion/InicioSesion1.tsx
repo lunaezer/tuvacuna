@@ -22,7 +22,12 @@ export default function InicioSesion1() {
         password: "",
         rol: "paciente",
     });
-    const [error, setError] = useState("");
+    const [errores, setErrores] = useState<{
+        email?: string;
+        password?: string;
+        credenciales?: boolean;
+        general?: string;
+    }>({});
     const { login } = useUsuario();
     const navigate = useNavigate();
 
@@ -33,7 +38,15 @@ export default function InicioSesion1() {
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        setError("");
+        setErrores({});
+
+        const nuevos: typeof errores = {};
+        if (!/^\S+@\S+\.\S+$/.test(form.email)) nuevos.email = "Correo electronico no valido";
+        if (!form.password) nuevos.password = "Contraseña no valida";
+        if (nuevos.email || nuevos.password) {
+            setErrores(nuevos);
+            return;
+        }
 
         try {
             const response = await fetch(`${API_URL}/api/auth/login`, {
@@ -49,7 +62,11 @@ export default function InicioSesion1() {
             const data = await response.json();
 
             if (!response.ok) {
-                setError(data.mensaje || data.message || "Usuario o contraseña incorrectos");
+                if (response.status === 401) {
+                    setErrores({ credenciales: true });
+                } else {
+                    setErrores({ general: data.mensaje || data.message || "Ocurrió un error, probá de nuevo" });
+                }
                 return;
             }
 
@@ -59,7 +76,7 @@ export default function InicioSesion1() {
 // acá después: redirigir al panel, ej. navigate("/panel")
             
         } catch (err) {
-            setError("No se pudo conectar con el servidor");
+            setErrores({ general: "No se pudo conectar con el servidor" });
         }
     }
 
@@ -71,12 +88,12 @@ export default function InicioSesion1() {
                 </Link>
 
                 <div className="login-form-wrapper">
-                    <h1 className="login-title">Hola de nuevo.</h1>
+                    <h1 className="login-title">¡Hola de nuevo!</h1>
                     <p className="login-subtitle">
                         Ingresá para ver tu carnet y el de tu grupo familiar.
                     </p>
 
-                    <form className="login-form" onSubmit={handleSubmit}>
+                    <form className="login-form" onSubmit={handleSubmit} noValidate>
                         <Input
                             type="email"
                             placeholder="nombre@correo.com"
@@ -86,6 +103,7 @@ export default function InicioSesion1() {
                             value={form.email}
                             onChange={handleChange}
                             required
+                            error={errores.email || errores.credenciales}
                         />
                         <Input
                             type="password"
@@ -96,6 +114,7 @@ export default function InicioSesion1() {
                             value={form.password}
                             onChange={handleChange}
                             required
+                            error={errores.password || (errores.credenciales ? "Mail o contraseña incorrectos" : undefined)}
                         />
 
                         <PerfilToggle
@@ -103,7 +122,7 @@ export default function InicioSesion1() {
                             onChange={(rol) => setForm((prev) => ({ ...prev, rol }))}
                         />
 
-                        {error && <p className="login-error">{error}</p>}
+                        {errores.general && <p className="login-error">{errores.general}</p>}
 
                         <Button variant="big">Ingresar →</Button>
 
