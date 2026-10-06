@@ -18,6 +18,7 @@ interface SidebarProps {
 function Sidebar({ activeItem = 'Panel', className = '' }: SidebarProps) {
 
   const { usuario } = useUsuario()
+  const { logout } = useUsuario()
   return (
     <aside className={`sidebar ${className}`.trim()}>
       <SidebarHeader to="/">
@@ -46,7 +47,7 @@ function Sidebar({ activeItem = 'Panel', className = '' }: SidebarProps) {
       </nav>
 
       <SidebarFooter >
-        <SidebarItem text="Cerrar Sesion"/>
+        <SidebarItem text="Cerrar Sesion" onClick={logout} to="/inicio-sesion"/>
         <SidebarItem text={usuario?.nombre}/>
       </SidebarFooter>
       

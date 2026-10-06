@@ -5,6 +5,7 @@ import FamilySelector from '../../components/FamilySelector/FamilySelector'
 import CarnetCard from '../../components/CarnetCard/CarnetCard'
 import Button from '../../components/Button/Button'
 import CarnetVacio from '../../components/CarnetVacio/CarnetVacio'
+import { useFamilia } from '../../hooks/useFamilia'
 import Modal from '../../components/Modal/Modal'
 import type { Familiar, SeccionHistorial } from '../../types'
 import { useUsuario } from '../../context/UsuarioContext/useUsuario'
@@ -13,12 +14,15 @@ import './CarnetPage.css'
 import { API_URL } from "../../config";
 
 // Poner en false para usar el back real
-const USAR_MOCK = true
+const USAR_MOCK = false
 
 export default function CarnetPage() {
   const { token, usuario } = useUsuario()
 
-  const [familiares, setFamiliares] = useState<Familiar[]>([])
+  const { familiares: familiaReal, cargandoFamiliares, abrirModalAgregar } = useFamilia()
+  const familiares: Familiar[] = USAR_MOCK ? familiaMock : familiaReal
+  // Terminó de cargar la lista y no vino nadie (ni vos): no hay carnet que pedir
+  const sinFamiliares = !USAR_MOCK && !cargandoFamiliares && familiares.length === 0
   const [indexFamiliarActivo, setIndexFamiliarActivo] = useState(0)
   const [seccionesHistorial, setSeccionesHistorial] = useState<SeccionHistorial[]>([])
   const [cargando, setCargando] = useState(true)
@@ -33,21 +37,6 @@ export default function CarnetPage() {
     fecha: '',
     lugar: '',
   })
-
-  useEffect(() => {
-    if (USAR_MOCK) {
-      setFamiliares(familiaMock)
-      return
-    }
-    async function cargarFamiliares() {
-      const response = await fetch(`${API_URL}/api/familia`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      const data = await response.json()
-      setFamiliares(data)
-    }
-    cargarFamiliares()
-  }, [])
 
   async function cargarCarnet(idFamiliar?: string) {
     if (USAR_MOCK) {
@@ -148,13 +137,7 @@ export default function CarnetPage() {
         titulo="Carnet"
       >
         {!mostrarCarnetVacio && <div className="carnet-header-acciones">
-          <Button
-            text="Subir foto del carnet"
-            icon={CameraIcon}
-            variant="secondary"
-            className="btn-subir-foto"
-            onClick={() => setModalSubirFotoAbierto(true)}
-          />
+          
           <Button
             text="Cargar dosis"
             icon={<span>+</span>}
@@ -172,7 +155,7 @@ export default function CarnetPage() {
         )}
         activoIndex={indexFamiliarActivo}
         onSelect={setIndexFamiliarActivo}
-        onAgregar={() => console.log('Agregar familiar')}
+        onAgregar={abrirModalAgregar}
       />
 
       {mostrarCarnetVacio && (
@@ -184,9 +167,15 @@ export default function CarnetPage() {
 
       {/* Línea de tiempo */}
       {!mostrarCarnetVacio && <div className="carnet-timeline">
-        <div className="carnet-timeline-linea" />
+        {!cargando && !sinFamiliares && seccionesHistorial.length > 0 && (
+          <div className="carnet-timeline-linea" />
+        )}
 
-        {cargando ? (
+        {sinFamiliares ? (
+          <div className="carnet-vacio">
+            <p>No pudimos cargar tus datos. Probá de nuevo más tarde.</p>
+          </div>
+        ) : cargando ? (
           <p className="carnet-cargando">Cargando información del carnet...</p>
         ) : seccionesHistorial.length === 0 ? (
           <div className="carnet-vacio">

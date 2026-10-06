@@ -1,4 +1,4 @@
-import { NavLink, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import './Navbar.css'
 
 export default function Navbar() {
@@ -7,19 +7,11 @@ export default function Navbar() {
       <nav className="barra-navegacion">
         <Link to="/" className="logo-marca-navegacion">LOGO TuVacuna</Link>
         <div className="menu-enlaces-navegacion">
-          <NavLink to="/panel" className={({ isActive }) => `enlace-navegacion ${isActive ? 'activo' : ''}`}>
-            Panel
-          </NavLink>
-          <NavLink to="/mi-carnet" className={({ isActive }) => `enlace-navegacion ${isActive ? 'activo' : ''}`}>
-            Mi carnet
-          </NavLink>
-          <NavLink to="/centros" className={({ isActive }) => `enlace-navegacion ${isActive ? 'activo' : ''}`}>
-            Centros
-          </NavLink>
-          <NavLink to="/calendario" className={({ isActive }) => `enlace-navegacion ${isActive ? 'activo' : ''}`}>
-            Calendario
-          </NavLink>
+          <a href="#como-funciona" className="enlace-navegacion">Como funciona</a>
+          <a href="#funciones" className="enlace-navegacion">Funciones</a>
+          <a href="#medicos" className="enlace-navegacion">Medicos</a>
         </div>
+        <span className="barra-navegacion-espacio" aria-hidden="true" />
       </nav>
     </header>
   )

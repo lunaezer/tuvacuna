@@ -1,30 +1,17 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import PageHeader from '../../components/PageHeader/PageHeader'
 import Button from '../../components/Button/Button'
 import FamilySelector from '../../components/FamilySelector/FamilySelector'
 import Cards from '../../components/Cards/Cards'
 import './PanelPage.css'
-import type { Familiar } from '../../types'
 import { useUsuario } from '../../context/UsuarioContext/useUsuario'
-import { API_URL } from "../../config";
+import { useFamilia } from '../../hooks/useFamilia'
 
 export default function PanelPage() {
   const [familiarActivo, setFamiliarActivo] = useState(0)
 
-  // Datos de ejemplo — después se reemplaza con datos reales
-  const [familiares, setFamiliares] = useState<Familiar[]>([])
-  const { token, usuario } = useUsuario()
-
-  useEffect(() => {
-    async function cargarFamiliares() {
-    const response = await fetch(`${API_URL}/api/familia`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-    const data = await response.json()
-    setFamiliares(data)
-  }
-  cargarFamiliares()
-  }, [] )
+  const { usuario } = useUsuario()
+  const { familiares, abrirModalAgregar } = useFamilia()
 
   return (
     <div className="contenedor-panel">
@@ -41,7 +28,7 @@ export default function PanelPage() {
         familiares={familiares}
         activoIndex={familiarActivo}
         onSelect={setFamiliarActivo}
-        onAgregar={() => console.log('Agregar familiar')} //funcion a modificar para agregar familiar
+        onAgregar={abrirModalAgregar}
       />
 
       {/* Grid de cards */}

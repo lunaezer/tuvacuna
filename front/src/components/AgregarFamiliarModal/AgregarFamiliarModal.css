@@ -1,0 +1,21 @@
+.agregar-familiar-titulo {
+  margin: 0 0 1rem;
+  font-size: 1.85rem;
+  font-weight: 800;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.agregar-familiar-acciones {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.agregar-familiar-acciones > * {
+  flex: 1;
+}
+
+.agregar-familiar-acciones .btn {
+  padding: 1.4375rem 1.5rem;
+}

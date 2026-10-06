@@ -6,7 +6,11 @@ export default function Footer() {
     <footer className="contenedor-pie-pagina">
       <div className="contenido-pie-pagina">
         <Link to="/" className="logo-pie-pagina">LOGO TuVacuna</Link>
-        <div className="texto-pie-pagina">Contactanos</div>
+        <p className="texto-pie-pagina">
+          Basado en el Calendario Nacional de Vacunación de la República Argentina.
+          <br />
+          TuVacuna no reemplaza la consulta ni la indicación de un profesional de la salud.
+        </p>
       </div>
     </footer>
   )

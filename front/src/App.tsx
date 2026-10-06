@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { UsuarioProvider } from './context/UsuarioContext/UsuarioContext'
+import { FamiliaProvider } from './context/FamiliaContext/FamiliaContext'
 import Navbar from './components/Navbar/Navbar'
 import Footer from './components/Footer/Footer'
 import DashboardLayout from './components/DashboardLayout/DashboardLayout'
@@ -80,9 +81,11 @@ function LayoutWrapper() {
 function App() {
   return (
     <UsuarioProvider>
-      <Router>
-        <LayoutWrapper />
-      </Router>
+      <FamiliaProvider>
+        <Router>
+          <LayoutWrapper />
+        </Router>
+      </FamiliaProvider>
     </UsuarioProvider>
   )
 }
