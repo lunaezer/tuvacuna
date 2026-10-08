@@ -15,7 +15,7 @@ interface SidebarProps {
   className?: string
 }
 
-function Sidebar({ activeItem = 'Panel', className = '' }: SidebarProps) {
+function Sidebar({ activeItem = 'Inicio', className = '' }: SidebarProps) {
 
   const { usuario } = useUsuario()
   const { logout } = useUsuario()
@@ -26,7 +26,7 @@ function Sidebar({ activeItem = 'Panel', className = '' }: SidebarProps) {
         </SidebarHeader>
 
       <nav className="sidebar-nav">
-        <SidebarItem text="Panel" to="/panel" active={activeItem === 'Panel'} >
+        <SidebarItem text="Inicio" to="/inicio" active={activeItem === 'Inicio'} >
           <img src={HomeLogoBlack} alt='HomeLogo' className='Logo' />
         </SidebarItem>
         <SidebarItem text="Mi carnet" to="/mi-carnet" active={activeItem === 'Mi carnet'}>

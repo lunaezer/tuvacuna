@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import type { FormEvent } from 'react'
 import PageHeader from '../../components/PageHeader/PageHeader'
 import FamilySelector from '../../components/FamilySelector/FamilySelector'
-import CarnetCard from '../../components/CarnetCard/CarnetCard'
+import CarnetTimeline from '../../components/CarnetTimeline/CarnetTimeline'
 import Button from '../../components/Button/Button'
 import CarnetVacio from '../../components/CarnetVacio/CarnetVacio'
 import { useFamilia } from '../../hooks/useFamilia'
@@ -166,50 +166,14 @@ export default function CarnetPage() {
       )}
 
       {/* Línea de tiempo */}
-      {!mostrarCarnetVacio && <div className="carnet-timeline">
-        {!cargando && !sinFamiliares && seccionesHistorial.length > 0 && (
-          <div className="carnet-timeline-linea" />
-        )}
-
-        {sinFamiliares ? (
-          <div className="carnet-vacio">
-            <p>No pudimos cargar tus datos. Probá de nuevo más tarde.</p>
-          </div>
-        ) : cargando ? (
-          <p className="carnet-cargando">Cargando información del carnet...</p>
-        ) : seccionesHistorial.length === 0 ? (
-          <div className="carnet-vacio">
-            <p>No hay dosis registradas para este familiar.</p>
-          </div>
-        ) : (
-          seccionesHistorial.map((seccion, index) => (
-            <div key={seccion.grupo || index} className="carnet-timeline-seccion">
-              <div className="carnet-timeline-nodo-header">
-                <div
-                  className={`carnet-timeline-nodo ${
-                    seccion.esPendiente ? 'carnet-timeline-nodo--pendientes' : ''
-                  }`}
-                />
-                <span className="carnet-timeline-titulo">{seccion.grupo}</span>
-              </div>
-
-              <div className="carnet-timeline-cards">
-                {seccion.dosis.map((dosis) => (
-                  <CarnetCard
-                    key={dosis.id}
-                    titulo={dosis.titulo}
-                    subtitulo={dosis.subtitulo}
-                    estado={dosis.estado}
-                    etiqueta={dosis.etiqueta}
-                    mostrarAgendar={dosis.mostrarAgendar}
-                    onAgendar={() => handleAgendar(dosis.id)}
-                  />
-                ))}
-              </div>
-            </div>
-          ))
-        )}
-      </div>}
+      {!mostrarCarnetVacio && (
+        <CarnetTimeline
+          secciones={seccionesHistorial}
+          cargando={cargando}
+          error={sinFamiliares ? 'No pudimos cargar tus datos. Probá de nuevo más tarde.' : undefined}
+          onAgendar={handleAgendar}
+        />
+      )}
 
       {/* PopUp 1: Cargar Dosis */}
       <Modal

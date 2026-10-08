@@ -18,3 +18,46 @@
   color: #64748b;
   margin-bottom: 32px;
 }
+
+.familia-invitaciones {
+  background: #ffffff;
+  border: 1px solid #fbbf24;
+  border-radius: 16px;
+  padding: 20px 28px;
+  margin-bottom: 32px;
+  width: 100%;
+  max-width: 60rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.familia-invitaciones-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.familia-invitaciones-titulo {
+  color: #0f172a;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.familia-invitaciones-badge {
+  background: #fef3c7;
+  color: #b45309;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 14px;
+  border-radius: 9999px;
+}
+
+.familia-invitaciones .invitacion-fila + .invitacion-fila {
+  border-top: 1px solid #e2e8f0;
+}
+
+.familia-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}

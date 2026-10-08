@@ -7,9 +7,10 @@ interface ModalProps {
   onClose?: () => void
   titulo?: string
   children?: ReactNode
+  className?: string
 }
 
-export default function Modal({ isOpen, onClose, titulo, children }: ModalProps) {
+export default function Modal({ isOpen, onClose, titulo, children, className = '' }: ModalProps) {
   // Cerrar el modal al presionar la tecla Escape
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -28,7 +29,7 @@ export default function Modal({ isOpen, onClose, titulo, children }: ModalProps)
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div 
-        className="modal-contenedor" 
+        className={`modal-contenedor ${className}`.trim()}
         onClick={(e) => e.stopPropagation()} // Evita cerrar el modal al hacer clic adentro
       >
         

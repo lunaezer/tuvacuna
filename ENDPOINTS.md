@@ -52,7 +52,7 @@ Modelo: cada persona tiene su propia cuenta. Agregar a alguien como familiar **n
 
 ```
 GET /api/familia
-  → Familiar[]   // { id, nombre, esVos, iniciales, colorBg }
+  → Familiar[]   // { id, nombre, esVos, iniciales, colorBg, edad }
 ```
 Lista de cuentas que yo agregué y que ya me aceptaron (a quienes puedo ver). Se llama cada vez que se toca el selector de familiares (`FamilySelector`).
 

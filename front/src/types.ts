@@ -1,4 +1,4 @@
-export type ButtonVariant = 'primary' | 'secondary' | 'celeste' | 'outline' | 'big' | 'medium' | 'perfil'
+export type ButtonVariant = 'primary' | 'secondary' | 'celeste' | 'outline' | 'big' | 'medium' | 'perfil' | 'aceptar' | 'rechazar'
 
 export type CardVariant = 'white' | 'dark'
 
@@ -8,6 +8,16 @@ export interface Familiar {
   esVos?: boolean
   iniciales?: string
   colorBg?: string
+  edad?: number
+}
+
+export type RolInvitacion = 'medico' | 'familiar'
+
+export interface Invitacion {
+  id: string
+  nombre: string
+  apellido: string
+  rol: RolInvitacion
 }
 
 export type EstadoDosis = 'atrasada' | 'pendiente' | 'aplicada' | 'recomendada'

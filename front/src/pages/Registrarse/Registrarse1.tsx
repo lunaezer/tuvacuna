@@ -155,7 +155,7 @@ const handleAddPaciente = () => {
         return;
       }
 
-      navigate("/panel");
+      navigate("/inicio");
     } catch {
       setError("No se pudo conectar con el servidor");
     }

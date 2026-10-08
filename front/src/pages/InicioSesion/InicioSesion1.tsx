@@ -72,8 +72,8 @@ export default function InicioSesion1() {
 
             console.log("Login correcto", data);
             await login(data.token);
-            navigate("/panel");
-// acá después: redirigir al panel, ej. navigate("/panel")
+            navigate("/inicio");
+// acá después: redirigir al inicio, ej. navigate("/inicio")
             
         } catch (err) {
             setErrores({ general: "No se pudo conectar con el servidor" });

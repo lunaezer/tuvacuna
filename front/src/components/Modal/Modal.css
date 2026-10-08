@@ -27,6 +27,16 @@
   flex-direction: column;
 }
 
+/* Variante grande (ej: carnet de un familiar) */
+.modal-contenedor--grande {
+  max-width: 64rem;
+  max-height: 90vh;
+}
+
+.modal-contenedor--grande .modal-contenido {
+  overflow-y: auto;
+}
+
 .modal-header {
   display: flex;
   align-items: center;

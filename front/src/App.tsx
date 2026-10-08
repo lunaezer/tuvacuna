@@ -6,7 +6,7 @@ import Footer from './components/Footer/Footer'
 import DashboardLayout from './components/DashboardLayout/DashboardLayout'
 
 import HomePage from './pages/Home/HomePage'
-import PanelPage from './pages/Panel/PanelPage'
+import InicioPage from './pages/Inicio/InicioPage'
 import CarnetPage from './pages/Carnet/CarnetPage'
 import CalendarioPage from './pages/Calendario/CalendarioPage'
 import CentrosPage from './pages/Centros/CentrosPage'
@@ -54,20 +54,20 @@ function LayoutWrapper() {
 
   // Mapeo automático de ruta a ítem activo en la Sidebar
   const mapaRutas: Record<string, string> = {
-    '/panel': 'Panel',
+    '/inicio': 'Inicio',
     '/mi-carnet': 'Mi carnet',
     '/calendario': 'Calendario',
     '/centros': 'Centros',
     '/familia': 'Familia',
     '/asistente': 'Asistente',
   }
-  const itemActivo = mapaRutas[location.pathname] || 'Panel'
+  const itemActivo = mapaRutas[location.pathname] || 'Inicio'
 
   // Para el resto de las páginas: Sidebar a la izquierda y contenido a la derecha (sin Navbar ni Footer)
   return (
     <DashboardLayout activeItem={itemActivo}>
       <Routes>
-        <Route path="/panel" element={<PanelPage />} />
+        <Route path="/inicio" element={<InicioPage />} />
         <Route path="/mi-carnet" element={<CarnetPage />} />
         <Route path="/calendario" element={<CalendarioPage />} />
         <Route path="/centros" element={<CentrosPage />} />

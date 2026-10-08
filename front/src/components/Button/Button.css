@@ -121,3 +121,26 @@
 .btn-perfil {
   height: 4rem;
 }
+
+/* Aceptar variant — dark solid, for use on light backgrounds */
+.btn-aceptar {
+  background-color: #0f172a;
+  color: #ffffff;
+}
+
+.btn-aceptar:hover {
+  background-color: #1e293b;
+  transform: translateY(-1px);
+}
+
+/* Rechazar variant — white with border, for use on light backgrounds */
+.btn-rechazar {
+  background-color: #ffffff;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+}
+
+.btn-rechazar:hover {
+  background-color: #f1f5f9;
+  transform: translateY(-1px);
+}
