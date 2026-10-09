@@ -1,4 +1,5 @@
 import Iniciales from '../Iniciales/Iniciales';
+import AgregarFamiliarBoton from '../AgregarFamiliarBoton/AgregarFamiliarBoton';
 import type { Familiar } from '../../types';
 import './FamilySelector.css';
 
@@ -34,11 +35,7 @@ function FamilySelector({ familiares = [], activoIndex = 0, onSelect, onAgregar 
         )
       })}
 
-      {onAgregar && (
-        <button className="family-pill family-pill-agregar" onClick={onAgregar}>
-          + Agregar familiar
-        </button>
-      )}
+      {onAgregar && <AgregarFamiliarBoton onClick={onAgregar} />}
     </div>
   );
 }

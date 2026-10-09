@@ -1,0 +1,61 @@
+/* Estilos del componente AgregarFamiliarBoton */
+.agregar-familiar-boton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--border-radius-pill);
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: 1px dashed var(--text-muted);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.agregar-familiar-boton:hover {
+  border-color: var(--primary-cyan);
+  color: var(--primary-cyan);
+  background: var(--primary-cyan-light);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Variante card (página Familia) */
+.agregar-familiar-boton--card {
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 2rem 1.5rem;
+  border: 2px dashed var(--text-muted);
+  border-radius: 1rem;
+  background: #ffffff;
+  white-space: normal;
+  text-align: center;
+}
+
+.agregar-familiar-boton-icono {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background: var(--primary-cyan-light);
+  border: 1px solid #e2e8f0;
+  color: var(--primary-cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.agregar-familiar-boton-titulo {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.agregar-familiar-boton-texto {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  max-width: 16rem;
+}

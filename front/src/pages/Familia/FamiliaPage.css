@@ -5,26 +5,12 @@
   flex-direction: column;
 }
 
-.titulo-familia {
-  font-size: 36px;
-  color: #0f172a;
-  font-weight: 500;
-  margin-bottom: 8px;
-  letter-spacing: -0.5px;
-}
-
-.subtitulo-familia {
-  font-size: 15px;
-  color: #64748b;
-  margin-bottom: 32px;
-}
-
 .familia-invitaciones {
   background: #ffffff;
   border: 1px solid #fbbf24;
-  border-radius: 16px;
-  padding: 20px 28px;
-  margin-bottom: 32px;
+  border-radius: 1rem;
+  padding: 1.25rem 1.75rem;
+  margin-bottom: 2rem;
   width: 100%;
   max-width: 60rem;
   margin-left: auto;
@@ -34,21 +20,21 @@
 .familia-invitaciones-header {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 1rem;
 }
 
 .familia-invitaciones-titulo {
   color: #0f172a;
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 700;
 }
 
 .familia-invitaciones-badge {
   background: #fef3c7;
   color: #b45309;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 600;
-  padding: 4px 14px;
+  padding: 0.25rem 0.875rem;
   border-radius: 9999px;
 }
 
@@ -58,6 +44,18 @@
 
 .familia-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, 16rem);
+  justify-content: center;
+  gap: 1.25rem;
+}
+
+.familia-agregar {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.familia-agregar .agregar-familiar-boton--card {
+  width: 100%;
+  max-width: 20rem;
 }

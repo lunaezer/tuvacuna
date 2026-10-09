@@ -19,8 +19,8 @@ export default function AgregarTurnoModal({isOpen, onClose, handleChange, handle
         <Input variant="large" placeholder="Ej: Antitetanica" name="vacuna" required label="¿Que vacuna?" onChange={handleChange}></Input>
 
         <div className="agregar-turno-fila">
-          <Input variant="small" placeholder="14/08/2026" name="fecha" required label="Fecha" onChange={handleChange} />
-          <Input variant="small" placeholder="09:00 Hs" name="hora" required label="Hora" onChange={handleChange} />
+          <Input variant="small" placeholder="14/08/2026" name="fecha" required label="Fecha" onChange={handleChange} type="date" />
+          <Input variant="small" placeholder="09:00 Hs" name="hora" required label="Hora" onChange={handleChange} type="time" />
         </div>
 
         <Input variant="large" placeholder="Ej: Stamboulian" name="lugar" required label="¿Que hospital?" onChange={handleChange} ></Input>

@@ -43,17 +43,3 @@
   background-color: var(--sidebar-hover);
   border-color: var(--sidebar-hover);
 }
-
-/* Botón agregar familiar */
-.family-pill-agregar {
-  padding: 0.65rem 1.25rem;
-  background: transparent;
-  border: 1px dashed var(--text-muted);
-  color: var(--text-secondary);
-}
-
-.family-pill-agregar:hover {
-  border-color: var(--primary-cyan);
-  color: var(--primary-cyan);
-  background: var(--primary-cyan-light);
-}

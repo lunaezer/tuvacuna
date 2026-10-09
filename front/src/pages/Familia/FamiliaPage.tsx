@@ -1,7 +1,9 @@
 import { useState } from 'react'
+import PageHeader from '../../components/PageHeader/PageHeader'
 import FamiliarCard from '../../components/FamiliarCard/FamiliarCard'
 import CarnetFamiliarModal from '../../components/CarnetFamiliarModal/CarnetFamiliarModal'
 import InvitacionFila from '../../components/InvitacionFila/InvitacionFila'
+import AgregarFamiliarBoton from '../../components/AgregarFamiliarBoton/AgregarFamiliarBoton'
 import { useFamilia } from '../../hooks/useFamilia'
 import { familiaMock } from '../../mocks/carnetMock'
 import type { Familiar } from '../../types'
@@ -11,7 +13,7 @@ import './FamiliaPage.css'
 const USAR_MOCK = true
 
 export default function FamiliaPage() {
-  const { familiares: familiaReal, invitaciones, aceptarInvitacion, rechazarInvitacion } = useFamilia()
+  const { familiares: familiaReal, invitaciones, aceptarInvitacion, rechazarInvitacion, abrirModalAgregar } = useFamilia()
   const familiares = USAR_MOCK ? familiaMock : familiaReal
   const [familiarSeleccionado, setFamiliarSeleccionado] = useState<Familiar | null>(null)
 
@@ -25,8 +27,12 @@ export default function FamiliaPage() {
 
   return (
     <div className="contenedor-familia">
-      <h1 className="titulo-familia">Grupo familiar</h1>
-      <p className="subtitulo-familia">Gestiona el carnet de tus hijos y familiares a cargo.</p>
+      <PageHeader
+        titulo="Grupo familiar"
+        subtitulo="Gestiona el carnet de tus hijos y familiares a cargo."
+      >
+        <AgregarFamiliarBoton variante="celeste" onClick={abrirModalAgregar} />
+      </PageHeader>
 
       {invitaciones.length > 0 && (
         <section className="familia-invitaciones">
@@ -54,6 +60,10 @@ export default function FamiliaPage() {
             onVerCarnet={() => setFamiliarSeleccionado(familiar)}
           />
         ))}
+      </div>
+
+      <div className="familia-agregar">
+        <AgregarFamiliarBoton variante="card" onClick={abrirModalAgregar} />
       </div>
 
       <CarnetFamiliarModal
