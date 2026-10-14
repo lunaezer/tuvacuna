@@ -2,17 +2,20 @@ import React from "react";
 import Input from "../Input/Input";
 import type { RegistroData } from "../../types";
 import Select from "../Select/Select";
+import ComorbilidadesSelector from "../ComorbilidadesSelector/ComorbilidadesSelector";
 
 interface PacienteFieldsProps {
   formData: RegistroData;
   handleChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => void;
+  setFormData: React.Dispatch<React.SetStateAction<RegistroData>>;
 }
 
 export default function FormPaciente({
   formData,
   handleChange,
+  setFormData,
 }: PacienteFieldsProps) {
   return (
     <>
@@ -51,16 +54,9 @@ export default function FormPaciente({
         {value: "escribanos", label: "escribanos"},
       ]}
       />
-       <Select
-      variant="large"
-      label="Condiciones a tener en cuenta"
-      name="condiciones"
-      value={formData.condiciones}
-      onChange={handleChange}
-      options={[
-        {value: "embarazo", label: "embarazo"},
-        {value: "diabetes", label: "diabetes"},
-      ]}
+      <ComorbilidadesSelector
+        seleccionadas={formData.comorbilidades}
+        onChange={(ids) => setFormData((prev) => ({ ...prev, comorbilidades: ids }))}
       />
     </>
   );

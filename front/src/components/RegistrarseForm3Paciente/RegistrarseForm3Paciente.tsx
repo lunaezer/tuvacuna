@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type React from "react";
 import Button from "../Button/Button";
+import { Link } from "react-router-dom";
 
 interface RegistrarseForm3PacienteProps {
   carnetPhoto: File | null;
@@ -70,9 +71,11 @@ export default function RegistrarseForm3Paciente({
         </Button>
       </form>
 
-      <button type="button" className="registro-skip-link">
+        <Link to="/inicio">
+      <button type="button" className="registro-skip-link" > 
         Prefiero completarlo después
       </button>
+      </Link>
     </div>
   );
 }

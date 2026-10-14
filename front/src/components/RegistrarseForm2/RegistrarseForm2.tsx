@@ -37,7 +37,7 @@ export default function RegistrarseForm2({
         <PerfilToggle value={formData.profile} onChange={selectProfile} />
 
         {formData.profile === "paciente" && (
-          <FormPaciente formData={formData} handleChange={handleChange} />
+          <FormPaciente formData={formData} handleChange={handleChange} setFormData={setFormData} />
         )}
 
         {formData.profile === "medico" && (

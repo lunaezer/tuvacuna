@@ -7,6 +7,8 @@ import Button from '../../components/Button/Button'
 import CarnetVacio from '../../components/CarnetVacio/CarnetVacio'
 import { useFamilia } from '../../hooks/useFamilia'
 import Modal from '../../components/Modal/Modal'
+import AgregarVacunaModal from '../../components/AgregarVacunaModal/AgregarVacunaModal'
+import type { FormVacuna } from '../../components/AgregarVacunaModal/AgregarVacunaModal'
 import type { Familiar, SeccionHistorial } from '../../types'
 import { useUsuario } from '../../context/UsuarioContext/useUsuario'
 import { familiaMock, carnetsMock } from '../../mocks/carnetMock'
@@ -32,11 +34,8 @@ export default function CarnetPage() {
   const [modalSubirFotoAbierto, setModalSubirFotoAbierto] = useState(false)
 
   // Campos del formulario Cargar Dosis
-  const [formDosis, setFormDosis] = useState({
-    nombreVacuna: '',
-    fecha: '',
-    lugar: '',
-  })
+  const formVacio: FormVacuna = { nombre: '', lote: '', fecha: '', marca: '', lugar: '', paraQuien: '' }
+  const [formDosis, setFormDosis] = useState<FormVacuna>(formVacio)
 
   async function cargarCarnet(idFamiliar?: string) {
     if (USAR_MOCK) {
@@ -95,12 +94,12 @@ export default function CarnetPage() {
 
   const handleGuardarDosis = async (e?: FormEvent<HTMLFormElement>) => {
     e?.preventDefault()
-    const familiarSeleccionado = familiares[indexFamiliarActivo]
-    if (!familiarSeleccionado) return
+    const { paraQuien, ...datos } = formDosis
+    const esYo = !paraQuien || paraQuien === 'yo'
 
-    const url = familiarSeleccionado.esVos
+    const url = esYo
       ? `${API_URL}/api/carnet`
-      : `${API_URL}/api/carnet/${familiarSeleccionado.id}`
+      : `${API_URL}/api/carnet/${paraQuien}`
 
     await fetch(url, {
       method: 'POST',
@@ -108,14 +107,14 @@ export default function CarnetPage() {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(formDosis),
+      body: JSON.stringify(datos),
     })
 
     // Refresca el carnet para que aparezca la dosis recién cargada
-    await cargarCarnet(familiarSeleccionado.esVos ? undefined : familiarSeleccionado.id)
+    await cargarCarnet(esYo ? undefined : paraQuien)
 
     setModalCargarDosisAbierto(false)
-    setFormDosis({ nombreVacuna: '', fecha: '', lugar: '' })
+    setFormDosis(formVacio)
   }
 
   const CameraIcon = (
@@ -175,61 +174,14 @@ export default function CarnetPage() {
         />
       )}
 
-      {/* PopUp 1: Cargar Dosis */}
-      <Modal
+      {/* PopUp 1: Agregar vacuna */}
+      <AgregarVacunaModal
         isOpen={modalCargarDosisAbierto}
         onClose={() => setModalCargarDosisAbierto(false)}
-        titulo="Cargar nueva dosis"
-      >
-        <form className="modal-form" onSubmit={handleGuardarDosis}>
-          <div className="modal-form-campo">
-            <label htmlFor="nombreVacuna">Nombre de la vacuna</label>
-            <input
-              id="nombreVacuna"
-              type="text"
-              placeholder="Ej: Antigripal, Triple Viral..."
-              value={formDosis.nombreVacuna}
-              onChange={(e) => setFormDosis({ ...formDosis, nombreVacuna: e.target.value })}
-              required
-            />
-          </div>
-
-          <div className="modal-form-campo">
-            <label htmlFor="fechaDosis">Fecha de aplicación</label>
-            <input
-              id="fechaDosis"
-              type="date"
-              value={formDosis.fecha}
-              onChange={(e) => setFormDosis({ ...formDosis, fecha: e.target.value })}
-              required
-            />
-          </div>
-
-          <div className="modal-form-campo">
-            <label htmlFor="lugarDosis">Lugar / Vacunatorio</label>
-            <input
-              id="lugarDosis"
-              type="text"
-              placeholder="Ej: Hospital Regional, Vacunatorio Centro..."
-              value={formDosis.lugar}
-              onChange={(e) => setFormDosis({ ...formDosis, lugar: e.target.value })}
-            />
-          </div>
-
-          <div className="modal-form-acciones">
-            <Button
-              text="Cancelar"
-              variant="outline"
-              onClick={() => setModalCargarDosisAbierto(false)}
-            />
-            <Button
-              text="Guardar dosis"
-              variant="celeste"
-              onClick={handleGuardarDosis}
-            />
-          </div>
-        </form>
-      </Modal>
+        form={formDosis}
+        setForm={setFormDosis}
+        handleSubmit={handleGuardarDosis}
+      />
 
       {/* PopUp 2: Subir Foto del Carnet */}
       <Modal

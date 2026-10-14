@@ -66,7 +66,7 @@ export interface RegistroData {
     birthDate: string;
     sex: string;
     obraSocial: string;
-    condiciones: string;
+    comorbilidades: number[];
     matricula: string;
     especialidad: string;
     institucion: string;
