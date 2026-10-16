@@ -1,6 +1,6 @@
 export type ButtonVariant = 'primary' | 'secondary' | 'celeste' | 'outline' | 'big' | 'medium' | 'perfil' | 'aceptar' | 'rechazar'
 
-export type CardVariant = 'white' | 'dark'
+export type CardVariant = 'white' | 'dark' | 'profile'
 
 export interface Familiar {
   id?: string

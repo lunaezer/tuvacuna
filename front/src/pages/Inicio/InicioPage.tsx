@@ -3,9 +3,14 @@ import Button from '../../components/Button/Button'
 import Cards from '../../components/Cards/Cards'
 import './InicioPage.css'
 import { useUsuario } from '../../context/UsuarioContext/useUsuario'
+import { useNavigate } from 'react-router-dom'
 
 export default function InicioPage() {
   const { usuario } = useUsuario()
+  const navigate = useNavigate()
+  const irAlCalendario = () => {
+    navigate("/calendario")
+  }
 
   return (
     <div className="contenedor-inicio">
@@ -14,7 +19,7 @@ export default function InicioPage() {
         titulo={`Hola, ${usuario?.nombre}!`}
         subtitulo="Revisá el estado de tus vacunas y próximos turnos."
       >
-        <Button text="+ Agendar turno" variant="celeste" />
+        <Button text="+ Agendar turno" variant="celeste" onClick={irAlCalendario}/>
       </PageHeader>
 
       {/* Grid de cards */}
