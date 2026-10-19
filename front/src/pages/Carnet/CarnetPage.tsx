@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import type { FormEvent } from 'react'
 import PageHeader from '../../components/PageHeader/PageHeader'
 import FamilySelector from '../../components/FamilySelector/FamilySelector'
@@ -22,7 +22,13 @@ export default function CarnetPage() {
   const { token, usuario } = useUsuario()
 
   const { familiares: familiaReal, cargandoFamiliares, abrirModalAgregar } = useFamilia()
-  const familiares: Familiar[] = USAR_MOCK ? familiaMock : familiaReal
+  const familiares: Familiar[] = useMemo(() => {
+    if (USAR_MOCK) return familiaMock
+    if (familiaReal.length > 0) return familiaReal
+    // Sin grupo familiar (o no se pudo cargar): queda solo tu propio carnet
+    if (!cargandoFamiliares && usuario) return [{ nombre: usuario.nombre, esVos: true }]
+    return []
+  }, [familiaReal, cargandoFamiliares, usuario])
   // Terminó de cargar la lista y no vino nadie (ni vos): no hay carnet que pedir
   const sinFamiliares = !USAR_MOCK && !cargandoFamiliares && familiares.length === 0
   const [indexFamiliarActivo, setIndexFamiliarActivo] = useState(0)
@@ -34,7 +40,7 @@ export default function CarnetPage() {
   const [modalSubirFotoAbierto, setModalSubirFotoAbierto] = useState(false)
 
   // Campos del formulario Cargar Dosis
-  const formVacio: FormVacuna = { nombre: '', lote: '', fecha: '', marca: '', lugar: '', paraQuien: '' }
+  const formVacio: FormVacuna = { idVacuna: '', lote: '', fecha: '', marca: '', lugar: '' }
   const [formDosis, setFormDosis] = useState<FormVacuna>(formVacio)
 
   async function cargarCarnet(idFamiliar?: string) {
@@ -73,7 +79,7 @@ export default function CarnetPage() {
     const formData = new FormData()
     formData.append('imagen', archivo)
 
-    await fetch(`${API_URL}/api/carnet/foto`, {
+    await fetch(`${API_URL}/api/carnet/dosis`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}` },
       body: formData,
@@ -94,24 +100,24 @@ export default function CarnetPage() {
 
   const handleGuardarDosis = async (e?: FormEvent<HTMLFormElement>) => {
     e?.preventDefault()
-    const { paraQuien, ...datos } = formDosis
-    const esYo = !paraQuien || paraQuien === 'yo'
-
-    const url = esYo
-      ? `${API_URL}/api/carnet`
-      : `${API_URL}/api/carnet/${paraQuien}`
-
-    await fetch(url, {
+    // El back por ahora solo carga dosis al carnet propio (la cuenta sale del token)
+    await fetch(`${API_URL}/api/carnet/dosis`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(datos),
+      body: JSON.stringify({
+        id_vacuna: Number(formDosis.idVacuna),
+        fecha_de_aplicacion: formDosis.fecha,
+        lote: formDosis.lote,
+        marca: formDosis.marca,
+        lugar: formDosis.lugar,
+      }),
     })
 
     // Refresca el carnet para que aparezca la dosis recién cargada
-    await cargarCarnet(esYo ? undefined : paraQuien)
+    await cargarCarnet()
 
     setModalCargarDosisAbierto(false)
     setFormDosis(formVacio)
