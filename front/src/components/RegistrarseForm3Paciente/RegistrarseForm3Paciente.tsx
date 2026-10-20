@@ -1,36 +1,35 @@
-import { useState } from "react";
 import type React from "react";
 import Button from "../Button/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface RegistrarseForm3PacienteProps {
   carnetPhoto: File | null;
   setCarnetPhoto: (file: File | null) => void;
-  handleSubmit: (e: React.FormEvent) => void;
+  onAbrirModal: () => void;
+  dosisCargadas: number;
 }
 
 export default function RegistrarseForm3Paciente({
   carnetPhoto,
   setCarnetPhoto,
-  handleSubmit,
+  onAbrirModal,
+  dosisCargadas,
 }: RegistrarseForm3PacienteProps) {
-  const [modoManual, setModoManual] = useState(false);
+  const navigate = useNavigate();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCarnetPhoto(e.target.files?.[0] ?? null);
   };
-
-  const puedeEnviar = carnetPhoto !== null || modoManual;
 
   return (
     <div className="registro-form-wrapper">
       <h1 className="registro-title">Traé tu carnet.</h1>
       <p className="registro-subtitle">
         Paso 3 de 3. Sacale una foto a tu libreta y la leemos nosotros, o
-        cargá las dosis a mano.
+        cargá las dosis a mano. Tambien podes hacerlo desde la página más adelante. 
       </p>
 
-      <form className="registro-form" onSubmit={handleSubmit}>
+      <div className="registro-form">
         <label className="registro-upload-box">
           <input
             type="file"
@@ -55,23 +54,23 @@ export default function RegistrarseForm3Paciente({
         <Button
           type="button"
           className="registro-manual-btn"
-          onClick={() => setModoManual((prev) => !prev)}
+          onClick={onAbrirModal}
         >
           + Cargar las vacunas a mano
         </Button>
 
-        {modoManual && (
-          <div className="registro-manual-placeholder">
-            {/* TODO: campos para cargar las dosis a mano, todavía sin definir */}
-          </div>
+        {dosisCargadas > 0 && (
+          <p className="registro-file-name">
+            {dosisCargadas} {dosisCargadas === 1 ? "vacuna cargada" : "vacunas cargadas"}
+          </p>
         )}
 
-        <Button type="submit" variant="big" disabled={!puedeEnviar}>
+        <Button type="button" variant="big" onClick={() => navigate("/inicio", { state: { cuentaCreada: true } })}>
           Ingresar →
         </Button>
-      </form>
+      </div>
 
-        <Link to="/inicio">
+        <Link to="/inicio" state={{ cuentaCreada: true }}>
       <button type="button" className="registro-skip-link" > 
         Prefiero completarlo después
       </button>

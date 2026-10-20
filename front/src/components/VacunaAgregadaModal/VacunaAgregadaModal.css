@@ -1,0 +1,22 @@
+.vacuna-agregada {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.vacuna-agregada-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background-color: rgba(52, 211, 153, 0.15);
+  color: #34d399;
+}
+
+.vacuna-agregada-icono svg {
+  width: 2rem;
+  height: 2rem;
+}

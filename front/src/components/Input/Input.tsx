@@ -14,18 +14,20 @@ interface inputProps {
     value?: string;
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
     type?: string;
+    max?: string;
     label: string;
     required?: boolean;
     // string: marca el campo y muestra el mensaje. true: solo marca el campo.
     error?: string | boolean;
 }
 
-function Input({ placeholder, variant, onClick, onChange, value, name, type = "text", required, label, error }: inputProps) {
+function Input({ placeholder, variant, onClick, onChange, value, name, type = "text", max, required, label, error }: inputProps) {
     return (
         <label className="input-label">
             {label}
             <input
                 type={type}
+                max={max}
                 placeholder={placeholder}
                 onClick={onClick}
                 name={name}

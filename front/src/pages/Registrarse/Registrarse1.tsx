@@ -1,7 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import Input from "../../components/Input/Input";
-import Button from "../../components/Button/Button";
 import Registrarse1Form from "../../components/RegistrarseForm1/RegistrarseForm1";
 import type { RegistroData } from "../../types";
 import RegistrarseForm2 from "../../components/RegistrarseForm2/RegistrarseForm2";
@@ -11,8 +8,14 @@ import "./Registrarse1.css";
 import RegistrarseForm3Medico from "../../components/RegistrarseForm3Medico/RegistrarseForm3Medico";
 import { useUsuario } from "../../context/UsuarioContext/useUsuario";
 import { API_URL } from "../../config";
+import AgregarVacunaModal from "../../components/AgregarVacunaModal/AgregarVacunaModal";
+import VacunaAgregadaModal from "../../components/VacunaAgregadaModal/VacunaAgregadaModal";
+import type { FormVacuna } from "../../components/AgregarVacunaModal/AgregarVacunaModal";
 
-const PANEL_CONTENT: Record<number, { badge: string; title: string; text: string }> = {
+const PANEL_CONTENT: Record<
+  number,
+  { badge: string; title: string; text: string }
+> = {
   1: {
     badge: "Tres Pasos",
     title: "Cuenta, datos de salud, carnet cargado y listo.",
@@ -29,6 +32,8 @@ const PANEL_CONTENT: Record<number, { badge: string; title: string; text: string
     text: "A partir de ahí TuVacuna calcula sola qué dosis te corresponden y cuándo, según el Calendario Nacional.",
   },
 };
+
+const formVacio: FormVacuna = { idVacuna: "", lote: "", fecha: "", marca: "", lugar: "" };
 
 function Registrarse1() {
   const [step, setStep] = useState(1);
@@ -56,23 +61,33 @@ function Registrarse1() {
   const [pacientes, setPacientes] = useState<string[]>([]);
   const [pacienteInput, setPacienteInput] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement >) => {
+  // Carga manual de vacunas (paso 3)
+  const [modalVacunaAbierto, setModalVacunaAbierto] = useState(false);
+  const [formDosis, setFormDosis] = useState<FormVacuna>(formVacio);
+  const [errorDosis, setErrorDosis] = useState("");
+  const [dosisCargadas, setDosisCargadas] = useState(0);
+  const [modalExitoAbierto, setModalExitoAbierto] = useState(false);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     const { name, value } = e.target;
 
     setFormData((prev) => ({ ...prev, [name]: value }));
-    
   };
 
-  const handlePacienteInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  setPacienteInput(e.target.value);
-};
+  const handlePacienteInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setPacienteInput(e.target.value);
+  };
 
-const handleAddPaciente = () => {
-  const email = pacienteInput.trim();
-  if (!email || pacientes.includes(email)) return;
-  setPacientes((prev) => [...prev, email]);
-  setPacienteInput("");
-};
+  const handleAddPaciente = () => {
+    const email = pacienteInput.trim();
+    if (!email || pacientes.includes(email)) return;
+    setPacientes((prev) => [...prev, email]);
+    setPacienteInput("");
+  };
 
   const handleNextStep = (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,12 +98,12 @@ const handleAddPaciente = () => {
   const { login, token } = useUsuario();
 
   const goBack = () => {
-  if (step === 1) {
-    navigate("/");
-  } else {
-    setStep((s) => s - 1);
-  }
-};
+    if (step === 1) {
+      navigate("/");
+    } else {
+      setStep((s) => s - 1);
+    }
+  };
   const handleCrearCuenta = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -127,6 +142,43 @@ const handleAddPaciente = () => {
       setStep(3);
     } catch {
       setError("No se pudo conectar con el servidor");
+    }
+  };
+
+  const handleGuardarDosis = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorDosis("");
+
+    try {
+      const response = await fetch(`${API_URL}/api/carnet/dosis`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          id_vacuna: Number(formDosis.idVacuna),
+          fecha_de_aplicacion: formDosis.fecha,
+          lote: formDosis.lote,
+          marca: formDosis.marca,
+          lugar: formDosis.lugar,
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        setErrorDosis(
+          data.mensaje || data.message || "No se pudo guardar la dosis",
+        );
+        return;
+      }
+
+      setDosisCargadas((n) => n + 1);
+      setFormDosis(formVacio);
+      setModalVacunaAbierto(false);
+      setModalExitoAbierto(true);
+    } catch {
+      setErrorDosis("No se pudo conectar con el servidor");
     }
   };
 
@@ -218,7 +270,8 @@ const handleAddPaciente = () => {
           <RegistrarseForm3Paciente
             carnetPhoto={carnetPhoto}
             setCarnetPhoto={setCarnetPhoto}
-            handleSubmit={handleSubmit}
+            onAbrirModal={() => setModalVacunaAbierto(true)}
+            dosisCargadas={dosisCargadas}
           />
         )}
 
@@ -246,7 +299,11 @@ const handleAddPaciente = () => {
             <div
               key={item.num}
               className={`registro-steps-card-row ${
-                index + 1 < step ? "is-completed" : index + 1 === step ? "is-active" : ""
+                index + 1 < step
+                  ? "is-completed"
+                  : index + 1 === step
+                    ? "is-active"
+                    : ""
               }`}
             >
               <span className="registro-steps-card-num">{item.num}</span>
@@ -255,6 +312,28 @@ const handleAddPaciente = () => {
           ))}
         </div>
       </div>
+
+      <AgregarVacunaModal
+        isOpen={modalVacunaAbierto}
+        onClose={() => {
+          setModalVacunaAbierto(false);
+          setErrorDosis("");
+        }}
+        form={formDosis}
+        setForm={setFormDosis}
+        handleSubmit={handleGuardarDosis}
+        error={errorDosis}
+      />
+
+      <VacunaAgregadaModal
+        isOpen={modalExitoAbierto}
+        onClose={() => setModalExitoAbierto(false)}
+        onAgregarOtra={() => {
+          setModalExitoAbierto(false);
+          setModalVacunaAbierto(true);
+        }}
+        onContinuar={() => navigate("/inicio", { state: { cuentaCreada: true } })}
+      />
     </div>
   );
 }

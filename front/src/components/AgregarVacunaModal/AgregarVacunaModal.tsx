@@ -19,9 +19,10 @@ interface AgregarVacunaModalProps {
   form: FormVacuna;
   setForm: (form: FormVacuna) => void;
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  error?: string;
 }
 
-export default function AgregarVacunaModal({ isOpen, onClose, form, setForm, handleSubmit }: AgregarVacunaModalProps) {
+export default function AgregarVacunaModal({ isOpen, onClose, form, setForm, handleSubmit, error }: AgregarVacunaModalProps) {
   const handleChange = (e: { target: { name: string; value: string } }) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -41,6 +42,7 @@ export default function AgregarVacunaModal({ isOpen, onClose, form, setForm, han
 
         <Input variant="large" name="lugar" label="Lugar" placeholder="Ej: Stamboulian" value={form.lugar} onChange={handleChange} required />
 
+        {error && <p className="modal-error">{error}</p>}
 
         <div className="agregar-turno-acciones">
           <Button text="Cancelar" type="button" variant="primary" onClick={onClose} />

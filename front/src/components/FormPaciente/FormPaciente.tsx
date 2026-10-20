@@ -25,6 +25,7 @@ export default function FormPaciente({
           label="Fecha de nacimiento"
           name="birthDate"
           type="date"
+          max={new Date().toISOString().split("T")[0]}
           required
           value={formData.birthDate}
           onChange={handleChange}
