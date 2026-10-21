@@ -7,6 +7,7 @@ import Button from '../../components/Button/Button'
 import CarnetVacio from '../../components/CarnetVacio/CarnetVacio'
 import { useFamilia } from '../../hooks/useFamilia'
 import Modal from '../../components/Modal/Modal'
+import Toast from '../../components/Toast/Toast'
 import AgregarVacunaModal from '../../components/AgregarVacunaModal/AgregarVacunaModal'
 import type { FormVacuna } from '../../components/AgregarVacunaModal/AgregarVacunaModal'
 import type { Familiar, SeccionHistorial } from '../../types'
@@ -42,6 +43,8 @@ export default function CarnetPage() {
   // Campos del formulario Cargar Dosis
   const formVacio: FormVacuna = { idVacuna: '', lote: '', fecha: '', marca: '', lugar: '' }
   const [formDosis, setFormDosis] = useState<FormVacuna>(formVacio)
+  const [errorDosis, setErrorDosis] = useState('')
+  const [dosisAgregada, setDosisAgregada] = useState(false)
 
   async function cargarCarnet(idFamiliar?: string) {
     if (USAR_MOCK) {
@@ -100,27 +103,40 @@ export default function CarnetPage() {
 
   const handleGuardarDosis = async (e?: FormEvent<HTMLFormElement>) => {
     e?.preventDefault()
-    // El back por ahora solo carga dosis al carnet propio (la cuenta sale del token)
-    await fetch(`${API_URL}/api/carnet/dosis`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        id_vacuna: Number(formDosis.idVacuna),
-        fecha_de_aplicacion: formDosis.fecha,
-        lote: formDosis.lote,
-        marca: formDosis.marca,
-        lugar: formDosis.lugar,
-      }),
-    })
+    setErrorDosis('')
 
-    // Refresca el carnet para que aparezca la dosis recién cargada
-    await cargarCarnet()
+    try {
+      // El back por ahora solo carga dosis al carnet propio (la cuenta sale del token)
+      const response = await fetch(`${API_URL}/api/carnet/dosis`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          id_vacuna: Number(formDosis.idVacuna),
+          fecha_de_aplicacion: formDosis.fecha,
+          lote: formDosis.lote,
+          marca: formDosis.marca,
+          lugar: formDosis.lugar,
+        }),
+      })
 
-    setModalCargarDosisAbierto(false)
-    setFormDosis(formVacio)
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}))
+        setErrorDosis(data.mensaje || data.message || 'No se pudo guardar la dosis')
+        return // el modal queda abierto
+      }
+
+      // Refresca el carnet para que aparezca la dosis recién cargada
+      await cargarCarnet()
+
+      setModalCargarDosisAbierto(false)
+      setFormDosis(formVacio)
+      setDosisAgregada(true)
+    } catch {
+      setErrorDosis('No se pudo conectar con el servidor')
+    }
   }
 
   const CameraIcon = (
@@ -183,10 +199,20 @@ export default function CarnetPage() {
       {/* PopUp 1: Agregar vacuna */}
       <AgregarVacunaModal
         isOpen={modalCargarDosisAbierto}
-        onClose={() => setModalCargarDosisAbierto(false)}
+        onClose={() => {
+          setModalCargarDosisAbierto(false)
+          setErrorDosis('')
+        }}
         form={formDosis}
         setForm={setFormDosis}
         handleSubmit={handleGuardarDosis}
+        error={errorDosis}
+      />
+
+      <Toast
+        isOpen={dosisAgregada}
+        mensaje="Vacuna agregada con éxito"
+        onClose={() => setDosisAgregada(false)}
       />
 
       {/* PopUp 2: Subir Foto del Carnet */}

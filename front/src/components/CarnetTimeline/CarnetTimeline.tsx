@@ -42,12 +42,8 @@ export default function CarnetTimeline({ secciones, cargando, error, onAgendar }
               {seccion.dosis.map((dosis) => (
                 <CarnetCard
                   key={dosis.id}
-                  titulo={dosis.titulo}
-                  subtitulo={dosis.subtitulo}
-                  estado={dosis.estado}
-                  etiqueta={dosis.etiqueta}
-                  mostrarAgendar={dosis.mostrarAgendar}
-                  onAgendar={() => onAgendar(dosis.id)}
+                  dosis={dosis}
+                  onAgendar={() => onAgendar(String(dosis.id))}
                 />
               ))}
             </div>

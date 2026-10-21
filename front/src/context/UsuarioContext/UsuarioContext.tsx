@@ -1,9 +1,13 @@
 import { createContext, useEffect, useState, type ReactNode } from "react";
 import { API_URL } from "../../config";
 
-interface Usuario {
+export interface Usuario {
     id: string;
     nombre: string;
+    rol?: "paciente" | "medico";
+    fechaNacimiento?: string;
+    obraSocial?: string;
+    comorbilidades?: (string | number)[];
 }
 
 interface UsuarioContextType {

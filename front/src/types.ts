@@ -1,6 +1,6 @@
 export type ButtonVariant = 'primary' | 'secondary' | 'celeste' | 'outline' | 'big' | 'medium' | 'perfil' | 'aceptar' | 'rechazar'
 
-export type CardVariant = 'white' | 'dark' | 'profile'
+export type CardVariant = 'white' | 'dark' | 'profile' | 'compact'
 
 export interface Familiar {
   id?: string
@@ -23,12 +23,13 @@ export interface Invitacion {
 export type EstadoDosis = 'atrasada' | 'pendiente' | 'aplicada' | 'recomendada'
 
 export interface Dosis {
-  id: string
-  titulo: string
-  subtitulo: string
+  id: number
+  nombre: string
   estado: EstadoDosis
-  etiqueta: string
-  mostrarAgendar: boolean
+  fecha_de_aplicacion?: string // solo en las aplicadas (AAAA-MM-DD)
+  lote?: string
+  marca?: string
+  lugar?: string
 }
 
 export interface SeccionHistorial {

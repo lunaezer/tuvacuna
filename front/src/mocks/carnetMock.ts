@@ -19,31 +19,31 @@ const carnetPropio: SeccionHistorial[] = [
     grupo: 'Pendientes',
     esPendiente: true,
     dosis: [
-      { id: 'd1', titulo: 'Antitetanica — Refuerzo', subtitulo: 'Venció el 20 de Jul de 2026', estado: 'atrasada', etiqueta: 'Atrasada', mostrarAgendar: true },
-      { id: 'd2', titulo: 'HPV — Segunda dosis', subtitulo: '', estado: 'recomendada', etiqueta: 'Recomendada', mostrarAgendar: true },
+      { id: 1, nombre: 'Antitetanica — Refuerzo', estado: 'atrasada' },
+      { id: 2, nombre: 'HPV — Segunda dosis', estado: 'recomendada' },
     ],
   },
   {
     grupo: '2026',
     esPendiente: false,
     dosis: [
-      { id: 'd3', titulo: 'Antigripal', subtitulo: '1 de agosto de 2026', estado: 'aplicada', etiqueta: 'Aplicada', mostrarAgendar: false },
-      { id: 'd4', titulo: 'Triple viral — Segunda dosis', subtitulo: '15 de mayo de 2026', estado: 'aplicada', etiqueta: 'Aplicada', mostrarAgendar: false },
+      { id: 3, nombre: 'Antigripal', estado: 'aplicada', fecha_de_aplicacion: '2026-08-01' },
+      { id: 4, nombre: 'Triple viral — Segunda dosis', estado: 'aplicada', fecha_de_aplicacion: '2026-05-15' },
     ],
   },
   {
     grupo: '2019',
     esPendiente: false,
     dosis: [
-      { id: 'd5', titulo: 'Vacuna covid', subtitulo: '3 de febrero de 2021', estado: 'aplicada', etiqueta: 'Aplicada', mostrarAgendar: false },
-      { id: 'd6', titulo: 'VPH — Primera dosis', subtitulo: '2 de septiembre de 2020', estado: 'aplicada', etiqueta: 'Aplicada', mostrarAgendar: false },
+      { id: 5, nombre: 'Vacuna covid', estado: 'aplicada', fecha_de_aplicacion: '2021-02-03' },
+      { id: 6, nombre: 'VPH — Primera dosis', estado: 'aplicada', fecha_de_aplicacion: '2020-09-02' },
     ],
   },
   {
     grupo: '2012-2009',
     esPendiente: false,
     dosis: [
-      { id: 'd7', titulo: 'Esquema completo de la infancia', subtitulo: '', estado: 'aplicada', etiqueta: 'Aplicada', mostrarAgendar: false },
+      { id: 7, nombre: 'Esquema completo de la infancia', estado: 'aplicada' },
     ],
   },
 ]
@@ -54,14 +54,14 @@ const carnetTomi: SeccionHistorial[] = [
     grupo: 'Pendientes',
     esPendiente: true,
     dosis: [
-      { id: 't1', titulo: 'Triple viral — Refuerzo', subtitulo: 'Vence el 10 de Dic de 2026', estado: 'recomendada', etiqueta: 'Recomendada', mostrarAgendar: true },
+      { id: 8, nombre: 'Triple viral — Refuerzo', estado: 'recomendada' },
     ],
   },
   {
     grupo: '2024',
     esPendiente: false,
     dosis: [
-      { id: 't2', titulo: 'Antigripal', subtitulo: '12 de abril de 2024', estado: 'aplicada', etiqueta: 'Aplicada', mostrarAgendar: false },
+      { id: 9, nombre: 'Antigripal', estado: 'aplicada', fecha_de_aplicacion: '2024-04-12' },
     ],
   },
 ]
@@ -71,8 +71,8 @@ const carnetMaru: SeccionHistorial[] = [
     grupo: '2025',
     esPendiente: false,
     dosis: [
-      { id: 'm1', titulo: 'Doble adultos', subtitulo: '3 de marzo de 2025', estado: 'aplicada', etiqueta: 'Aplicada', mostrarAgendar: false },
-      { id: 'm2', titulo: 'Hepatitis B — Tercera dosis', subtitulo: '20 de enero de 2025', estado: 'aplicada', etiqueta: 'Aplicada', mostrarAgendar: false },
+      { id: 10, nombre: 'Doble adultos', estado: 'aplicada', fecha_de_aplicacion: '2025-03-03' },
+      { id: 11, nombre: 'Hepatitis B — Tercera dosis', estado: 'aplicada', fecha_de_aplicacion: '2025-01-20' },
     ],
   },
 ]

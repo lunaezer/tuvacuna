@@ -59,7 +59,7 @@ export const DosisProvider = ({ children }: { children: ReactNode }) => {
         atrasadas: dosis.filter((d) => d.estado === "atrasada").length,
     };
 
-    const paraAgendar = dosis.filter((d) => d.mostrarAgendar);
+    const paraAgendar = dosis.filter((d) => d.estado !== "aplicada");
 
     useEffect(() => {
         cargarDosis();

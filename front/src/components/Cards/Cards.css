@@ -48,3 +48,18 @@
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
 }
 
+
+/* Variante compacta: más chica, para barras horizontales */
+.card-compact {
+  min-height: 0;
+  padding: 16px 24px;
+  border-radius: 24px;
+  flex-direction: row;
+  align-items: center;
+  background: linear-gradient(135deg, #f8fbff 0%, #eaf4fb 100%);
+}
+
+.card-compact:hover {
+  transform: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}

@@ -6,6 +6,7 @@ import './InicioPage.css'
 import { useUsuario } from '../../context/UsuarioContext/useUsuario'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Toast from '../../components/Toast/Toast'
+import UserInfo from '../../components/UserInfo/UserInfo'
 
 export default function InicioPage() {
   const { usuario } = useUsuario()
@@ -31,6 +32,7 @@ export default function InicioPage() {
       <Toast
         isOpen={cuentaCreada}
         mensaje="Usuario creado con éxito"
+        duracion={2500}
         onClose={() => setCuentaCreada(false)}
       />
 
@@ -41,6 +43,8 @@ export default function InicioPage() {
       >
         <Button text="+ Agendar turno" variant="celeste" onClick={irAlCalendario}/>
       </PageHeader>
+
+      <UserInfo />
 
       {/* Grid de cards */}
       <div className="inicio-grid">
