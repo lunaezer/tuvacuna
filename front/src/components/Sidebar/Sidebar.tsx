@@ -27,7 +27,8 @@ const itemsPaciente = [
 ]
 
 const itemsMedico = [
-  { text: 'Pacientes', to: '/medico', Icon: FamiliaIcon },
+  { text: 'Inicio', to: '/inicio', Icon: HomeIcon },
+  { text: 'Pacientes', to: '/pacientes', Icon: FamiliaIcon },
 ]
 
 function Sidebar({ activeItem = 'Inicio', className = '' }: SidebarProps) {

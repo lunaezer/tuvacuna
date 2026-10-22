@@ -8,7 +8,10 @@ import DashboardLayout from './components/DashboardLayout/DashboardLayout'
 
 import HomePage from './pages/Home/HomePage'
 import InicioPage from './pages/Inicio/InicioPage'
-import MedicoPage from './pages/Medico/MedicoPage'
+import InicioMedicoPage from './pages/Medico/InicioMedicoPage'
+import PacientesPage from './pages/Medico/PacientesPage'
+import CarnetPacientePage from './pages/Medico/CarnetPacientePage'
+import { useUsuario } from './context/UsuarioContext/useUsuario'
 import CarnetPage from './pages/Carnet/CarnetPage'
 import CalendarioPage from './pages/Calendario/CalendarioPage'
 import CentrosPage from './pages/Centros/CentrosPage'
@@ -21,6 +24,7 @@ import './App.css'
 
 function LayoutWrapper() {
   const location = useLocation()
+  const { usuario } = useUsuario()
   const esHome = location.pathname === '/'
   const esInicioSesion = location.pathname === '/inicio-sesion'
   const esRegistrarse1 = location.pathname === '/registrarse1'
@@ -62,21 +66,23 @@ function LayoutWrapper() {
     '/centros': 'Centros',
     '/familia': 'Familia',
     '/asistente': 'Asistente',
-    '/medico': 'Pacientes',
   }
-  const itemActivo = mapaRutas[location.pathname] || 'Inicio'
+  const itemActivo = location.pathname.startsWith('/pacientes')
+    ? 'Pacientes'
+    : mapaRutas[location.pathname] || 'Inicio'
 
   // Para el resto de las páginas: Sidebar a la izquierda y contenido a la derecha (sin Navbar ni Footer)
   return (
     <DashboardLayout activeItem={itemActivo}>
       <Routes>
-        <Route path="/inicio" element={<InicioPage />} />
+        <Route path="/inicio" element={usuario?.rol === 'medico' ? <InicioMedicoPage /> : <InicioPage />} />
         <Route path="/mi-carnet" element={<CarnetPage />} />
         <Route path="/calendario" element={<CalendarioPage />} />
         <Route path="/centros" element={<CentrosPage />} />
         <Route path="/familia" element={<FamiliaPage />} />
         <Route path="/asistente" element={<AsistentePage />} />
-        <Route path="/medico" element={<MedicoPage />} />
+        <Route path="/pacientes" element={<PacientesPage />} />
+        <Route path="/pacientes/:id/carnet" element={<CarnetPacientePage />} />
       </Routes>
     </DashboardLayout>
   )

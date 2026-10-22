@@ -1,0 +1,24 @@
+.contenedor-inicio-medico {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.inicio-medico-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.inicio-medico-columna {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .inicio-medico-grid {
+    grid-template-columns: 1fr;
+  }
+}

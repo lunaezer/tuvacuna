@@ -1,0 +1,84 @@
+.invitaciones-recibidas {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: #fff;
+  border: 1px solid #fcb354;
+  border-radius: 1.5rem;
+}
+
+.invitaciones-recibidas-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.invitaciones-recibidas-titulo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.invitaciones-recibidas-contador {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 0.375rem 0.75rem;
+  border-radius: 9999px;
+  background: #fef3e2;
+  color: #92600a;
+  white-space: nowrap;
+}
+
+.invitaciones-recibidas-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.invitaciones-recibidas-fila {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  background: #f8fafc;
+}
+
+.invitaciones-recibidas-datos {
+  display: flex;
+  flex-direction: column;
+}
+
+.invitaciones-recibidas-nombre {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.invitaciones-recibidas-edad {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.invitaciones-recibidas-acciones {
+  margin-left: auto;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.invitaciones-recibidas-vacio {
+  margin: 0;
+  color: #64748b;
+}
+
+.invitaciones-recibidas-error {
+  margin: 0;
+  color: #b91c1c;
+  font-size: 0.875rem;
+}

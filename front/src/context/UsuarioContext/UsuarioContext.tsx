@@ -9,6 +9,12 @@ export interface Usuario {
     obraSocial?: string;
     comorbilidades?: (string | number)[];
     apellido?: string;
+    // solo médicos
+    dni?: string;
+    mail?: string;
+    matricula?: string;
+    especialidad?: string;
+    institucion?: string;
 }
 
 interface UsuarioContextType {

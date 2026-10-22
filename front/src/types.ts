@@ -20,6 +20,14 @@ export interface Invitacion {
   rol: RolInvitacion
 }
 
+// Solicitud que un paciente le manda al médico (el id es el de la solicitud, no el del paciente)
+export interface SolicitudPaciente {
+  id: number
+  nombre: string
+  apellido: string
+  edad?: number // el back todavía no la manda
+}
+
 export type EstadoDosis = 'atrasada' | 'pendiente' | 'aplicada' | 'recomendada'
 
 export interface Dosis {

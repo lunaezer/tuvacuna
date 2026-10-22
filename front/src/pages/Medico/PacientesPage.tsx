@@ -1,9 +1,9 @@
 import PageHeader from '../../components/PageHeader/PageHeader'
-import './MedicoPage.css'
+import './PacientesPage.css'
 
-export default function MedicoPage() {
+export default function PacientesPage() {
   return (
-    <div className="contenedor-medico">
+    <div className="contenedor-pacientes">
       <PageHeader
         titulo="Mis pacientes"
         subtitulo="Seguimiento de vacunación de tus pacientes."

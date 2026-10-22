@@ -72,7 +72,7 @@ export default function InicioSesion1() {
 
             console.log("Login correcto", data);
             await login(data.token);
-            navigate(form.rol === "medico" ? "/medico" : "/inicio");
+            navigate("/inicio");
             
         } catch (err) {
             setErrores({ general: "No se pudo conectar con el servidor" });
