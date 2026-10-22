@@ -72,8 +72,7 @@ export default function InicioSesion1() {
 
             console.log("Login correcto", data);
             await login(data.token);
-            navigate("/inicio");
-// acá después: redirigir al inicio, ej. navigate("/inicio")
+            navigate(form.rol === "medico" ? "/medico" : "/inicio");
             
         } catch (err) {
             setErrores({ general: "No se pudo conectar con el servidor" });

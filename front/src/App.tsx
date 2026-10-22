@@ -8,6 +8,7 @@ import DashboardLayout from './components/DashboardLayout/DashboardLayout'
 
 import HomePage from './pages/Home/HomePage'
 import InicioPage from './pages/Inicio/InicioPage'
+import MedicoPage from './pages/Medico/MedicoPage'
 import CarnetPage from './pages/Carnet/CarnetPage'
 import CalendarioPage from './pages/Calendario/CalendarioPage'
 import CentrosPage from './pages/Centros/CentrosPage'
@@ -61,6 +62,7 @@ function LayoutWrapper() {
     '/centros': 'Centros',
     '/familia': 'Familia',
     '/asistente': 'Asistente',
+    '/medico': 'Pacientes',
   }
   const itemActivo = mapaRutas[location.pathname] || 'Inicio'
 
@@ -74,6 +76,7 @@ function LayoutWrapper() {
         <Route path="/centros" element={<CentrosPage />} />
         <Route path="/familia" element={<FamiliaPage />} />
         <Route path="/asistente" element={<AsistentePage />} />
+        <Route path="/medico" element={<MedicoPage />} />
       </Routes>
     </DashboardLayout>
   )

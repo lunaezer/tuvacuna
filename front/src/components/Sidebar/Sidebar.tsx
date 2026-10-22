@@ -9,6 +9,7 @@ import CentrosIcon from '../../assets/CentrosIcon.svg?react'
 import FamiliaIcon from '../../assets/FamiliaIcon.svg?react'
 import IAIcon from '../../assets/IAIcon.svg?react'
 import LogoutIcon from '../../assets/LogoutIcon.svg?react'
+import Iniciales from '../Iniciales/Iniciales'
 import { useUsuario } from '../../context/UsuarioContext/useUsuario'
 
 interface SidebarProps {
@@ -16,7 +17,7 @@ interface SidebarProps {
   className?: string
 }
 
-const items = [
+const itemsPaciente = [
   { text: 'Inicio', to: '/inicio', Icon: HomeIcon },
   { text: 'Mi carnet', to: '/mi-carnet', Icon: CarnetIcon },
   { text: 'Calendario', to: '/calendario', Icon: CalendarioIcon },
@@ -25,8 +26,13 @@ const items = [
   { text: 'Asistente', to: '/asistente', Icon: IAIcon },
 ]
 
+const itemsMedico = [
+  { text: 'Pacientes', to: '/medico', Icon: FamiliaIcon },
+]
+
 function Sidebar({ activeItem = 'Inicio', className = '' }: SidebarProps) {
   const { usuario, logout } = useUsuario()
+  const items = usuario?.rol === 'medico' ? itemsMedico : itemsPaciente
 
   return (
     <aside className={`sidebar ${className}`.trim()}>
@@ -46,7 +52,9 @@ function Sidebar({ activeItem = 'Inicio', className = '' }: SidebarProps) {
         <SidebarItem text="Cerrar Sesion" onClick={logout} to="/inicio-sesion">
           <LogoutIcon className="Logo" />
         </SidebarItem>
-        <SidebarItem text={usuario?.nombre} />
+        <SidebarItem text={usuario?.nombre}>
+          <Iniciales nombre={`${usuario?.nombre ?? ''} ${usuario?.apellido ?? ''}`.trim()} size="medium" />
+        </SidebarItem>
       </SidebarFooter>
     </aside>
   )
