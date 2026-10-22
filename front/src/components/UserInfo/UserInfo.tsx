@@ -31,20 +31,20 @@ export default function UserInfo() {
         edad !== null ? `${edad} años` : null,
         usuario.obraSocial || null,
         cantCondiciones === 0
-            ? "sin condiciones registradas"
+            ? "Sin condiciones registradas"
             : `${cantCondiciones} condición${cantCondiciones > 1 ? "es" : ""} registrada${cantCondiciones > 1 ? "s" : ""}`,
     ].filter(Boolean)
 
     return (
         <Cards variant="compact" className="user-info">
             <div className="user-info__avatar">
-                <Iniciales nombre={usuario.nombre} />
+                <Iniciales nombre={`${usuario.nombre} ${usuario.apellido ?? ""}`.trim()} />
                 <span className="user-info__estado" />
             </div>
 
             <div className="user-info__datos">
                 <span className="user-info__label">TU PERFIL</span>
-                <h2 className="user-info__nombre">{usuario.nombre}</h2>
+                <h2 className="user-info__nombre">{[usuario.nombre, usuario.apellido].filter(Boolean).join(" ")}</h2>
                 <p className="user-info__detalle">{detalles.join(" · ")}</p>
             </div>
 

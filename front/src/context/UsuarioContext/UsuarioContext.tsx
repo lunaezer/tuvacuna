@@ -8,6 +8,7 @@ export interface Usuario {
     fechaNacimiento?: string;
     obraSocial?: string;
     comorbilidades?: (string | number)[];
+    apellido?: string;
 }
 
 interface UsuarioContextType {
