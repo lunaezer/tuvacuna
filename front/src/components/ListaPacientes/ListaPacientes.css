@@ -1,0 +1,79 @@
+.lista-pacientes {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  text-align: left;
+}
+
+.lista-pacientes-encabezado,
+.lista-pacientes-fila {
+  display: grid;
+  grid-template-columns: 1fr 10rem 8rem 1.5rem;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1.25rem;
+}
+
+.lista-pacientes-encabezado {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background: #f8fafc;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #475569;
+}
+
+.lista-pacientes-filas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lista-pacientes-fila {
+  padding-top: 0.85rem;
+  padding-bottom: 0.85rem;
+  border-top: 1px solid #f1f5f9;
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  color: #94a3b8;
+}
+
+.lista-pacientes-fila:hover {
+  background: #f8fafc;
+}
+
+.lista-pacientes-fila--activa {
+  background: #f0f9ff;
+  border-left-color: #38bdf8;
+}
+
+.lista-pacientes-nombre {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.lista-pacientes-fecha {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.lista-pacientes-vacia {
+  margin: 0;
+  padding: 1.5rem;
+  color: #64748b;
+}
+
+@media (max-width: 640px) {
+  .lista-pacientes-encabezado,
+  .lista-pacientes-fila {
+    grid-template-columns: 1fr 7rem 1.5rem;
+  }
+  .lista-pacientes-encabezado span:nth-child(2),
+  .lista-pacientes-fecha {
+    display: none;
+  }
+}

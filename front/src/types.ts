@@ -28,6 +28,23 @@ export interface SolicitudPaciente {
   edad?: number // el back todavía no la manda
 }
 
+export type EstadoPaciente = 'atrasada' | 'proxima' | 'al-dia'
+
+export interface PacienteResumen {
+  id: number
+  nombre: string
+  apellido: string
+  edad: number
+  dni: string
+  obraSocial: string
+  comorbilidades: string[]
+  dosisAplicadas: number
+  cobertura: number // porcentaje
+  ultimaVacuna: string // AAAA-MM-DD
+  estado: EstadoPaciente
+  detalleEstado?: string // ej: "Antitetánica vencida hace 34 días"
+}
+
 export type EstadoDosis = 'atrasada' | 'pendiente' | 'aplicada' | 'recomendada'
 
 export interface Dosis {

@@ -31,7 +31,7 @@ export default function InicioMedicoPage() {
             onRechazar={rechazar}
             onGestionar={() => navigate('/pacientes')}
           />
-          <Button text="Cerrar sesión" variant="outline" onClick={cerrarSesion} />
+          <Button text="Cerrar sesión" variant="outline" className="boton-cerrar-sesion" onClick={cerrarSesion} />
         </div>
       </div>
     </div>

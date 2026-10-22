@@ -1,0 +1,23 @@
+.estado-paciente-badge {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.estado-paciente-badge--atrasada {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.estado-paciente-badge--proxima {
+  background: #fef3e2;
+  color: #92600a;
+}
+
+.estado-paciente-badge--al-dia {
+  background: #dcfce7;
+  color: #047857;
+}

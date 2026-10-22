@@ -82,3 +82,19 @@
   color: #b91c1c;
   font-size: 0.875rem;
 }
+
+.invitaciones-recibidas-acciones .btn {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.75rem;
+  border: none;
+}
+
+.invitaciones-recibidas-acciones .btn-aceptar {
+  background: #dcfce7;
+  color: #047857;
+}
+
+.invitaciones-recibidas-acciones .btn-rechazar {
+  background: #fee2e2;
+  color: #b91c1c;
+}

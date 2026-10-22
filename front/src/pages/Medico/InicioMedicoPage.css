@@ -22,3 +22,14 @@
     grid-template-columns: 1fr;
   }
 }
+
+.inicio-medico-columna .boton-cerrar-sesion {
+  width: 100%;
+  background: #fff;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.inicio-medico-columna .boton-cerrar-sesion:hover {
+  background: #fef2f2;
+}

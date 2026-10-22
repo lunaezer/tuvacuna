@@ -27,7 +27,12 @@ export default function UserInfo() {
     const edad = calcularEdad(usuario.fechaNacimiento)
     const cantCondiciones = usuario.comorbilidades?.length ?? 0
 
-    const detalles = [
+    const esMedico = usuario.rol === "medico"
+    const detalles = esMedico ? [
+        usuario.especialidad || null,
+        usuario.matricula ? `MN ${usuario.matricula}` : null,
+        usuario.institucion || null,
+    ].filter(Boolean) : [
         edad !== null ? `${edad} años` : null,
         usuario.obraSocial || null,
         cantCondiciones === 0
@@ -44,11 +49,11 @@ export default function UserInfo() {
 
             <div className="user-info__datos">
                 <span className="user-info__label">TU PERFIL</span>
-                <h2 className="user-info__nombre">{[usuario.nombre, usuario.apellido].filter(Boolean).join(" ")}</h2>
+                <h2 className="user-info__nombre">{esMedico ? "Dr. " : ""}{[usuario.nombre, usuario.apellido].filter(Boolean).join(" ")}</h2>
                 <p className="user-info__detalle">{detalles.join(" · ")}</p>
             </div>
 
-            <Button variant="perfil" onClick={() => navigate("/perfil")}>
+            <Button variant="perfil" onClick={() => navigate(esMedico ?  "/inicio" : "/perfil")}>
                 Ver mi perfil ›
             </Button>
         </Cards>

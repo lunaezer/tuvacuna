@@ -70,3 +70,9 @@
     width: 100%;
   }
 }
+
+.perfil-medico-card-acciones .btn {
+  width: 100%;
+  padding: 0.85rem 1.4rem;
+  font-size: 1rem;
+}

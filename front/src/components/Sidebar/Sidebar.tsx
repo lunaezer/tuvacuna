@@ -34,6 +34,9 @@ const itemsMedico = [
 function Sidebar({ activeItem = 'Inicio', className = '' }: SidebarProps) {
   const { usuario, logout } = useUsuario()
   const items = usuario?.rol === 'medico' ? itemsMedico : itemsPaciente
+  const nombreUsuario = usuario?.rol === 'medico'
+    ? `Dr. ${[usuario.nombre, usuario.apellido].filter(Boolean).join(' ')}`
+    : usuario?.nombre
 
   return (
     <aside className={`sidebar ${className}`.trim()}>
@@ -53,7 +56,7 @@ function Sidebar({ activeItem = 'Inicio', className = '' }: SidebarProps) {
         <SidebarItem text="Cerrar Sesion" onClick={logout} to="/inicio-sesion">
           <LogoutIcon className="Logo" />
         </SidebarItem>
-        <SidebarItem text={usuario?.nombre}>
+        <SidebarItem text={nombreUsuario}>
           <Iniciales nombre={`${usuario?.nombre ?? ''} ${usuario?.apellido ?? ''}`.trim()} size="medium" />
         </SidebarItem>
       </SidebarFooter>
