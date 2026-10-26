@@ -6,10 +6,17 @@ interface CarnetTimelineProps {
   secciones: SeccionHistorial[]
   cargando: boolean
   error?: string
-  onAgendar: (idDosis: string) => void
+  onAgendar?: (idDosis: string) => void // sin handler no se muestra el botón "Agendar"
+  mensajeVacio?: string
 }
 
-export default function CarnetTimeline({ secciones, cargando, error, onAgendar }: CarnetTimelineProps) {
+export default function CarnetTimeline({
+  secciones,
+  cargando,
+  error,
+  onAgendar,
+  mensajeVacio = 'No hay dosis registradas para este familiar.',
+}: CarnetTimelineProps) {
   return (
     <div className="carnet-timeline">
       {!cargando && !error && secciones.length > 0 && (
@@ -24,7 +31,7 @@ export default function CarnetTimeline({ secciones, cargando, error, onAgendar }
         <p className="carnet-cargando">Cargando información del carnet...</p>
       ) : secciones.length === 0 ? (
         <div className="carnet-vacio">
-          <p>No hay dosis registradas para este familiar.</p>
+          <p>{mensajeVacio}</p>
         </div>
       ) : (
         secciones.map((seccion, index) => (
@@ -43,7 +50,7 @@ export default function CarnetTimeline({ secciones, cargando, error, onAgendar }
                 <CarnetCard
                   key={dosis.id}
                   dosis={dosis}
-                  onAgendar={() => onAgendar(String(dosis.id))}
+                  onAgendar={onAgendar && (() => onAgendar(String(dosis.id)))}
                 />
               ))}
             </div>

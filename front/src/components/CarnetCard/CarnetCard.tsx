@@ -31,7 +31,7 @@ function CarnetCard({ dosis, onAgendar }: CarnetCardProps) {
     .filter(Boolean)
     .join(' · ')
   const etiqueta = ETIQUETA[estado]
-  const mostrarAgendar = estado !== 'aplicada'
+  const mostrarAgendar = estado !== 'aplicada' && Boolean(onAgendar)
 
   return (
     <div className={`carnet-card carnet-card--${estado}`}>

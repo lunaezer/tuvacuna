@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { UsuarioProvider } from './context/UsuarioContext/UsuarioContext'
 import { FamiliaProvider } from './context/FamiliaContext/FamiliaContext'
 import { DosisProvider } from './context/DosisContext/DosisContext'
+import { PacientesProvider } from './context/PacientesContext/PacientesContext'
 import Navbar from './components/Navbar/Navbar'
 import Footer from './components/Footer/Footer'
 import DashboardLayout from './components/DashboardLayout/DashboardLayout'
@@ -93,9 +94,11 @@ function App() {
     <UsuarioProvider>
       <FamiliaProvider>
         <DosisProvider>
-          <Router>
-            <LayoutWrapper />
-          </Router>
+          <PacientesProvider>
+            <Router>
+              <LayoutWrapper />
+            </Router>
+          </PacientesProvider>
         </DosisProvider>
       </FamiliaProvider>
     </UsuarioProvider>

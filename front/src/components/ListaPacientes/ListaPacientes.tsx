@@ -1,11 +1,11 @@
 import { ChevronRight } from 'lucide-react'
 import Iniciales from '../Iniciales/Iniciales'
 import EstadoPacienteBadge from '../EstadoPacienteBadge/EstadoPacienteBadge'
-import type { PacienteResumen } from '../../types'
+import type { PacienteLista } from '../../types'
 import './ListaPacientes.css'
 
 interface ListaPacientesProps {
-  pacientes: PacienteResumen[]
+  pacientes: PacienteLista[]
   seleccionadoId: number | null
   onSeleccionar: (id: number) => void
 }
@@ -13,7 +13,8 @@ interface ListaPacientesProps {
 const MESES = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC']
 
 // '2026-04-03' -> '03·ABR·2026' (se parte a mano para evitar líos de zona horaria)
-function formatearFecha(iso: string) {
+function formatearFecha(iso: string | null) {
+  if (!iso) return '—'
   const [anio, mes, dia] = iso.split('-')
   return `${dia}·${MESES[Number(mes) - 1]}·${anio}`
 }

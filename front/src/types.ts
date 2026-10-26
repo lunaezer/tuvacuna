@@ -30,19 +30,23 @@ export interface SolicitudPaciente {
 
 export type EstadoPaciente = 'atrasada' | 'proxima' | 'al-dia'
 
-export interface PacienteResumen {
+// GET /api/medico/pacientes: lo justo para la tabla
+export interface PacienteLista {
   id: number
   nombre: string
   apellido: string
-  edad: number
   dni: string
+  ultimaVacuna: string | null // AAAA-MM-DD
+  estado: EstadoPaciente
+}
+
+// GET /api/medico/pacientes/:id: datos crudos, el front calcula el resto
+export interface PacienteDetalle {
+  id: number
+  fechaNacimiento: string // AAAA-MM-DD
   obraSocial: string
   comorbilidades: string[]
-  dosisAplicadas: number
-  cobertura: number // porcentaje
-  ultimaVacuna: string // AAAA-MM-DD
-  estado: EstadoPaciente
-  detalleEstado?: string // ej: "Antitetánica vencida hace 34 días"
+  dosis: Dosis[]
 }
 
 export type EstadoDosis = 'atrasada' | 'pendiente' | 'aplicada' | 'recomendada'
