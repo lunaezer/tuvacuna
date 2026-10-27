@@ -19,6 +19,7 @@ import CalendarioPage from './pages/Calendario/CalendarioPage'
 import CentrosPage from './pages/Centros/CentrosPage'
 import FamiliaPage from './pages/Familia/FamiliaPage'
 import AsistentePage from './pages/Asistente/AsistentePage'
+import PerfilPage from './pages/Perfil/PerfilPage'
 import InicioSesion1 from './pages/InicioSesion/InicioSesion1'
 import Registrarse1 from './pages/Registrarse/Registrarse1'
 
@@ -68,6 +69,7 @@ function LayoutWrapper() {
     '/centros': 'Centros',
     '/familia': 'Familia',
     '/asistente': 'Asistente',
+    '/perfil': 'Perfil',
   }
   const itemActivo = location.pathname.startsWith('/pacientes')
     ? 'Pacientes'
@@ -83,6 +85,7 @@ function LayoutWrapper() {
         <Route path="/centros" element={<CentrosPage />} />
         <Route path="/familia" element={<FamiliaPage />} />
         <Route path="/asistente" element={<AsistentePage />} />
+        <Route path="/perfil" element={<PerfilPage />} />
         <Route path="/pacientes" element={<PacientesPage />} />
         <Route path="/pacientes/:id/carnet" element={<CarnetPacientePage />} />
       </Routes>

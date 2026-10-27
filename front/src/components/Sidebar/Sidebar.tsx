@@ -56,7 +56,7 @@ function Sidebar({ activeItem = 'Inicio', className = '' }: SidebarProps) {
         <SidebarItem text="Cerrar Sesion" onClick={logout} to="/inicio-sesion">
           <LogoutIcon className="Logo" />
         </SidebarItem>
-        <SidebarItem text={nombreUsuario}>
+        <SidebarItem text={nombreUsuario} to="/perfil" active={activeItem === 'Perfil'}>
           <Iniciales nombre={`${usuario?.nombre ?? ''} ${usuario?.apellido ?? ''}`.trim()} size="medium" />
         </SidebarItem>
       </SidebarFooter>

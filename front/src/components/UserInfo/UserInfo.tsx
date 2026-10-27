@@ -5,7 +5,7 @@ import Button from "../Button/Button"
 import { useUsuario } from "../../context/UsuarioContext/useUsuario"
 import "./UserInfo.css"
 
-function calcularEdad(fechaNacimiento?: string) {
+export function calcularEdad(fechaNacimiento?: string) {
     if (!fechaNacimiento) return null
     const nac = new Date(fechaNacimiento)
     if (isNaN(nac.getTime())) return null

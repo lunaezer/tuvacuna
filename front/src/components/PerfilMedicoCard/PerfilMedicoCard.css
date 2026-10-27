@@ -76,3 +76,27 @@
   padding: 0.85rem 1.4rem;
   font-size: 1rem;
 }
+
+.perfil-medico-card-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.perfil-medico-card-chip {
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  font-size: 0.8rem;
+  color: #cbd5e1;
+}
+
+.perfil-medico-card-chip b {
+  margin-right: 0.3rem;
+  font-size: 1.1rem;
+  color: #2ed573;
+}
+
+.perfil-medico-card-chip b.chip-amarillo { color: #fbbf24; }
+.perfil-medico-card-chip b.chip-rojo { color: #f87171; }
