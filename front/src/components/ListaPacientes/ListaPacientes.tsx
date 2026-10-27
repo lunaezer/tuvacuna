@@ -8,6 +8,8 @@ interface ListaPacientesProps {
   pacientes: PacienteLista[]
   seleccionadoId: number | null
   onSeleccionar: (id: number) => void
+  onVerCarnet: (id: number) => void
+
 }
 
 const MESES = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC']
@@ -19,7 +21,7 @@ function formatearFecha(iso: string | null) {
   return `${dia}·${MESES[Number(mes) - 1]}·${anio}`
 }
 
-export default function ListaPacientes({ pacientes, seleccionadoId, onSeleccionar }: ListaPacientesProps) {
+export default function ListaPacientes({ pacientes, seleccionadoId, onSeleccionar, onVerCarnet }: ListaPacientesProps) {
   return (
     <div className="lista-pacientes">
       <div className="lista-pacientes-encabezado">
@@ -45,7 +47,7 @@ export default function ListaPacientes({ pacientes, seleccionadoId, onSelecciona
               </span>
               <span className="lista-pacientes-fecha">{formatearFecha(p.ultimaVacuna)}</span>
               <EstadoPacienteBadge estado={p.estado} />
-              <ChevronRight size={16} />
+              <ChevronRight size={16}  onClick={() => onVerCarnet(p.id)} />
             </li>
           ))}
         </ul>

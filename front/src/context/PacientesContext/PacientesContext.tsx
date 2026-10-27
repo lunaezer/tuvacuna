@@ -16,6 +16,7 @@ interface PacientesContextType {
     cargandoDetalle: boolean;
     errorDetalle: string;
     seleccionar: (id: number) => Promise<void>;
+    cargarLista: () => Promise<void>;
 }
 
 export const PacientesContext = createContext<PacientesContextType | undefined>(undefined);
@@ -31,7 +32,35 @@ export const PacientesProvider = ({ children }: { children: ReactNode }) => {
     const [detalles, setDetalles] = useState<Record<number, PacienteDetalle>>({}); // cache por id
     const [errorDetalle, setErrorDetalle] = useState("");
 
-    // Lista de pacientes: solo se pide si quien está logueado es médico
+    // Pide la lista de pacientes. Se expone para poder volver a pedirla (ej: al aceptar una solicitud)
+    const cargarLista = useCallback(async () => {
+        if (!esMedico) return; // solo los médicos tienen pacientes
+        setCargandoLista(true);
+        setErrorLista("");
+
+        if (USAR_MOCK) {
+            setPacientes(pacientesListaMock);
+            setCargandoLista(false);
+            return;
+        }
+        try {
+            const response = await fetch(`${API_URL}/api/medico/pacientes`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            if (!response.ok) {
+                const data = await response.json().catch(() => null);
+                setErrorLista(data?.mensaje ?? "No se pudieron cargar los pacientes");
+                return;
+            }
+            setPacientes(await response.json());
+        } catch {
+            setErrorLista("No se pudo conectar con el servidor");
+        } finally {
+            setCargandoLista(false);
+        }
+    }, [esMedico, token]);
+
+    // La lista solo se pide si quien está logueado es médico
     useEffect(() => {
         if (!esMedico) {
             setPacientes([]);
@@ -42,35 +71,8 @@ export const PacientesProvider = ({ children }: { children: ReactNode }) => {
             setCargandoLista(false);
             return;
         }
-
-        async function cargarLista() {
-            setCargandoLista(true);
-            setErrorLista("");
-
-            if (USAR_MOCK) {
-                setPacientes(pacientesListaMock);
-                setCargandoLista(false);
-                return;
-            }
-            try {
-                const response = await fetch(`${API_URL}/api/medico/pacientes`, {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-                if (!response.ok) {
-                    const data = await response.json().catch(() => null);
-                    setErrorLista(data?.mensaje ?? "No se pudieron cargar los pacientes");
-                    return;
-                }
-                setPacientes(await response.json());
-            } catch {
-                setErrorLista("No se pudo conectar con el servidor");
-            } finally {
-                setCargandoLista(false);
-            }
-        }
-
         cargarLista();
-    }, [esMedico, token]);
+    }, [esMedico, cargarLista]);
 
     // Detalle del paciente: se pide al seleccionarlo y se guarda en el cache
     const seleccionar = useCallback(async (id: number) => {
@@ -119,6 +121,7 @@ export const PacientesProvider = ({ children }: { children: ReactNode }) => {
                 cargandoDetalle,
                 errorDetalle,
                 seleccionar,
+                cargarLista,
             }}
         >
             {children}

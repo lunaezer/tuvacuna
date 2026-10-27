@@ -4,6 +4,7 @@ import DatosMedico from '../../components/DatosMedico/DatosMedico'
 import InvitacionesRecibidas from '../../components/InvitacionesRecibidas/InvitacionesRecibidas'
 import Button from '../../components/Button/Button'
 import { useSolicitudesMedico } from '../../hooks/useSolicitudesMedico'
+import { usePacientes } from '../../hooks/usePacientes'
 import { useUsuario } from '../../context/UsuarioContext/useUsuario'
 import './InicioMedicoPage.css'
 
@@ -11,6 +12,12 @@ export default function InicioMedicoPage() {
   const navigate = useNavigate()
   const { logout } = useUsuario()
   const { solicitudes, aceptar, rechazar } = useSolicitudesMedico()
+  const { cargarLista } = usePacientes()
+
+  const aceptarYActualizar = async (id: number) => {
+    await aceptar(id) // si falla, tira el error y no sigue
+    cargarLista() // el paciente aceptado aparece en "Mis pacientes"
+  }
 
   const cerrarSesion = () => {
     logout()
@@ -27,7 +34,7 @@ export default function InicioMedicoPage() {
         <div className="inicio-medico-columna">
           <InvitacionesRecibidas
             solicitudes={solicitudes}
-            onAceptar={aceptar}
+            onAceptar={aceptarYActualizar}
             onRechazar={rechazar}
             onGestionar={() => navigate('/pacientes')}
           />

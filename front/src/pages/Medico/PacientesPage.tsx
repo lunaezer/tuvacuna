@@ -48,7 +48,7 @@ export default function PacientesPage() {
             atrasados={pacientes.filter((p) => p.estado === 'atrasada').length}
           />
 
-          <ListaPacientes pacientes={visibles} seleccionadoId={seleccionadoId} onSeleccionar={seleccionar} />
+          <ListaPacientes pacientes={visibles} seleccionadoId={seleccionadoId} onSeleccionar={seleccionar} onVerCarnet={(id) => navigate(`/pacientes/${id}/carnet`)}/>
 
           <PreviewPaciente
             paciente={seleccionado}
