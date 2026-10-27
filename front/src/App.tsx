@@ -3,6 +3,7 @@ import { UsuarioProvider } from './context/UsuarioContext/UsuarioContext'
 import { FamiliaProvider } from './context/FamiliaContext/FamiliaContext'
 import { DosisProvider } from './context/DosisContext/DosisContext'
 import { PacientesProvider } from './context/PacientesContext/PacientesContext'
+import { MedicosProvider } from './context/MedicosContext/MedicosContext'
 import Navbar from './components/Navbar/Navbar'
 import Footer from './components/Footer/Footer'
 import DashboardLayout from './components/DashboardLayout/DashboardLayout'
@@ -95,9 +96,11 @@ function App() {
       <FamiliaProvider>
         <DosisProvider>
           <PacientesProvider>
-            <Router>
-              <LayoutWrapper />
-            </Router>
+            <MedicosProvider>
+              <Router>
+                <LayoutWrapper />
+              </Router>
+            </MedicosProvider>
           </PacientesProvider>
         </DosisProvider>
       </FamiliaProvider>

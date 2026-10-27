@@ -11,13 +11,10 @@ export interface Familiar {
   edad?: number
 }
 
-export type RolInvitacion = 'medico' | 'familiar'
-
 export interface Invitacion {
   id: string
   nombre: string
   apellido: string
-  rol: RolInvitacion
 }
 
 // Solicitud que un paciente le manda al médico (el id es el de la solicitud, no el del paciente)
@@ -26,6 +23,24 @@ export interface SolicitudPaciente {
   nombre: string
   apellido: string
   edad?: number // el back todavía no la manda
+}
+
+// Un médico que ya atiende al paciente
+export interface Medico {
+  id: number
+  nombre: string
+  apellido: string
+  especialidad: string
+  matricula: string
+  institucion?: string
+}
+
+// Lo que completa el paciente para mandarle una solicitud a un médico (los 4 son obligatorios)
+export interface DatosMedico {
+  matricula: string
+  mail: string
+  nombre: string
+  apellido: string
 }
 
 export type EstadoPaciente = 'atrasada' | 'proxima' | 'al-dia'

@@ -1,0 +1,33 @@
+.agregar-medico-titulo {
+  margin: 0 0 1rem;
+  font-size: 1.85rem;
+  font-weight: 800;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.agregar-medico-fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.agregar-medico-error {
+  margin: 0;
+  color: #b91c1c;
+  font-size: 0.875rem;
+}
+
+.agregar-medico-acciones {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.agregar-medico-acciones > * {
+  flex: 1;
+}
+
+.agregar-medico-acciones .btn {
+  padding: 1.4375rem 1.5rem;
+}

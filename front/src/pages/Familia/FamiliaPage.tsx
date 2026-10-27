@@ -2,9 +2,12 @@ import { useState } from 'react'
 import PageHeader from '../../components/PageHeader/PageHeader'
 import FamiliarCard from '../../components/FamiliarCard/FamiliarCard'
 import CarnetFamiliarModal from '../../components/CarnetFamiliarModal/CarnetFamiliarModal'
-import InvitacionFila from '../../components/InvitacionFila/InvitacionFila'
+import CajaPersonas from '../../components/CajaPersonas/CajaPersonas'
+import PersonaFila from '../../components/PersonaFila/PersonaFila'
+import Button from '../../components/Button/Button'
 import AgregarFamiliarBoton from '../../components/AgregarFamiliarBoton/AgregarFamiliarBoton'
 import { useFamilia } from '../../hooks/useFamilia'
+import { useMedicos } from '../../hooks/useMedicos'
 import { familiaMock } from '../../mocks/carnetMock'
 import type { Familiar } from '../../types'
 import './FamiliaPage.css'
@@ -14,6 +17,7 @@ const USAR_MOCK = true
 
 export default function FamiliaPage() {
   const { familiares: familiaReal, invitaciones, aceptarInvitacion, rechazarInvitacion, abrirModalAgregar } = useFamilia()
+  const { medicos, errorMedicos, abrirModalAgregarMedico } = useMedicos()
   const familiares = USAR_MOCK ? familiaMock : familiaReal
   const [familiarSeleccionado, setFamiliarSeleccionado] = useState<Familiar | null>(null)
 
@@ -31,25 +35,40 @@ export default function FamiliaPage() {
         titulo="Grupo familiar"
         subtitulo="Gestiona el carnet de tus hijos y familiares a cargo."
       >
-        <AgregarFamiliarBoton variante="celeste" onClick={abrirModalAgregar} />
+        <div className="familia-header-botones">
+          <Button text="Agregar medico" variant="primary" onClick={abrirModalAgregarMedico} />
+          <AgregarFamiliarBoton variante="celeste" onClick={abrirModalAgregar} />
+        </div>
       </PageHeader>
 
       {invitaciones.length > 0 && (
-        <section className="familia-invitaciones">
-          <div className="familia-invitaciones-header">
-            <h2 className="familia-invitaciones-titulo">Invitaciones recibidas</h2>
-            <span className="familia-invitaciones-badge">Pendientes</span>
-          </div>
-
+        <CajaPersonas titulo="Invitaciones recibidas" badge="Pendientes" variante="invitaciones">
           {invitaciones.map((invitacion) => (
-            <InvitacionFila
+            <PersonaFila
               key={invitacion.id}
-              invitacion={invitacion}
-              onAceptar={() => responder(() => aceptarInvitacion(invitacion.id))}
-              onRechazar={() => responder(() => rechazarInvitacion(invitacion.id))}
+              nombre={`${invitacion.nombre} ${invitacion.apellido}`}
+              etiqueta="Familiar"
+              variante="familiar"
+            >
+              <Button text="Rechazar" variant="rechazar" onClick={() => responder(() => rechazarInvitacion(invitacion.id))} />
+              <Button text="Aceptar" variant="aceptar" onClick={() => responder(() => aceptarInvitacion(invitacion.id))} />
+            </PersonaFila>
+          ))}
+        </CajaPersonas>
+      )}
+
+      {errorMedicos && <p className="familia-error">{errorMedicos}</p>}
+      {medicos.length > 0 && (
+        <CajaPersonas titulo="Médicos" variante="medicos">
+          {medicos.map((medico) => (
+            <PersonaFila
+              key={medico.id}
+              nombre={`Dr. ${medico.nombre} ${medico.apellido}`}
+              etiqueta="Médico"
+              variante="medico"
             />
           ))}
-        </section>
+        </CajaPersonas>
       )}
 
       <div className="familia-grid">

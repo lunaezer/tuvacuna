@@ -5,41 +5,15 @@
   flex-direction: column;
 }
 
-.familia-invitaciones {
-  background: #ffffff;
-  border: 1px solid #fbbf24;
-  border-radius: 1rem;
-  padding: 1.25rem 1.75rem;
-  margin-bottom: 2rem;
-  width: 100%;
-  max-width: 60rem;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.familia-invitaciones-header {
+.familia-header-botones {
   display: flex;
-  align-items: center;
   gap: 1rem;
 }
 
-.familia-invitaciones-titulo {
-  color: #0f172a;
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-
-.familia-invitaciones-badge {
-  background: #fef3c7;
-  color: #b45309;
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 0.25rem 0.875rem;
-  border-radius: 9999px;
-}
-
-.familia-invitaciones .invitacion-fila + .invitacion-fila {
-  border-top: 1px solid #e2e8f0;
+.familia-error {
+  color: #b91c1c;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 
 .familia-grid {

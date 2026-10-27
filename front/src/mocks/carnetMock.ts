@@ -2,8 +2,7 @@ import type { Familiar, Invitacion, SeccionHistorial } from '../types'
 
 // Respuesta hardcodeada de GET /api/familia/solicitudes/recibidas
 export const invitacionesMock: Invitacion[] = [
-  { id: 'i1', nombre: 'joaquin', apellido: 'baranek', rol: 'medico' },
-  { id: 'i2', nombre: 'Juliana', apellido: 'Pane', rol: 'familiar' },
+  { id: 'i1', nombre: 'Juliana', apellido: 'Pane' },
 ]
 
 // Respuesta hardcodeada de GET /api/familia
