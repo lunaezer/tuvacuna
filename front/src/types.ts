@@ -23,6 +23,7 @@ export interface SolicitudPaciente {
   nombre: string
   apellido: string
   edad?: number // el back todavía no la manda
+  respuesta?: 'aceptada' | 'rechazada' // se marca al responder, para mostrar la confirmación un momento
 }
 
 // Un médico que ya atiende al paciente
@@ -33,14 +34,6 @@ export interface Medico {
   especialidad: string
   matricula: string
   institucion?: string
-}
-
-// Lo que completa el paciente para mandarle una solicitud a un médico (los 4 son obligatorios)
-export interface DatosMedico {
-  matricula: string
-  mail: string
-  nombre: string
-  apellido: string
 }
 
 export type EstadoPaciente = 'atrasada' | 'proxima' | 'al-dia'

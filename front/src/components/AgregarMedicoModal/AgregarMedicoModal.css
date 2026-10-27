@@ -6,10 +6,10 @@
   color: var(--text-primary);
 }
 
-.agregar-medico-fila {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+.agregar-medico-ayuda {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.9rem;
 }
 
 .agregar-medico-error {
@@ -18,9 +18,20 @@
   font-size: 0.875rem;
 }
 
+.agregar-medico-lista {
+  max-height: 18rem;
+  overflow-y: auto;
+}
+
+.agregar-medico-ya {
+  flex-shrink: 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #047857;
+}
+
 .agregar-medico-acciones {
   display: flex;
-  gap: 1rem;
   margin-top: 0.5rem;
 }
 
@@ -30,4 +41,12 @@
 
 .agregar-medico-acciones .btn {
   padding: 1.4375rem 1.5rem;
+}
+
+/* Botón "Solicitado": verde y sin acción, del mismo tamaño que "Agregar" */
+.persona-fila .agregar-medico-solicitado {
+  background: #dcfce7;
+  color: #047857;
+  opacity: 1;
+  cursor: default;
 }

@@ -20,7 +20,8 @@
   flex-shrink: 0;
 }
 
-.persona-fila-icono--familiar {
+.persona-fila-icono--familiar,
+.persona-fila-icono--paciente {
   color: #059669;
   border-color: #34d399;
 }
@@ -30,8 +31,19 @@
   border-color: #38bdf8;
 }
 
-.persona-fila-nombre {
+.persona-fila-datos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
   min-width: 10rem;
+}
+
+.persona-fila-detalle {
+  font-size: 0.8125rem;
+  color: #64748b;
+}
+
+.persona-fila-nombre {
   color: #0f172a;
   font-size: 0.9375rem;
   font-weight: 600;
@@ -44,7 +56,8 @@
   border-radius: 9999px;
 }
 
-.persona-fila-etiqueta--familiar {
+.persona-fila-etiqueta--familiar,
+.persona-fila-etiqueta--paciente {
   background: #dcfce7;
   color: #059669;
 }
@@ -68,4 +81,9 @@
     margin-left: 0;
     width: 100%;
   }
+}
+
+.persona-fila-avatar {
+  display: flex;
+  flex-shrink: 0;
 }

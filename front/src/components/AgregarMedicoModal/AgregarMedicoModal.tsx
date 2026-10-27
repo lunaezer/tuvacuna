@@ -2,90 +2,132 @@ import { useEffect, useState } from "react";
 import Modal from "../Modal/Modal";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
-import type { DatosMedico } from "../../types";
+import PersonaFila from "../PersonaFila/PersonaFila";
+import type { Medico } from "../../types";
 import "./AgregarMedicoModal.css";
 
 interface AgregarMedicoModalProps {
   isOpen: boolean
   onClose: () => void
-  onEnviar: (datos: DatosMedico) => Promise<void>
+  onBuscar: (texto: string) => Promise<Medico[]>
+  onEnviar: (idMedico: number) => Promise<void>
+  idsAgregados: number[] // médicos que ya atienden al paciente
 }
 
-const formVacio: DatosMedico = { matricula: "", mail: "", nombre: "", apellido: "" }
+export default function AgregarMedicoModal({ isOpen, onClose, onBuscar, onEnviar, idsAgregados }: AgregarMedicoModalProps) {
+  const [texto, setTexto] = useState("")
+  const [resultados, setResultados] = useState<Medico[]>([])
+  const [buscando, setBuscando] = useState(false)
+  const [error, setError] = useState("")
+  const [enviandoId, setEnviandoId] = useState<number | null>(null)
+  const [solicitados, setSolicitados] = useState<number[]>([]) // a quiénes ya se les mandó la solicitud
 
-export default function AgregarMedicoModal({ isOpen, onClose, onEnviar }: AgregarMedicoModalProps) {
-  const [form, setForm] = useState<DatosMedico>(formVacio)
-  const [errores, setErrores] = useState<Partial<Record<keyof DatosMedico, string>>>({})
-  const [errorGeneral, setErrorGeneral] = useState("")
-  const [enviando, setEnviando] = useState(false)
+  const buscado = texto.trim()
 
   // Al cerrar se limpia todo, así la próxima vez arranca vacío
   useEffect(() => {
     if (!isOpen) {
-      setForm(formVacio)
-      setErrores({})
-      setErrorGeneral("")
-      setEnviando(false)
+      setTexto("")
+      setResultados([])
+      setBuscando(false)
+      setError("")
+      setEnviandoId(null)
+      setSolicitados([])
     }
   }, [isOpen])
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-  }
+  // Busca mientras escribe, esperando 300 ms desde la última tecla
+  useEffect(() => {
+    setError("")
+    if (buscado.length < 2) {
+      setResultados([])
+      return
+    }
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    setErrorGeneral("")
+    let vigente = true // descarta respuestas viejas si ya se escribió otra cosa
+    const timer = setTimeout(async () => {
+      setBuscando(true)
+      try {
+        const medicos = await onBuscar(buscado)
+        if (vigente) setResultados(medicos)
+      } catch (err) {
+        if (vigente) setError(err instanceof Error ? err.message : "No se pudo buscar médicos")
+      } finally {
+        if (vigente) setBuscando(false)
+      }
+    }, 300)
 
-    // Los 4 datos son obligatorios
-    const nuevos: typeof errores = {}
-    if (!form.nombre.trim()) nuevos.nombre = "Ingresá el nombre"
-    if (!form.apellido.trim()) nuevos.apellido = "Ingresá el apellido"
-    if (!form.matricula.trim()) nuevos.matricula = "Ingresá la matrícula"
-    if (!/^\S+@\S+\.\S+$/.test(form.mail.trim())) nuevos.mail = "Correo electrónico no válido"
-    setErrores(nuevos)
-    if (Object.keys(nuevos).length > 0) return
+    return () => {
+      vigente = false
+      clearTimeout(timer)
+    }
+  }, [buscado])
 
-    setEnviando(true)
+  async function agregar(medico: Medico) {
+    setError("")
+    setEnviandoId(medico.id)
     try {
-      await onEnviar({
-        nombre: form.nombre.trim(),
-        apellido: form.apellido.trim(),
-        matricula: form.matricula.trim(),
-        mail: form.mail.trim(),
-      })
-      onClose()
+      await onEnviar(medico.id)
+      setSolicitados((actuales) => [...actuales, medico.id])
     } catch (err) {
-      setErrorGeneral(err instanceof Error ? err.message : "No se pudo enviar la solicitud")
+      setError(err instanceof Error ? err.message : "No se pudo enviar la solicitud")
     } finally {
-      setEnviando(false)
+      setEnviandoId(null)
     }
   }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <h1 className="agregar-medico-titulo">Agregar médico</h1>
-      <form className="modal-form" onSubmit={handleSubmit} noValidate>
-        <div className="agregar-medico-fila">
-          <Input variant="small" name="nombre" label="Nombre" placeholder="Carolina" required
-            value={form.nombre} onChange={handleChange} error={errores.nombre} />
-          <Input variant="small" name="apellido" label="Apellido" placeholder="Rivas" required
-            value={form.apellido} onChange={handleChange} error={errores.apellido} />
-        </div>
 
-        <Input variant="large" name="matricula" label="Matrícula profesional" placeholder="112455" required
-          value={form.matricula} onChange={handleChange} error={errores.matricula} />
+      <div className="modal-form">
+        <Input
+          variant="large"
+          name="busqueda"
+          label="Buscar médico"
+          placeholder="Nombre, apellido, especialidad u hospital"
+          value={texto}
+          onChange={(e) => setTexto(e.target.value)}
+        />
 
-        <Input variant="large" type="email" name="mail" label="Correo del médico" placeholder="medico@correo.com" required
-          value={form.mail} onChange={handleChange} error={errores.mail} />
+        {error && <p className="agregar-medico-error">{error}</p>}
 
-        {errorGeneral && <p className="agregar-medico-error">{errorGeneral}</p>}
+        {buscado.length < 2 ? (
+          <p className="agregar-medico-ayuda">Escribí al menos 2 letras para buscar.</p>
+        ) : buscando ? (
+          <p className="agregar-medico-ayuda">Buscando...</p>
+        ) : resultados.length === 0 ? (
+          !error && <p className="agregar-medico-ayuda">No encontramos médicos con esa búsqueda.</p>
+        ) : (
+          <div className="agregar-medico-lista">
+            {resultados.map((medico) => (
+              <PersonaFila
+                key={medico.id}
+                nombre={`Dr. ${medico.nombre} ${medico.apellido}`}
+                detalle={[medico.especialidad, medico.institucion, `MN ${medico.matricula}`].filter(Boolean).join(" · ")}
+                variante="medico"
+              >
+                {idsAgregados.includes(medico.id) ? (
+                  <span className="agregar-medico-ya">Ya te atiende</span>
+                ) : solicitados.includes(medico.id) ? (
+                  <Button text="Solicitado" variant="aceptar" disabled className="agregar-medico-solicitado" />
+                ) : (
+                  <Button
+                    text={enviandoId === medico.id ? "Enviando..." : "Agregar"}
+                    variant="aceptar"
+                    disabled={enviandoId !== null}
+                    onClick={() => agregar(medico)}
+                  />
+                )}
+              </PersonaFila>
+            ))}
+          </div>
+        )}
 
         <div className="agregar-medico-acciones">
-          <Button text="Cancelar" type="button" variant="primary" onClick={onClose} />
-          <Button text={enviando ? "Enviando..." : "Enviar solicitud"} type="submit" variant="celeste" disabled={enviando} />
+          <Button text="Cerrar" type="button" variant="primary" onClick={onClose} />
         </div>
-      </form>
+      </div>
     </Modal>
   );
 }

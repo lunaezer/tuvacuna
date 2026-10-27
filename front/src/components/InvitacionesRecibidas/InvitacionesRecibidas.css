@@ -33,43 +33,43 @@
 }
 
 .invitaciones-recibidas-lista {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  text-align: left;
 }
 
-.invitaciones-recibidas-fila {
-  display: flex;
-  align-items: center;
-  gap: 0.875rem;
-  padding: 0.75rem 1rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 1rem;
-  background: #f8fafc;
-}
-
-.invitaciones-recibidas-datos {
-  display: flex;
-  flex-direction: column;
-}
-
-.invitaciones-recibidas-nombre {
-  font-weight: 600;
-  color: #0f172a;
-}
-
-.invitaciones-recibidas-edad {
+/* Aceptar / Rechazar suaves y más chicos, como en el diseño */
+.invitaciones-recibidas .persona-fila-acciones .btn {
+  padding: 0.4rem 0.9rem;
   font-size: 0.75rem;
-  color: #64748b;
+  border: none;
 }
 
-.invitaciones-recibidas-acciones {
-  margin-left: auto;
-  display: flex;
-  gap: 0.5rem;
+.invitaciones-recibidas .persona-fila-acciones .btn-aceptar {
+  background: #dcfce7;
+  color: #047857;
+}
+
+.invitaciones-recibidas .persona-fila-acciones .btn-rechazar {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+/* Confirmación que reemplaza a la fila un momento después de responder */
+.invitaciones-recibidas-franja {
+  margin: 0.5rem 0;
+  padding: 0.9rem 1rem;
+  border-radius: 1rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.invitaciones-recibidas-franja--aceptada {
+  background: #dcfce7;
+  color: #047857;
+}
+
+.invitaciones-recibidas-franja--rechazada {
+  background: #fee2e2;
+  color: #b91c1c;
 }
 
 .invitaciones-recibidas-vacio {
@@ -81,20 +81,4 @@
   margin: 0;
   color: #b91c1c;
   font-size: 0.875rem;
-}
-
-.invitaciones-recibidas-acciones .btn {
-  padding: 0.4rem 0.9rem;
-  font-size: 0.75rem;
-  border: none;
-}
-
-.invitaciones-recibidas-acciones .btn-aceptar {
-  background: #dcfce7;
-  color: #047857;
-}
-
-.invitaciones-recibidas-acciones .btn-rechazar {
-  background: #fee2e2;
-  color: #b91c1c;
 }

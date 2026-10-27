@@ -5,7 +5,7 @@ import { solicitudesMock } from "../mocks/solicitudesMock";
 import type { SolicitudPaciente } from "../types";
 
 // Poner en false para usar el back real
-const USAR_MOCK = true;
+const USAR_MOCK = false;
 
 export const useSolicitudesMedico = () => {
     const { token } = useUsuario();
@@ -49,8 +49,14 @@ export const useSolicitudesMedico = () => {
             }
         }
 
-        // Ya la respondí: sale de la lista de pendientes
-        setSolicitudes((actuales) => actuales.filter((solicitud) => solicitud.id !== id));
+        // Ya la respondí: queda marcada un momento (para mostrar la confirmación) y después sale de la lista
+        const respuesta: SolicitudPaciente["respuesta"] = accion === "aceptar" ? "aceptada" : "rechazada";
+        setSolicitudes((actuales) =>
+            actuales.map((solicitud) => (solicitud.id === id ? { ...solicitud, respuesta } : solicitud)),
+        );
+        setTimeout(() => {
+            setSolicitudes((actuales) => actuales.filter((solicitud) => solicitud.id !== id));
+        }, 2500);
     }
 
     useEffect(() => {

@@ -4,18 +4,40 @@ import { useUsuario } from "../UsuarioContext/useUsuario";
 import { medicosMock, medicosExistentesMock } from "../../mocks/medicosMock";
 import { normalizar } from "../../utils/texto";
 import AgregarMedicoModal from "../../components/AgregarMedicoModal/AgregarMedicoModal";
-import Toast from "../../components/Toast/Toast";
-import type { DatosMedico, Medico } from "../../types";
+import type { Medico } from "../../types";
 
 // Poner en false para usar el back real
-const USAR_MOCK = true;
+const USAR_MOCK = false;
+
+// Como los manda el back (el id viene como id_medico)
+interface MedicoBack {
+    id?: number;
+    id_medico?: number;
+    nombre: string;
+    apellido: string;
+    especialidad: string;
+    institucion?: string;
+    matricula: string | number;
+}
+
+function aMedico(m: MedicoBack): Medico {
+    return {
+        id: (m.id_medico ?? m.id) as number,
+        nombre: m.nombre,
+        apellido: m.apellido,
+        especialidad: m.especialidad,
+        institucion: m.institucion,
+        matricula: String(m.matricula),
+    };
+}
 
 interface MedicosContextType {
     medicos: Medico[];                                       // los que ya me atienden
     cargandoMedicos: boolean;
     errorMedicos: string;
     cargarMedicos: () => Promise<void>;
-    enviarSolicitud: (datos: DatosMedico) => Promise<void>;  // tira un Error si falla
+    buscarMedicos: (texto: string) => Promise<Medico[]>;     // tira un Error si falla
+    enviarSolicitud: (idMedico: number) => Promise<void>;    // tira un Error si falla
     abrirModalAgregarMedico: () => void;
 }
 
@@ -30,7 +52,6 @@ export const MedicosProvider = ({ children }: { children: ReactNode }) => {
     const [errorMedicos, setErrorMedicos] = useState("");
     const solicitudesMock = useRef(new Set<number>()); // solo para simular el 409 con el mock
     const [modalAbierto, setModalAbierto] = useState(false);
-    const [solicitudEnviada, setSolicitudEnviada] = useState(false);
 
     // Médicos que ya aceptaron al paciente
     const cargarMedicos = useCallback(async () => {
@@ -43,21 +64,10 @@ export const MedicosProvider = ({ children }: { children: ReactNode }) => {
             setCargandoMedicos(false);
             return;
         }
-        try {
-            const response = await fetch(`${API_URL}/api/medicos`, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            if (!response.ok) {
-                const data = await response.json().catch(() => null);
-                setErrorMedicos(data?.mensaje ?? "No se pudieron cargar tus médicos");
-                return;
-            }
-            setMedicos(await response.json());
-        } catch {
-            setErrorMedicos("No se pudo conectar con el servidor");
-        } finally {
-            setCargandoMedicos(false);
-        }
+        // TODO: el back todavía no tiene un endpoint para listar los médicos que aceptaron al paciente
+        // (GET /api/medicos es la búsqueda). Cuando exista, se pide acá y se mapea con aMedico().
+        setMedicos([]);
+        setCargandoMedicos(false);
     }, [esPaciente, token]);
 
     useEffect(() => {
@@ -70,32 +80,53 @@ export const MedicosProvider = ({ children }: { children: ReactNode }) => {
         cargarMedicos();
     }, [esPaciente, cargarMedicos]);
 
-    // Manda los datos del médico y el back busca cuál coincide para crearle la solicitud.
-    // Tira un Error si falla (lo muestra el modal). Ej: "Médico no encontrado"
-    async function enviarSolicitud(datos: DatosMedico) {
+    // Busca médicos por nombre, apellido, especialidad o institución (mínimo 2 caracteres).
+    // Tira un Error si falla (lo muestra el modal)
+    async function buscarMedicos(texto: string): Promise<Medico[]> {
         if (USAR_MOCK) {
-            // simula la búsqueda del back: tienen que coincidir los 4 datos
-            const encontrado = medicosExistentesMock.find(
-                (m) =>
-                    normalizar(m.matricula) === normalizar(datos.matricula.trim()) &&
-                    normalizar(m.mail) === normalizar(datos.mail.trim()) &&
-                    normalizar(m.nombre) === normalizar(datos.nombre.trim()) &&
-                    normalizar(m.apellido) === normalizar(datos.apellido.trim()),
-            );
-            if (!encontrado) throw new Error("Médico no encontrado");
-            if (medicos.some((m) => m.id === encontrado.id) || solicitudesMock.current.has(encontrado.id)) {
+            // simula al back: cada palabra tiene que aparecer en alguno de los 4 campos
+            if (texto.trim().length < 2) throw new Error("La búsqueda debe tener al menos 2 caracteres");
+            const palabras = normalizar(texto.trim()).split(/\s+/).slice(0, 5);
+            return medicosExistentesMock
+                .filter((m) => {
+                    const campos = normalizar(`${m.nombre} ${m.apellido} ${m.especialidad} ${m.institucion ?? ""}`);
+                    return palabras.every((p) => campos.includes(p));
+                })
+                .sort((a, b) => a.apellido.localeCompare(b.apellido) || a.nombre.localeCompare(b.nombre))
+                .slice(0, 20);
+        }
+
+        let response: Response;
+        try {
+            response = await fetch(`${API_URL}/api/medicos?busqueda=${encodeURIComponent(texto.trim())}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+        } catch {
+            throw new Error("No se pudo conectar con el servidor");
+        }
+        if (!response.ok) {
+            const data = await response.json().catch(() => null);
+            throw new Error(data?.mensaje ?? "No se pudo buscar médicos");
+        }
+        const filas: MedicoBack[] = await response.json();
+        return filas.map(aMedico);
+    }
+
+    // Manda la solicitud al médico elegido. Tira un Error si falla (lo muestra el modal)
+    async function enviarSolicitud(idMedico: number) {
+        if (USAR_MOCK) {
+            if (medicos.some((m) => m.id === idMedico) || solicitudesMock.current.has(idMedico)) {
                 throw new Error("Ya enviaste una solicitud a este médico o ya te atiende");
             }
-            solicitudesMock.current.add(encontrado.id);
+            solicitudesMock.current.add(idMedico);
             return;
         }
 
         let response: Response;
         try {
-            response = await fetch(`${API_URL}/api/medicos/solicitud`, {
+            response = await fetch(`${API_URL}/api/medicos/${idMedico}/solicitud`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-                body: JSON.stringify(datos),
+                headers: { Authorization: `Bearer ${token}` },
             });
         } catch {
             throw new Error("No se pudo conectar con el servidor");
@@ -113,6 +144,7 @@ export const MedicosProvider = ({ children }: { children: ReactNode }) => {
                 cargandoMedicos,
                 errorMedicos,
                 cargarMedicos,
+                buscarMedicos,
                 enviarSolicitud,
                 abrirModalAgregarMedico: () => setModalAbierto(true),
             }}
@@ -121,16 +153,9 @@ export const MedicosProvider = ({ children }: { children: ReactNode }) => {
             <AgregarMedicoModal
                 isOpen={modalAbierto}
                 onClose={() => setModalAbierto(false)}
-                onEnviar={async (datos) => {
-                    await enviarSolicitud(datos);
-                    setSolicitudEnviada(true); // solo llega acá si salió bien
-                }}
-            />
-            <Toast
-                isOpen={solicitudEnviada}
-                mensaje="Solicitud enviada al médico"
-                duracion={2500}
-                onClose={() => setSolicitudEnviada(false)}
+                onBuscar={buscarMedicos}
+                onEnviar={enviarSolicitud}
+                idsAgregados={medicos.map((m) => m.id)}
             />
         </MedicosContext.Provider>
     );
