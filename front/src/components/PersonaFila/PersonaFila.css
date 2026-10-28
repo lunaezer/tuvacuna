@@ -67,6 +67,11 @@
   color: #0284c7;
 }
 
+.persona-fila-etiqueta--pendiente {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
 .persona-fila-acciones {
   margin-left: auto;
   display: flex;

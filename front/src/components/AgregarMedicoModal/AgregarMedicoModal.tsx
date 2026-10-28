@@ -104,11 +104,11 @@ export default function AgregarMedicoModal({ isOpen, onClose, onBuscar, onEnviar
               <PersonaFila
                 key={medico.id}
                 nombre={`Dr. ${medico.nombre} ${medico.apellido}`}
-                detalle={[medico.especialidad, medico.institucion, `MN ${medico.matricula}`].filter(Boolean).join(" · ")}
+                detalle={[medico.especialidad, medico.institucion, medico.matricula && `MN ${medico.matricula}`].filter(Boolean).join(" · ")}
                 variante="medico"
               >
                 {idsAgregados.includes(medico.id) ? (
-                  <span className="agregar-medico-ya">Ya te atiende</span>
+                  <span className="agregar-medico-ya">Ya enviaste solicitud</span>
                 ) : solicitados.includes(medico.id) ? (
                   <Button text="Solicitado" variant="aceptar" disabled className="agregar-medico-solicitado" />
                 ) : (

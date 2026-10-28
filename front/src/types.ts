@@ -32,8 +32,10 @@ export interface Medico {
   nombre: string
   apellido: string
   especialidad: string
-  matricula: string
+  matricula?: string                      // /api/perfil/medicos no la manda
   institucion?: string
+  estado?: 'aceptado' | 'pendiente'       // solo viene en /api/perfil/medicos
+  idVinculo?: number                      // para quitar al médico (DELETE)
 }
 
 export type EstadoPaciente = 'atrasada' | 'proxima' | 'al-dia'

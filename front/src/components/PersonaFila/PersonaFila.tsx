@@ -6,12 +6,13 @@ interface PersonaFilaProps {
   nombre: string
   detalle?: string // línea chica debajo del nombre (opcional)
   etiqueta?: string // opcional
+  etiquetaPendiente?: boolean // pinta la etiqueta de rojo (ej: solicitud pendiente)
   variante: 'familiar' | 'medico' | 'paciente' // define los colores del ícono y la etiqueta
   avatar?: ReactNode // reemplaza al ícono (ej: las iniciales)
   children?: ReactNode // acciones (opcional)
 }
 
-export default function PersonaFila({ nombre, detalle, etiqueta, variante, avatar, children }: PersonaFilaProps) {
+export default function PersonaFila({ nombre, detalle, etiqueta, etiquetaPendiente, variante, avatar, children }: PersonaFilaProps) {
   return (
     <div className="persona-fila">
       {avatar ? (
@@ -28,7 +29,11 @@ export default function PersonaFila({ nombre, detalle, etiqueta, variante, avata
       </div>
 
       {etiqueta && (
-        <span className={`persona-fila-etiqueta persona-fila-etiqueta--${variante}`}>{etiqueta}</span>
+        <span
+          className={`persona-fila-etiqueta persona-fila-etiqueta--${variante}${etiquetaPendiente ? ' persona-fila-etiqueta--pendiente' : ''}`}
+        >
+          {etiqueta}
+        </span>
       )}
 
       {children && <div className="persona-fila-acciones">{children}</div>}

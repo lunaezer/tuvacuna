@@ -5,13 +5,15 @@ export interface Usuario {
     id: string;
     nombre: string;
     rol?: "paciente" | "medico";
-    fechaNacimiento?: string;
-    obraSocial?: string;
-    comorbilidades?: (string | number)[];
     apellido?: string;
-    // solo médicos
     dni?: string;
     mail?: string;
+    // solo pacientes
+    fechaNacimiento?: string;
+    obraSocial?: string;
+    sexo?: string;
+    comorbilidades?: (string | number)[];
+    // solo médicos
     matricula?: string;
     especialidad?: string;
     institucion?: string;
@@ -44,7 +46,13 @@ export const UsuarioProvider = ({ children }: { children: ReactNode }) => {
         }
 
         const data = await response.json();
-        setUsuario(data);
+        // el back devuelve snake_case; el front usa camelCase
+        const { obra_social, fecha_de_nacimiento, ...resto } = data;
+        setUsuario({
+            ...resto,
+            obraSocial: obra_social,
+            fechaNacimiento: fecha_de_nacimiento,
+        });
     }
 
     async function login(nuevoToken: string) {

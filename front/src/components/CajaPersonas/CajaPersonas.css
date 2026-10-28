@@ -38,3 +38,12 @@
   padding: 0.25rem 0.875rem;
   border-radius: 9999px;
 }
+
+.caja-personas--accesos {
+  border-color: #e2e8f0;
+}
+
+.caja-personas--accesos .caja-personas-badge {
+  background: #e0f2fe;
+  color: #0369a1;
+}

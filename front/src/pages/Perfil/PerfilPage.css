@@ -1,35 +1,35 @@
-.contenedor-inicio-medico {
+.perfil-page {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
-.inicio-medico-grid {
+.perfil-page-grid {
   display: grid;
   grid-template-columns: 1.3fr 1fr;
   gap: 24px;
   align-items: start;
 }
 
-.inicio-medico-columna {
+.perfil-page-columna {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
 @media (max-width: 900px) {
-  .inicio-medico-grid {
+  .perfil-page-grid {
     grid-template-columns: 1fr;
   }
 }
 
-.inicio-medico-columna .boton-cerrar-sesion {
+.perfil-page-columna .boton-cerrar-sesion {
   width: 100%;
   background: #fff;
   color: #b91c1c;
   border: 1px solid #fecaca;
 }
 
-.inicio-medico-columna .boton-cerrar-sesion:hover {
+.perfil-page-columna .boton-cerrar-sesion:hover {
   background: #fef2f2;
 }

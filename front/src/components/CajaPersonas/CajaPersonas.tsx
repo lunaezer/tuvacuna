@@ -4,7 +4,7 @@ import './CajaPersonas.css'
 interface CajaPersonasProps {
   titulo: string
   badge?: string
-  variante: 'invitaciones' | 'medicos' // define el color del borde
+  variante: 'invitaciones' | 'medicos' | 'accesos' // define el color del borde
   children: ReactNode
 }
 

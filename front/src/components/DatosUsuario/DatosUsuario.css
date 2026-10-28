@@ -1,4 +1,4 @@
-.datos-medico {
+.datos-usuario {
   text-align: left;
   display: flex;
   flex-direction: column;
@@ -8,20 +8,20 @@
   border-radius: 1.5rem;
 }
 
-.datos-medico-titulo {
+.datos-usuario-titulo {
   margin: 0 0 0.5rem;
   font-size: 1.5rem;
   font-weight: 700;
   color: #0f172a;
 }
 
-.datos-medico-grid {
+.datos-usuario-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
 }
 
-.datos-medico-dato {
+.datos-usuario-dato {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
@@ -31,7 +31,7 @@
   background: #f8fafc;
 }
 
-.datos-medico-icono {
+.datos-usuario-icono {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -43,18 +43,18 @@
   color: #0284c7;
 }
 
-.datos-medico-icono--verde {
+.datos-usuario-icono--verde {
   background: #dcfce7;
   color: #059669;
 }
 
-.datos-medico-etiqueta {
+.datos-usuario-etiqueta {
   font-size: 0.6875rem;
   letter-spacing: 0.03em;
   color: #64748b;
 }
 
-.datos-medico-valor {
+.datos-usuario-valor {
   font-size: 1.0625rem;
   font-weight: 700;
   color: #0f172a;
@@ -62,7 +62,7 @@
 }
 
 @media (max-width: 720px) {
-  .datos-medico-grid {
+  .datos-usuario-grid {
     grid-template-columns: 1fr;
   }
 }

@@ -10,7 +10,6 @@ import DashboardLayout from './components/DashboardLayout/DashboardLayout'
 
 import HomePage from './pages/Home/HomePage'
 import InicioPage from './pages/Inicio/InicioPage'
-import InicioMedicoPage from './pages/Medico/InicioMedicoPage'
 import PacientesPage from './pages/Medico/PacientesPage'
 import CarnetPacientePage from './pages/Medico/CarnetPacientePage'
 import { useUsuario } from './context/UsuarioContext/useUsuario'
@@ -79,7 +78,7 @@ function LayoutWrapper() {
   return (
     <DashboardLayout activeItem={itemActivo}>
       <Routes>
-        <Route path="/inicio" element={usuario?.rol === 'medico' ? <InicioMedicoPage /> : <InicioPage />} />
+        <Route path="/inicio" element={usuario?.rol === 'medico' ? <PerfilPage /> : <InicioPage />} />
         <Route path="/mi-carnet" element={<CarnetPage />} />
         <Route path="/calendario" element={<CalendarioPage />} />
         <Route path="/centros" element={<CentrosPage />} />

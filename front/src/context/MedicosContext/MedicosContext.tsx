@@ -17,7 +17,8 @@ interface MedicoBack {
     apellido: string;
     especialidad: string;
     institucion?: string;
-    matricula: string | number;
+    matricula?: string | number;
+    estado?: "aceptado" | "pendiente";
 }
 
 function aMedico(m: MedicoBack): Medico {
@@ -27,7 +28,9 @@ function aMedico(m: MedicoBack): Medico {
         apellido: m.apellido,
         especialidad: m.especialidad,
         institucion: m.institucion,
-        matricula: String(m.matricula),
+        matricula: m.matricula != null ? String(m.matricula) : undefined,
+        estado: m.estado,
+        idVinculo: m.estado ? m.id : undefined, // solo en /api/perfil/medicos, ahí id es el del vínculo
     };
 }
 
@@ -64,9 +67,26 @@ export const MedicosProvider = ({ children }: { children: ReactNode }) => {
             setCargandoMedicos(false);
             return;
         }
-        // TODO: el back todavía no tiene un endpoint para listar los médicos que aceptaron al paciente
-        // (GET /api/medicos es la búsqueda). Cuando exista, se pide acá y se mapea con aMedico().
-        setMedicos([]);
+
+        // Trae aceptados y pendientes (cada fila trae su estado)
+        let response: Response;
+        try {
+            response = await fetch(`${API_URL}/api/perfil/medicos`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+        } catch {
+            setErrorMedicos("No se pudo conectar con el servidor");
+            setCargandoMedicos(false);
+            return;
+        }
+        if (!response.ok) {
+            const data = await response.json().catch(() => null);
+            setErrorMedicos(data?.mensaje ?? "No se pudieron cargar tus médicos");
+            setCargandoMedicos(false);
+            return;
+        }
+        const filas: MedicoBack[] = await response.json();
+        setMedicos(filas.map(aMedico));
         setCargandoMedicos(false);
     }, [esPaciente, token]);
 
@@ -135,6 +155,7 @@ export const MedicosProvider = ({ children }: { children: ReactNode }) => {
             const data = await response.json().catch(() => null);
             throw new Error(data?.mensaje ?? "No se pudo enviar la solicitud");
         }
+        await cargarMedicos(); // para que el pendiente aparezca al instante
     }
 
     return (

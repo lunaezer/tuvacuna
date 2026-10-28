@@ -64,7 +64,9 @@ export default function FamiliaPage() {
             <PersonaFila
               key={medico.id}
               nombre={`Dr. ${medico.nombre} ${medico.apellido}`}
-              etiqueta="Médico"
+              detalle={[medico.especialidad, medico.institucion].filter(Boolean).join(' · ')}
+              etiqueta={medico.estado === 'pendiente' ? 'Pendiente' : 'Médico'}
+              etiquetaPendiente={medico.estado === 'pendiente'}
               variante="medico"
             />
           ))}

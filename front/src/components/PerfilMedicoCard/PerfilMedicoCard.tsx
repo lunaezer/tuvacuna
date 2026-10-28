@@ -3,7 +3,7 @@ import Iniciales from '../Iniciales/Iniciales'
 import Button from '../Button/Button'
 import { useUsuario } from '../../context/UsuarioContext/useUsuario'
 import { useDosis } from '../../hooks/useDosis'
-import { nombreEspecialidad } from '../DatosMedico/DatosMedico'
+import { nombreEspecialidad } from '../DatosUsuario/DatosUsuario'
 import { calcularEdad } from '../UserInfo/UserInfo'
 import './PerfilMedicoCard.css'
 
