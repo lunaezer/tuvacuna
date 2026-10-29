@@ -23,13 +23,6 @@
   }
 }
 
-.perfil-page-columna .boton-cerrar-sesion {
+.perfil-page-columna .btn-peligro {
   width: 100%;
-  background: #fff;
-  color: #b91c1c;
-  border: 1px solid #fecaca;
-}
-
-.perfil-page-columna .boton-cerrar-sesion:hover {
-  background: #fef2f2;
 }

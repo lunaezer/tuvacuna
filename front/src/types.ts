@@ -1,4 +1,4 @@
-export type ButtonVariant = 'primary' | 'secondary' | 'celeste' | 'outline' | 'big' | 'medium' | 'perfil' | 'aceptar' | 'rechazar'
+export type ButtonVariant = 'primary' | 'secondary' | 'celeste' | 'outline' | 'big' | 'medium' | 'perfil' | 'aceptar' | 'rechazar' | 'peligro'
 
 export type CardVariant = 'white' | 'dark' | 'profile' | 'compact'
 

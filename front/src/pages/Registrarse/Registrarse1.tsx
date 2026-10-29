@@ -58,8 +58,7 @@ function Registrarse1() {
 
   // Paso 3
   const [carnetPhoto, setCarnetPhoto] = useState<File | null>(null);
-  const [pacientes, setPacientes] = useState<string[]>([]);
-  const [pacienteInput, setPacienteInput] = useState("");
+  const [matriculaPhoto, setMatriculaPhoto] = useState<File | null>(null);
 
   // Carga manual de vacunas (paso 3)
   const [modalVacunaAbierto, setModalVacunaAbierto] = useState(false);
@@ -74,19 +73,6 @@ function Registrarse1() {
     const { name, value } = e.target;
 
     setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handlePacienteInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setPacienteInput(e.target.value);
-  };
-
-  const handleAddPaciente = () => {
-    const email = pacienteInput.trim();
-    if (!email || pacientes.includes(email)) return;
-    setPacientes((prev) => [...prev, email]);
-    setPacienteInput("");
   };
 
   const handleNextStep = (e: React.FormEvent) => {
@@ -187,15 +173,11 @@ function Registrarse1() {
     setError("");
 
     const body = new FormData();
-    if (formData.profile === "paciente") {
-      if (carnetPhoto) body.append("carnetPhoto", carnetPhoto);
-    } else {
-      pacientes.forEach((p) => body.append("pacientes", p));
-    }
+    if (matriculaPhoto) body.append("matriculaPhoto", matriculaPhoto);
 
     try {
-      // TODO: reemplazar por el endpoint real del paso 3
-      const response = await fetch(`${API_URL}/api/ENDPOINT_PASO_3`, {
+      // TODO: reemplazar por el endpoint real de matrícula (todavía no existe en el back)
+      const response = await fetch(`${API_URL}/api/ENDPOINT_MATRICULA`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body,
@@ -214,6 +196,10 @@ function Registrarse1() {
   };
 
   const panelContent = PANEL_CONTENT[step] ?? PANEL_CONTENT[1];
+  const panelTitle =
+    step === 3 && formData.profile === "medico"
+      ? "Cuenta, datos de salud, matrícula validada y listo."
+      : panelContent.title;
 
   const stepsCard = [
     { num: "01", label: "Tus Datos" },
@@ -277,10 +263,8 @@ function Registrarse1() {
 
         {step === 3 && formData.profile === "medico" && (
           <RegistrarseForm3Medico
-            pacienteInput={pacienteInput}
-            handlePacienteInputChange={handlePacienteInputChange}
-            handleAddPaciente={handleAddPaciente}
-            pacientes={pacientes}
+            matriculaPhoto={matriculaPhoto}
+            setMatriculaPhoto={setMatriculaPhoto}
             handleSubmit={handleSubmit}
           />
         )}
@@ -291,7 +275,7 @@ function Registrarse1() {
           <span className="registro-badge-dot" />
           {panelContent.badge}
         </span>
-        <h2 className="registro-panel-title">{panelContent.title}</h2>
+        <h2 className="registro-panel-title">{panelTitle}</h2>
         <p className="registro-panel-text">{panelContent.text}</p>
 
         <div className="registro-steps-card">

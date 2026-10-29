@@ -1,4 +1,4 @@
-.perfil-medico-card {
+.perfil-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -9,30 +9,31 @@
   color: #fff;
 }
 
-.perfil-medico-card-info {
+.perfil-card-info {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
 }
 
-.perfil-medico-card-label {
+.perfil-card-label {
   font-size: 0.75rem;
   letter-spacing: 0.05em;
   color: #38bdf8;
+  display: flex;
 }
 
-.perfil-medico-card-identidad {
+.perfil-card-identidad {
   display: flex;
   align-items: center;
   gap: 1.25rem;
 }
 
-.perfil-medico-card-avatar {
+.perfil-card-avatar {
   position: relative;
   display: flex;
 }
 
-.perfil-medico-card-estado {
+.perfil-card-estado {
   position: absolute;
   right: -2px;
   bottom: 0;
@@ -43,18 +44,20 @@
   border: 2px solid #1b2b36;
 }
 
-.perfil-medico-card-nombre {
+.perfil-card-nombre {
   margin: 0;
   font-size: 2rem;
   font-weight: 700;
+  display: flex;
 }
 
-.perfil-medico-card-detalle {
+.perfil-card-detalle {
   margin: 0.25rem 0 0;
   color: #cbd5e1;
+  display: flex;
 }
 
-.perfil-medico-card-acciones {
+.perfil-card-acciones {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -62,28 +65,28 @@
 }
 
 @media (max-width: 720px) {
-  .perfil-medico-card {
+  .perfil-card {
     flex-direction: column;
     align-items: flex-start;
   }
-  .perfil-medico-card-acciones {
+  .perfil-card-acciones {
     width: 100%;
   }
 }
 
-.perfil-medico-card-acciones .btn {
+.perfil-card-acciones .btn {
   width: 100%;
   padding: 0.85rem 1.4rem;
   font-size: 1rem;
 }
 
-.perfil-medico-card-chips {
+.perfil-card-chips {
   display: flex;
   flex-wrap: wrap;
   gap: 0.6rem;
 }
 
-.perfil-medico-card-chip {
+.perfil-card-chip {
   padding: 0.4rem 0.9rem;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -92,11 +95,11 @@
   color: #cbd5e1;
 }
 
-.perfil-medico-card-chip b {
+.perfil-card-chip b {
   margin-right: 0.3rem;
   font-size: 1.1rem;
   color: #2ed573;
 }
 
-.perfil-medico-card-chip b.chip-amarillo { color: #fbbf24; }
-.perfil-medico-card-chip b.chip-rojo { color: #f87171; }
+.perfil-card-chip b.chip-amarillo { color: #fbbf24; }
+.perfil-card-chip b.chip-rojo { color: #f87171; }

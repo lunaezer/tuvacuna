@@ -1,6 +1,11 @@
 import { createContext, useEffect, useState, type ReactNode } from "react";
 import { API_URL } from "../../config";
 
+export interface Comorbilidad {
+    id: number;
+    nombre: string;
+}
+
 export interface Usuario {
     id: string;
     nombre: string;
@@ -12,7 +17,8 @@ export interface Usuario {
     fechaNacimiento?: string;
     obraSocial?: string;
     sexo?: string;
-    comorbilidades?: (string | number)[];
+    // undefined = no se pudo cargar; [] = el paciente no tiene ninguna
+    comorbilidades?: Comorbilidad[];
     // solo médicos
     matricula?: string;
     especialidad?: string;
@@ -25,6 +31,20 @@ interface UsuarioContextType {
     cargando: boolean;
     login: (token: string) => Promise<void>;
     logout: () => void;
+}
+
+async function pedirComorbilidades(token: string): Promise<Comorbilidad[] | undefined> {
+    try {
+        const response = await fetch(`${API_URL}/api/perfil/comorbilidades`, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!response.ok) return undefined;
+
+        const lista: { id_comorbilidad: number; nombre: string }[] = await response.json();
+        return lista.map((c) => ({ id: c.id_comorbilidad, nombre: c.nombre }));
+    } catch {
+        return undefined; // sin conexión o error: queda como "no cargadas"
+    }
 }
 
 export const UsuarioContext = createContext<UsuarioContextType | undefined>(undefined);
@@ -48,10 +68,13 @@ export const UsuarioProvider = ({ children }: { children: ReactNode }) => {
         const data = await response.json();
         // el back devuelve snake_case; el front usa camelCase
         const { obra_social, fecha_de_nacimiento, ...resto } = data;
+        const comorbilidades = data.rol === "paciente" ? await pedirComorbilidades(token) : undefined;
+
         setUsuario({
             ...resto,
             obraSocial: obra_social,
             fechaNacimiento: fecha_de_nacimiento,
+            comorbilidades: comorbilidades,
         });
     }
 

@@ -45,7 +45,7 @@ export default function AgregarFamiliarModal({ isOpen, onClose, onEnviar }: Agre
         <Input
           variant="large"
           type="email"
-          name="email"
+          name="email"  
           label="Mail del familiar"
           placeholder="familiar@gmail.com"
           required
@@ -62,7 +62,7 @@ export default function AgregarFamiliarModal({ isOpen, onClose, onEnviar }: Agre
             disabled={enviando}
           />
         </div>
-      </form>
+      </form> 
     </Modal>
   )
 }

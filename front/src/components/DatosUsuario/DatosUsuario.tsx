@@ -1,7 +1,5 @@
-import { useEffect, useState } from 'react'
 import { User, Check, Shield } from 'lucide-react'
 import { useUsuario } from '../../context/UsuarioContext/useUsuario'
-import { API_URL } from '../../config'
 import './DatosUsuario.css'
 
 const MAX_COMORBILIDADES_VISIBLES = 2
@@ -22,38 +20,22 @@ export function nombreEspecialidad(valor: string) {
 }
 
 export default function DatosUsuario() {
-  const { usuario, token } = useUsuario()
-  // null mientras carga o si falló; lista (posiblemente vacía) si cargó bien
-  const [comorbilidades, setComorbilidades] = useState<string[] | null>(null)
-
-  const esPaciente = usuario?.rol === 'paciente'
-
-  useEffect(() => {
-    if (!esPaciente || !token) return
-    fetch(`${API_URL}/api/perfil/comorbilidades`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error()
-        return res.json()
-      })
-      .then((lista: { nombre: string }[]) => setComorbilidades(lista.map((c) => c.nombre)))
-      .catch(() => setComorbilidades(null))
-  }, [esPaciente, token])
+  const { usuario } = useUsuario()
 
   if (!usuario) return null
 
   const esMedico = usuario.rol === 'medico'
 
+  const nombres = usuario.comorbilidades?.map((c) => c.nombre)
   let textoComorbilidades = '—'
-  if (comorbilidades) {
-    if (comorbilidades.length === 0) {
+  if (nombres) {
+    if (nombres.length === 0) {
       textoComorbilidades = 'Ninguna'
-    } else if (comorbilidades.length <= MAX_COMORBILIDADES_VISIBLES) {
-      textoComorbilidades = comorbilidades.join(', ')
+    } else if (nombres.length <= MAX_COMORBILIDADES_VISIBLES) {
+      textoComorbilidades = nombres.join(', ')
     } else {
-      const visibles = comorbilidades.slice(0, MAX_COMORBILIDADES_VISIBLES).join(', ')
-      textoComorbilidades = `${visibles} +${comorbilidades.length - MAX_COMORBILIDADES_VISIBLES}`
+      const visibles = nombres.slice(0, MAX_COMORBILIDADES_VISIBLES).join(', ')
+      textoComorbilidades = `${visibles} +${nombres.length - MAX_COMORBILIDADES_VISIBLES}`
     }
   }
 
@@ -103,7 +85,7 @@ export default function DatosUsuario() {
             <div className="datos-usuario-dato">
               <span className="datos-usuario-icono datos-usuario-icono--verde"><Check size={16} /></span>
               <span className="datos-usuario-etiqueta">COMORBILIDADES</span>
-              <span className="datos-usuario-valor" title={comorbilidades?.join(', ')}>
+              <span className="datos-usuario-valor" title={nombres?.join(', ')}>
                 {textoComorbilidades}
               </span>
             </div>

@@ -47,6 +47,7 @@
   color: #0f172a;
   font-size: 0.9375rem;
   font-weight: 600;
+  display: flex;
 }
 
 .persona-fila-etiqueta {

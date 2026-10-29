@@ -5,14 +5,14 @@ import { useUsuario } from '../../context/UsuarioContext/useUsuario'
 import { useDosis } from '../../hooks/useDosis'
 import { nombreEspecialidad } from '../DatosUsuario/DatosUsuario'
 import { calcularEdad } from '../UserInfo/UserInfo'
-import './PerfilMedicoCard.css'
+import './PerfilCard.css'
 
-interface PerfilMedicoCardProps {
+interface PerfilCardProps {
   // en /perfil el botón "Editar perfil" activa el modo edición en vez de navegar
   onEditar?: () => void
 }
 
-export default function PerfilMedicoCard({ onEditar }: PerfilMedicoCardProps) {
+export default function PerfilCard({ onEditar }: PerfilCardProps) {
   const { usuario } = useUsuario()
   const { conteo } = useDosis()
   const navigate = useNavigate()
@@ -36,32 +36,32 @@ export default function PerfilMedicoCard({ onEditar }: PerfilMedicoCardProps) {
       ]
 
   return (
-    <section className="perfil-medico-card">
-      <div className="perfil-medico-card-info">
-        <span className="perfil-medico-card-label">MI PERFIL</span>
+    <section className="perfil-card">
+      <div className="perfil-card-info">
+        <span className="perfil-card-label">MI PERFIL</span>
 
-        <div className="perfil-medico-card-identidad">
-          <div className="perfil-medico-card-avatar">
+        <div className="perfil-card-identidad">
+          <div className="perfil-card-avatar">
             <Iniciales nombre={nombreCompleto} size="large" />
-            <span className="perfil-medico-card-estado" />
+            <span className="perfil-card-estado" />
           </div>
 
           <div>
-            <h2 className="perfil-medico-card-nombre">{esMedico ? 'Dr. ' : ''}{nombreCompleto}</h2>
-            <p className="perfil-medico-card-detalle">{detalle.filter(Boolean).join(' · ')}</p>
+            <h2 className="perfil-card-nombre">{esMedico ? 'Dr. ' : ''}{nombreCompleto}</h2>
+            <p className="perfil-card-detalle">{detalle.filter(Boolean).join(' · ')}</p>
           </div>
         </div>
 
         {!esMedico && (
-          <div className="perfil-medico-card-chips">
-            <span className="perfil-medico-card-chip"><b>{conteo.aplicadas}</b> Vacunas en tu carnet</span>
-            <span className="perfil-medico-card-chip"><b className="chip-amarillo">{conteo.recomendadas}</b> Próximas</span>
-            <span className="perfil-medico-card-chip"><b className="chip-rojo">{conteo.atrasadas}</b> Atrasadas</span>
+          <div className="perfil-card-chips">
+            <span className="perfil-card-chip"><b>{conteo.aplicadas}</b> Vacunas en tu carnet</span>
+            <span className="perfil-card-chip"><b className="chip-amarillo">{conteo.recomendadas}</b> Próximas</span>
+            <span className="perfil-card-chip"><b className="chip-rojo">{conteo.atrasadas}</b> Atrasadas</span>
           </div>
         )}
       </div>
 
-      <div className="perfil-medico-card-acciones">
+      <div className="perfil-card-acciones">
         {esMedico ? (
           <Button text="Ver mis pacientes" variant="celeste" onClick={() => navigate('/pacientes')} />
         ) : (

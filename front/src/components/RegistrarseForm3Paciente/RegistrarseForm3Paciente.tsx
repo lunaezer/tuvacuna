@@ -1,5 +1,5 @@
-import type React from "react";
 import Button from "../Button/Button";
+import UploadFoto from "../UploadFoto/UploadFoto";
 import { Link, useNavigate } from "react-router-dom";
 
 interface RegistrarseForm3PacienteProps {
@@ -17,10 +17,6 @@ export default function RegistrarseForm3Paciente({
 }: RegistrarseForm3PacienteProps) {
   const navigate = useNavigate();
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCarnetPhoto(e.target.files?.[0] ?? null);
-  };
-
   return (
     <div className="registro-form-wrapper">
       <h1 className="registro-title">Traé tu carnet.</h1>
@@ -30,26 +26,7 @@ export default function RegistrarseForm3Paciente({
       </p>
 
       <div className="registro-form">
-        <label className="registro-upload-box">
-          <input
-            type="file"
-            accept="image/*"
-            capture="environment"
-            onChange={handleFileChange}
-            className="registro-upload-input"
-          />
-          <span className="registro-upload-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-              <circle cx="12" cy="13" r="4" />
-            </svg>
-          </span>
-          <span>Subi una foto de tu carnet</span>
-        </label>
-
-        {carnetPhoto && (
-          <p className="registro-file-name">{carnetPhoto.name}</p>
-        )}
+        <UploadFoto variante="carnet" archivo={carnetPhoto} onChange={setCarnetPhoto} />
 
         <Button
           type="button"
