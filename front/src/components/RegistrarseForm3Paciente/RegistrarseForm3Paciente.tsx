@@ -18,7 +18,7 @@ export default function RegistrarseForm3Paciente({
   const navigate = useNavigate();
 
   return (
-    <div className="registro-form-wrapper">
+    <div className="registro-form-wrapper is-upload">
       <h1 className="registro-title">Traé tu carnet.</h1>
       <p className="registro-subtitle">
         Paso 3 de 3. Sacale una foto a tu libreta y la leemos nosotros, o

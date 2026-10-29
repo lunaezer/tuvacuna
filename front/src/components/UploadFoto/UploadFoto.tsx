@@ -16,6 +16,7 @@ const TEXTOS: Record<Variante, string> = {
 export default function UploadFoto({ variante, archivo, onChange }: UploadFotoProps) {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.files?.[0] ?? null);
+    e.target.value = "";
   };
 
   return (
@@ -37,7 +38,19 @@ export default function UploadFoto({ variante, archivo, onChange }: UploadFotoPr
         <span>{TEXTOS[variante]}</span>
       </label>
 
-      {archivo && <p className="registro-file-name">{archivo.name}</p>}
+      {archivo && (
+        <div className="registro-file-row">
+          <p className="registro-file-name">{archivo.name}</p>
+          <button
+            type="button"
+            className="registro-file-remove"
+            onClick={() => onChange(null)}
+            aria-label="Quitar foto"
+          >
+            &times;
+          </button>
+        </div>
+      )}
     </>
   );
 }

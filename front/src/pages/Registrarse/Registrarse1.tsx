@@ -8,6 +8,7 @@ import "./Registrarse1.css";
 import RegistrarseForm3Medico from "../../components/RegistrarseForm3Medico/RegistrarseForm3Medico";
 import { useUsuario } from "../../context/UsuarioContext/useUsuario";
 import { API_URL } from "../../config";
+import VerificarMatriculaModal from "../../components/VerificarMatriculaModal/VerificarMatriculaModal";
 import AgregarVacunaModal from "../../components/AgregarVacunaModal/AgregarVacunaModal";
 import VacunaAgregadaModal from "../../components/VacunaAgregadaModal/VacunaAgregadaModal";
 import type { FormVacuna } from "../../components/AgregarVacunaModal/AgregarVacunaModal";
@@ -59,6 +60,7 @@ function Registrarse1() {
   // Paso 3
   const [carnetPhoto, setCarnetPhoto] = useState<File | null>(null);
   const [matriculaPhoto, setMatriculaPhoto] = useState<File | null>(null);
+  const [modalMatriculaAbierto, setModalMatriculaAbierto] = useState(false);
 
   // Carga manual de vacunas (paso 3)
   const [modalVacunaAbierto, setModalVacunaAbierto] = useState(false);
@@ -168,33 +170,6 @@ function Registrarse1() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-
-    const body = new FormData();
-    if (matriculaPhoto) body.append("matriculaPhoto", matriculaPhoto);
-
-    try {
-      // TODO: reemplazar por el endpoint real de matrícula (todavía no existe en el back)
-      const response = await fetch(`${API_URL}/api/ENDPOINT_MATRICULA`, {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-        body,
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        setError(data.mensaje || data.message || "Error al guardar");
-        return;
-      }
-
-      navigate("/inicio");
-    } catch {
-      setError("No se pudo conectar con el servidor");
-    }
-  };
-
   const panelContent = PANEL_CONTENT[step] ?? PANEL_CONTENT[1];
   const panelTitle =
     step === 3 && formData.profile === "medico"
@@ -210,7 +185,7 @@ function Registrarse1() {
         step === 1
           ? "Tu Carnet / Tus pacientes"
           : formData.profile === "medico"
-            ? "Tus pacientes"
+            ? "Tu matricula"
             : "Tu Carnet",
     },
   ];
@@ -265,7 +240,7 @@ function Registrarse1() {
           <RegistrarseForm3Medico
             matriculaPhoto={matriculaPhoto}
             setMatriculaPhoto={setMatriculaPhoto}
-            handleSubmit={handleSubmit}
+            onIngresar={() => setModalMatriculaAbierto(true)}
           />
         )}
       </div>
@@ -296,6 +271,15 @@ function Registrarse1() {
           ))}
         </div>
       </div>
+
+      <VerificarMatriculaModal
+        isOpen={modalMatriculaAbierto}
+        onClose={() => setModalMatriculaAbierto(false)}
+        onConfirmar={() => {
+          setModalMatriculaAbierto(false);
+          navigate("/inicio", { state: { cuentaCreada: true } });
+        }}
+      />
 
       <AgregarVacunaModal
         isOpen={modalVacunaAbierto}
