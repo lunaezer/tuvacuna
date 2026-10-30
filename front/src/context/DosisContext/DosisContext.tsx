@@ -5,7 +5,7 @@ import { carnetsMock } from "../../mocks/carnetMock";
 import type { Dosis, SeccionHistorial } from "../../types";
 
 // Poner en false para usar el back real
-const USAR_MOCK = true;
+const USAR_MOCK = false;
 
 interface ConteoDosis {
     aplicadas: number;
@@ -16,6 +16,7 @@ interface ConteoDosis {
 interface DosisContextType {
     conteo: ConteoDosis;
     paraAgendar: Dosis[];
+    aplicadas: Dosis[];
     cargandoDosis: boolean;
     cargarDosis: () => Promise<void>;
 }
@@ -60,13 +61,14 @@ export const DosisProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const paraAgendar = dosis.filter((d) => d.estado !== "aplicada");
+    const aplicadas = dosis.filter((d) => d.estado === "aplicada");
 
     useEffect(() => {
         cargarDosis();
     }, [cargarDosis]);
 
     return (
-        <DosisContext.Provider value={{ conteo, paraAgendar, cargandoDosis, cargarDosis }}>
+        <DosisContext.Provider value={{ conteo, paraAgendar, aplicadas, cargandoDosis, cargarDosis }}>
             {children}
         </DosisContext.Provider>
     );

@@ -1,0 +1,51 @@
+.dosis-resumen {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.dosis-cuadro {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+  background: #fafcfd;
+  border: 2px solid;
+  border-radius: var(--border-radius-md);
+}
+
+.dosis-icono {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  margin-bottom: 8px;
+}
+
+.dosis-numero {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.dosis-texto {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* Una variante por estado: borde + fondo y color del icono */
+.dosis-aplicadas { border-color: #6ed3a8; }
+.dosis-aplicadas .dosis-icono { background: #e3f6ec; color: #2f9e6e; }
+
+.dosis-recomendadas { border-color: var(--primary-cyan); }
+.dosis-recomendadas .dosis-icono { background: #fdf0dc; color: #b8791f; }
+
+.dosis-atrasadas { border-color: #6ed3a8; }
+.dosis-atrasadas .dosis-icono { background: #fde8e8; color: #c0392b; }
+
+@media (max-width: 768px) {
+  .dosis-resumen { grid-template-columns: 1fr; }
+}

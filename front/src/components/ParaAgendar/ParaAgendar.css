@@ -1,0 +1,25 @@
+/* Reusa CarnetCard, pero sin caja propia: filas separadas por una línea */
+.para-agendar {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+}
+
+.para-agendar .carnet-card {
+  padding: 1rem 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.para-agendar .carnet-card:last-child {
+  border-bottom: none;
+}
+
+.para-agendar-vacio {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}

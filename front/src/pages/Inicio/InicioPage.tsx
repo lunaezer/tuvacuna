@@ -7,6 +7,8 @@ import { useUsuario } from '../../context/UsuarioContext/useUsuario'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Toast from '../../components/Toast/Toast'
 import UserInfo from '../../components/UserInfo/UserInfo'
+import DosisResumen from '../../components/DosisResumen/DosisResumen'
+import ParaAgendar from '../../components/ParaAgendar/ParaAgendar'
 
 export default function InicioPage() {
   const { usuario } = useUsuario()
@@ -21,7 +23,7 @@ export default function InicioPage() {
     if (location.state?.cuentaCreada) {
       navigate(location.pathname, { replace: true, state: null })
     }
-  }, [])
+  }, [location.pathname, location.state?.cuentaCreada, navigate])
 
   const irAlCalendario = () => {
     navigate("/calendario")
@@ -48,9 +50,13 @@ export default function InicioPage() {
 
       {/* Grid de cards */}
       <div className="inicio-grid">
-        <Cards title="Próximas vacunas" variant="white" />
+        <Cards title="Tus dosis" variant="white" className="inicio-card">
+          <DosisResumen />
+        </Cards>
         <Cards title="Historial" variant="dark" />
-        <Cards title="Estado del carnet" variant="white" />
+        <Cards title="Para agendar en tu calendario" variant="white" className="inicio-card">
+          <ParaAgendar />
+        </Cards>
         <Cards title="Información" variant="white" />
       </div>
     </div>

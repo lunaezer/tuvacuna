@@ -39,6 +39,18 @@
   gap: 20px;
 }
 
+/* Cards de Inicio: todo alineado a la izquierda; título grande y en negrita */
+.inicio-card {
+  text-align: left;
+}
+
+.inicio-card .card-titulo {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 4px;
+}
+
 /* Responsive: 1 columna en pantallas chicas */
 @media (max-width: 768px) {
   .inicio-header {

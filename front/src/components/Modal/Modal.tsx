@@ -5,12 +5,12 @@ import './Modal.css'
 interface ModalProps {
   isOpen: boolean
   onClose?: () => void
-  titulo?: string
+  titulo?: string // todavía no se muestra; CarnetPage lo sigue pasando
   children?: ReactNode
   className?: string
 }
 
-export default function Modal({ isOpen, onClose, titulo, children, className = '' }: ModalProps) {
+export default function Modal({ isOpen, onClose, children, className = '' }: ModalProps) {
   // Cerrar el modal al presionar la tecla Escape
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

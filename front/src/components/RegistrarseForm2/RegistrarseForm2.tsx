@@ -1,5 +1,4 @@
 import React from "react";
-import Input from "../Input/Input";
 import type { RegistroData } from "../../types";
 import Button from "../Button/Button";
 import FormPaciente from "../FormPaciente/FormPaciente";
