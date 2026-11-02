@@ -149,7 +149,6 @@ export default function CarnetPage() {
           <BotonSubirFoto onArchivo={setArchivoOcr} />
           <Button
             text="Cargar dosis"
-            icon={<span>+</span>}
             variant="celeste"
             className="btn-cargar-dosis"
             onClick={() => setModalCargarDosisAbierto(true)}
