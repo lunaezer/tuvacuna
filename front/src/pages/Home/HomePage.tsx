@@ -6,14 +6,8 @@ import {
   Users,
   Sparkles,
   UserRound,
-  House,
-  Calendar,
-  LogOut,
-  Send,
-  Bot,
-  Clock,
-  Syringe,
 } from 'lucide-react'
+import inicioActual from '../../assets/inicio-actual.png'
 import './HomePage.css'
 
 function Ampolla({ fill }: { fill: string }) {
@@ -140,73 +134,6 @@ const hitos = [
   { vacunas: 'Antineumocócica', edad: '65 +' },
 ]
 
-function MockupPanel() {
-  return (
-    <div className="home-panel" role="img" aria-label="Vista previa del panel de TuVacuna">
-      <aside className="home-panel-side">
-        <span className="home-panel-brand">TuVacuna</span>
-        <ul>
-          <li className="activo"><House size={14} /> Inicio</li>
-          <li><CreditCard size={14} /> Carnet</li>
-          <li><Calendar size={14} /> Calendario</li>
-          <li><MapPin size={14} /> Centros</li>
-          <li><Users size={14} /> Familia</li>
-          <li><Bot size={14} /> Asistente</li>
-        </ul>
-        <div className="home-panel-logout"><LogOut size={14} /> Cerrar sesion</div>
-        <div className="home-panel-user"><span>XX</span><i /></div>
-      </aside>
-
-      <div className="home-panel-main">
-        <div className="home-panel-top">
-          <h4>Hola, ___!</h4>
-          <span className="home-panel-agendar">Agendar turno</span>
-        </div>
-        <div className="home-panel-chips">
-          <span className="chip-activo"><b>XX</b> ___</span>
-          <span className="chip-agregar">+ Agregar familiar</span>
-        </div>
-
-        <div className="home-panel-grid">
-          <div className="home-panel-card">
-            <div className="home-panel-anillo"><strong>80%</strong><small>Al día</small></div>
-            <div>
-              <h5>Cobertura de vacunación</h5>
-              <p><i className="verde" />16 Vacunas aplicadas y registradas</p>
-              <p><i className="amarillo" />3 Recomendadas en los próximos 60 días</p>
-              <p><i className="rojo" />2 atrasadas</p>
-            </div>
-          </div>
-
-          <div className="home-panel-card oscura">
-            <h5>Centro mas cercano</h5>
-            <p className="km">1,2 <small>Km</small></p>
-            <p className="centro"><MapPin size={14} /> Vacunatorio municipal centro <small>AV. Rivadavia 2145</small></p>
-            <span className="home-panel-boton">Ver en el mapa</span>
-          </div>
-
-          <div className="home-panel-card columna">
-            <h5>Para agendar</h5>
-            <div className="fila"><Syringe size={14} /><span>HPV — Segunda dosis</span><em className="rec">Recomendada</em></div>
-            <div className="fila"><Clock size={14} /><span>Antitetanica — Refuerzo</span><em className="atr">Atrasada</em></div>
-            <div className="fila"><Clock size={14} /><span>Antitetanica — Refuerzo</span><em className="atr">Atrasada</em></div>
-          </div>
-
-          <div className="home-panel-card columna">
-            <h5>Preguntale a TuVacuna</h5>
-            <div className="home-panel-input">¿La antigripal se da todos los años? <Send size={12} /></div>
-            <div className="home-panel-sugerencias">
-              <span>¿Puedo vacunarme embarazada?</span>
-              <span>Que efectos tienen las vacunas</span>
-              <span>¿Que es la Hepatitis B?</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 export default function HomePage() {
   const navigate = useNavigate()
   const irRegistro = () => navigate('/registrarse1')
@@ -255,7 +182,7 @@ export default function HomePage() {
           Cobertura, dosis atrasadas, próximos turnos y el centro más cercano. Sin planillas, sin
           papeles, sin recordar nada de memoria.
         </p>
-        <MockupPanel />
+        <img className="home-panel-img" src={inicioActual} alt="Vista previa del panel de TuVacuna" />
       </section>
 
       {/* Cómo funciona */}
