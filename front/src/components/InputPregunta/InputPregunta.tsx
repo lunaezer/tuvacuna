@@ -6,9 +6,17 @@ interface InputPreguntaProps {
   onEnviar: (texto: string) => void
   deshabilitado?: boolean // mientras espera una respuesta
   maxLength?: number
+  placeholder?: string
+  variante?: 'oscuro' | 'claro' // oscuro: dentro del panel del asistente; claro: sobre una card blanca
 }
 
-export default function InputPregunta({ onEnviar, deshabilitado, maxLength }: InputPreguntaProps) {
+export default function InputPregunta({
+  onEnviar,
+  deshabilitado,
+  maxLength,
+  placeholder = 'Escribí tu pregunta...',
+  variante = 'oscuro',
+}: InputPreguntaProps) {
   const [texto, setTexto] = useState('')
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -19,10 +27,10 @@ export default function InputPregunta({ onEnviar, deshabilitado, maxLength }: In
   }
 
   return (
-    <form className="input-pregunta" onSubmit={handleSubmit}>
+    <form className={`input-pregunta input-pregunta--${variante}`} onSubmit={handleSubmit}>
       <input
         className="input-pregunta-campo"
-        placeholder="Escribí tu pregunta..."
+        placeholder={placeholder}
         maxLength={maxLength}
         value={texto}
         onChange={(e) => setTexto(e.target.value)}

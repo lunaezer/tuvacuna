@@ -9,6 +9,8 @@ import Toast from '../../components/Toast/Toast'
 import UserInfo from '../../components/UserInfo/UserInfo'
 import DosisResumen from '../../components/DosisResumen/DosisResumen'
 import ParaAgendar from '../../components/ParaAgendar/ParaAgendar'
+import DondeVacunarte from '../../components/DondeVacunarte/DondeVacunarte'
+import PreguntaAsistente from '../../components/PreguntaAsistente/PreguntaAsistente'
 
 export default function InicioPage() {
   const { usuario } = useUsuario()
@@ -53,11 +55,15 @@ export default function InicioPage() {
         <Cards title="Tus dosis" variant="white" className="inicio-card">
           <DosisResumen />
         </Cards>
-        <Cards title="Historial" variant="dark" />
+        <Cards title="Donde vacunarte" variant="dark" className="inicio-card">
+          <DondeVacunarte />
+        </Cards>
         <Cards title="Para agendar en tu calendario" variant="white" className="inicio-card">
           <ParaAgendar />
         </Cards>
-        <Cards title="Información" variant="white" />
+        <Cards title="Preguntale a TuVacuna" variant="white" className="inicio-card">
+          <PreguntaAsistente />
+        </Cards>
       </div>
     </div>
   )

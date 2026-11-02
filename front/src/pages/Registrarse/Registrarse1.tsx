@@ -10,6 +10,7 @@ import { useUsuario } from "../../context/UsuarioContext/useUsuario";
 import { API_URL } from "../../config";
 import VerificarMatriculaModal from "../../components/VerificarMatriculaModal/VerificarMatriculaModal";
 import AgregarVacunaModal from "../../components/AgregarVacunaModal/AgregarVacunaModal";
+import RevisarCarnetModal from "../../components/RevisarCarnetModal/RevisarCarnetModal";
 import VacunaAgregadaModal from "../../components/VacunaAgregadaModal/VacunaAgregadaModal";
 import type { FormVacuna } from "../../components/AgregarVacunaModal/AgregarVacunaModal";
 
@@ -292,6 +293,19 @@ function Registrarse1() {
         handleSubmit={handleGuardarDosis}
         error={errorDosis}
       />
+
+      {/* al elegir la foto del carnet se lee y se revisa antes de guardar las dosis */}
+      {carnetPhoto && (
+        <RevisarCarnetModal
+          archivo={carnetPhoto}
+          onClose={() => setCarnetPhoto(null)}
+          onGuardado={(guardadas) => setDosisCargadas((n) => n + guardadas)}
+          onCargarManual={() => {
+            setCarnetPhoto(null);
+            setModalVacunaAbierto(true);
+          }}
+        />
+      )}
 
       <VacunaAgregadaModal
         isOpen={modalExitoAbierto}

@@ -1,19 +1,43 @@
 .sugerencias-asistente {
   display: flex;
-  flex-direction: column;
   gap: 0.75rem;
 }
 
+.sugerencias-asistente--oscuro {
+  flex-direction: column;
+}
+
+.sugerencias-asistente--claro {
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
 .sugerencia-asistente {
+  font-weight: 600;
+}
+
+.sugerencias-asistente--oscuro .sugerencia-asistente {
   padding: 1rem;
   border-radius: var(--border-radius-md);
   background: rgba(255, 255, 255, 0.07);
   color: #fff;
   font-size: 0.8125rem;
-  font-weight: 600;
   text-align: left;
 }
 
-.sugerencia-asistente:hover {
+.sugerencias-asistente--oscuro .sugerencia-asistente:hover {
   background: rgba(255, 255, 255, 0.14);
+}
+
+.sugerencias-asistente--claro .sugerencia-asistente {
+  padding: 0.4rem 0.875rem;
+  border-radius: var(--border-radius-pill);
+  background: #fff;
+  border: 1px solid var(--primary-cyan);
+  color: var(--text-primary);
+  font-size: 0.75rem;
+}
+
+.sugerencias-asistente--claro .sugerencia-asistente:hover {
+  background: var(--primary-cyan-light);
 }

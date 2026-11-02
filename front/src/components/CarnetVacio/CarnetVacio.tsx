@@ -33,7 +33,7 @@ function CarnetVacio({ onSubirFoto, onCargarManual }: CarnetVacioProps) {
       <input
         ref={inputRef}
         type="file"
-        accept="image/jpeg,image/png,application/pdf"
+        accept="image/jpeg,image/png,image/webp"
         className="carnet-vacio-input"
         onChange={handleArchivo}
       />

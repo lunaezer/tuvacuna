@@ -1,0 +1,35 @@
+/* el modal es más ancho que el normal y la lista de dosis hace scroll */
+.modal-contenedor.revisar-carnet {
+  max-width: 40rem;
+  max-height: 90vh;
+}
+
+.revisar-carnet .modal-contenido {
+  overflow-y: auto;
+}
+
+.revisar-carnet-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.revisar-carnet-estado {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.revisar-carnet-leyendo {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.revisar-carnet-hint {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}

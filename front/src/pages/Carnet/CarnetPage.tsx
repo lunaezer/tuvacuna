@@ -7,7 +7,8 @@ import CarnetTimeline from '../../components/CarnetTimeline/CarnetTimeline'
 import Button from '../../components/Button/Button'
 import CarnetVacio from '../../components/CarnetVacio/CarnetVacio'
 import { useFamilia } from '../../hooks/useFamilia'
-import Modal from '../../components/Modal/Modal'
+import BotonSubirFoto from '../../components/BotonSubirFoto/BotonSubirFoto'
+import RevisarCarnetModal from '../../components/RevisarCarnetModal/RevisarCarnetModal'
 import Toast from '../../components/Toast/Toast'
 import AgregarVacunaModal from '../../components/AgregarVacunaModal/AgregarVacunaModal'
 import type { FormVacuna } from '../../components/AgregarVacunaModal/AgregarVacunaModal'
@@ -40,7 +41,7 @@ export default function CarnetPage() {
 
   // Estado para los modales (popups)
   const [modalCargarDosisAbierto, setModalCargarDosisAbierto] = useState(false)
-  const [modalSubirFotoAbierto, setModalSubirFotoAbierto] = useState(false)
+  const [archivoOcr, setArchivoOcr] = useState<File | null>(null) // la foto que se está leyendo
 
   // Campos del formulario Cargar Dosis
   const formVacio: FormVacuna = { idVacuna: '', lote: '', fecha: '', marca: '', lugar: '' }
@@ -76,22 +77,6 @@ export default function CarnetPage() {
     cargarCarnet(familiarSeleccionado.esVos ? undefined : familiarSeleccionado.id)
   }, [indexFamiliarActivo, familiares])
 
-  const handleSubirFoto = async (archivo: File) => {
-    if (USAR_MOCK) {
-      console.log('Foto seleccionada:', archivo.name)
-      return
-    }
-    const formData = new FormData()
-    formData.append('imagen', archivo)
-
-    await fetch(`${API_URL}/api/carnet/dosis`, {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${token}` },
-      body: formData,
-    })
-    await cargarCarnet()
-  }
-
   // El turno necesita fecha: se lleva a la persona al calendario con la vacuna ya elegida
   const handleAgendar = (idVacuna: number) => {
     navigate('/calendario', { state: { idVacuna } })
@@ -102,8 +87,11 @@ export default function CarnetPage() {
     setErrorDosis('')
 
     try {
-      // El back por ahora solo carga dosis al carnet propio (la cuenta sale del token)
-      const response = await fetch(`${API_URL}/api/carnet/dosis`, {
+      // Sin familiar: el carnet propio (la cuenta sale del token). Con familiar: el suyo, si te dio acceso
+      const url = idFamiliarActivo === undefined
+        ? `${API_URL}/api/carnet/dosis`
+        : `${API_URL}/api/carnet/${idFamiliarActivo}/dosis`
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -125,7 +113,7 @@ export default function CarnetPage() {
       }
 
       // Refresca el carnet para que aparezca la dosis recién cargada
-      await cargarCarnet()
+      await cargarCarnet(idFamiliarActivo)
 
       setModalCargarDosisAbierto(false)
       setFormDosis(formVacio)
@@ -136,6 +124,8 @@ export default function CarnetPage() {
   }
 
   const familiarActivo = familiares[indexFamiliarActivo]
+  // undefined = el carnet propio; si no, el id del familiar que se está mirando
+  const idFamiliarActivo = familiarActivo?.esVos ? undefined : familiarActivo?.id
   // La pantalla "Traé tu carnet" es solo para el carnet propio: los familiares todavía no se pueden cargar
   const mostrarCarnetVacio =
     !cargando && seccionesHistorial.length === 0 && Boolean(familiarActivo?.esVos)
@@ -147,7 +137,7 @@ export default function CarnetPage() {
         titulo="Carnet"
       >
         {!mostrarCarnetVacio && <div className="carnet-header-acciones">
-          
+          <BotonSubirFoto onArchivo={setArchivoOcr} />
           <Button
             text="Cargar dosis"
             icon={<span>+</span>}
@@ -170,7 +160,7 @@ export default function CarnetPage() {
 
       {mostrarCarnetVacio && (
         <CarnetVacio
-          onSubirFoto={handleSubirFoto}
+          onSubirFoto={setArchivoOcr}
           onCargarManual={() => setModalCargarDosisAbierto(true)}
         />
       )}
@@ -204,36 +194,19 @@ export default function CarnetPage() {
         onClose={() => setDosisAgregada(false)}
       />
 
-      {/* PopUp 2: Subir Foto del Carnet */}
-      <Modal
-        isOpen={modalSubirFotoAbierto}
-        onClose={() => setModalSubirFotoAbierto(false)}
-        titulo="Subir foto del carnet"
-      >
-        <div className="modal-form">
-          <div className="modal-upload-area" onClick={() => console.log('Seleccionar archivo')}>
-            <span className="modal-upload-icon">📷</span>
-            <p className="modal-upload-texto">Arrastrá la foto del carnet aquí o hacé clic para seleccionar</p>
-            <span className="modal-upload-hint">Formatos soportados: JPG, PNG, PDF (Máx. 5MB)</span>
-          </div>
-
-          <div className="modal-form-acciones">
-            <Button
-              text="Cancelar"
-              variant="outline"
-              onClick={() => setModalSubirFotoAbierto(false)}
-            />
-            <Button
-              text="Subir imagen"
-              variant="celeste"
-              onClick={() => {
-                console.log('Imagen subida')
-                setModalSubirFotoAbierto(false)
-              }}
-            />
-          </div>
-        </div>
-      </Modal>
+      {/* PopUp 2: leer la foto del carnet y revisar las dosis (se monta de nuevo con cada foto) */}
+      {archivoOcr && (
+        <RevisarCarnetModal
+          archivo={archivoOcr}
+          idFamiliar={idFamiliarActivo}
+          onClose={() => setArchivoOcr(null)}
+          onGuardado={() => cargarCarnet(idFamiliarActivo)}
+          onCargarManual={() => {
+            setArchivoOcr(null)
+            setModalCargarDosisAbierto(true)
+          }}
+        />
+      )}
     </div>
   )
 }

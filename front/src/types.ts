@@ -24,6 +24,18 @@ export interface MensajeChat {
   content: string
 }
 
+// Una fila que leyó el lector de carnets (GET /api/ocr/lecturas/:id cuando está "listo")
+export interface RegistroOcr {
+  vacuna_ocr: string
+  dosis_ocr: string | null
+  fecha_ocr: string | null
+  id_vacuna_sugerida: number | null
+  candidatas: { id_vacuna: number; nombre: string; dosis: string }[]
+  fecha_sugerida: string | null // AAAA-MM-DD
+  lote: string | null
+  marca: string | null
+}
+
 // Alguien que puede ver mi carnet (GET /api/familia/acceso). El id es el del vínculo.
 export interface AccesoFamiliar {
   id: number

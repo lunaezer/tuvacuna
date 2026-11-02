@@ -41,6 +41,18 @@
   gap: 0.375rem;
 }
 
+/* los dos botones del header (Subir foto y Cargar dosis) miden lo mismo */
+.carnet-header-acciones .btn {
+  padding: 0.9rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+
+.carnet-header-acciones .btn-rechazar {
+  border-color: #cbd5e1;
+}
+
 
 @media (max-width: 768px) {
   .carnet-header-acciones {
