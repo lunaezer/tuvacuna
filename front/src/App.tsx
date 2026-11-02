@@ -5,6 +5,7 @@ import { DosisProvider } from './context/DosisContext/DosisContext'
 import { PacientesProvider } from './context/PacientesContext/PacientesContext'
 import { MedicosProvider } from './context/MedicosContext/MedicosContext'
 import { CentrosProvider } from './context/CentrosContext/CentrosContext'
+import { AsistenteProvider } from './context/AsistenteContext/AsistenteContext'
 import Navbar from './components/Navbar/Navbar'
 import Footer from './components/Footer/Footer'
 import DashboardLayout from './components/DashboardLayout/DashboardLayout'
@@ -18,7 +19,6 @@ import CarnetPage from './pages/Carnet/CarnetPage'
 import CalendarioPage from './pages/Calendario/CalendarioPage'
 import CentrosPage from './pages/Centros/CentrosPage'
 import FamiliaPage from './pages/Familia/FamiliaPage'
-import AsistentePage from './pages/Asistente/AsistentePage'
 import PerfilPage from './pages/Perfil/PerfilPage'
 import InicioSesion1 from './pages/InicioSesion/InicioSesion1'
 import Registrarse1 from './pages/Registrarse/Registrarse1'
@@ -68,7 +68,6 @@ function LayoutWrapper() {
     '/calendario': 'Calendario',
     '/centros': 'Centros',
     '/familia': 'Familia',
-    '/asistente': 'Asistente',
     '/perfil': 'Perfil',
   }
   const itemActivo = location.pathname.startsWith('/pacientes')
@@ -84,7 +83,6 @@ function LayoutWrapper() {
         <Route path="/calendario" element={<CalendarioPage />} />
         <Route path="/centros" element={<CentrosPage />} />
         <Route path="/familia" element={<FamiliaPage />} />
-        <Route path="/asistente" element={<AsistentePage />} />
         <Route path="/perfil" element={<PerfilPage />} />
         <Route path="/pacientes" element={<PacientesPage />} />
         <Route path="/pacientes/:id/carnet" element={<CarnetPacientePage />} />
@@ -101,9 +99,11 @@ function App() {
           <PacientesProvider>
             <MedicosProvider>
               <CentrosProvider>
-                <Router>
-                  <LayoutWrapper />
-                </Router>
+                <AsistenteProvider>
+                  <Router>
+                    <LayoutWrapper />
+                  </Router>
+                </AsistenteProvider>
               </CentrosProvider>
             </MedicosProvider>
           </PacientesProvider>

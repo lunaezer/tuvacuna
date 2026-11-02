@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import Sidebar from '../Sidebar/Sidebar'
+import AsistentePanel from '../AsistentePanel/AsistentePanel'
 import './DashboardLayout.css'
 
 interface DashboardLayoutProps {
@@ -14,6 +15,7 @@ function DashboardLayout({ activeItem, children }: DashboardLayoutProps) {
       <main className="contenido-principal-dashboard">
         {children}
       </main>
+      <AsistentePanel />
     </div>
   )
 }

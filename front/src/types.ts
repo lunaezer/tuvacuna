@@ -18,6 +18,12 @@ export interface Invitacion {
   fecha: string
 }
 
+// Un mensaje del chat con el asistente. El back no guarda la charla: se manda entera en cada pedido.
+export interface MensajeChat {
+  role: 'user' | 'assistant'
+  content: string
+}
+
 // Alguien que puede ver mi carnet (GET /api/familia/acceso). El id es el del vínculo.
 export interface AccesoFamiliar {
   id: number

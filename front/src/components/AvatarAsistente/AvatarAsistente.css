@@ -1,0 +1,11 @@
+.avatar-asistente {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: rgba(52, 179, 230, 0.2);
+  color: var(--primary-cyan);
+}

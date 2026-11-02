@@ -1,0 +1,16 @@
+.boton-enviar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: var(--primary-cyan);
+  color: #0f172a;
+}
+
+.boton-enviar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

@@ -11,28 +11,37 @@ import IAIcon from '../../assets/IAIcon.svg?react'
 import LogoutIcon from '../../assets/LogoutIcon.svg?react'
 import Iniciales from '../Iniciales/Iniciales'
 import { useUsuario } from '../../context/UsuarioContext/useUsuario'
+import { useAsistente } from '../../hooks/useAsistente'
 
 interface SidebarProps {
   activeItem?: string
   className?: string
 }
 
-const itemsPaciente = [
+interface ItemMenu {
+  text: string
+  to?: string
+  Icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>
+  abreAsistente?: boolean
+}
+
+const itemsPaciente: ItemMenu[] = [
   { text: 'Inicio', to: '/inicio', Icon: HomeIcon },
   { text: 'Mi carnet', to: '/mi-carnet', Icon: CarnetIcon },
   { text: 'Calendario', to: '/calendario', Icon: CalendarioIcon },
   { text: 'Centros', to: '/centros', Icon: CentrosIcon },
   { text: 'Familia', to: '/familia', Icon: FamiliaIcon },
-  { text: 'Asistente', to: '/asistente', Icon: IAIcon },
+  { text: 'Asistente', Icon: IAIcon, abreAsistente: true }, // no navega: abre el panel flotante
 ]
 
-const itemsMedico = [
+const itemsMedico: ItemMenu[] = [
   { text: 'Inicio', to: '/inicio', Icon: HomeIcon },
   { text: 'Pacientes', to: '/pacientes', Icon: FamiliaIcon },
 ]
 
 function Sidebar({ activeItem = 'Inicio', className = '' }: SidebarProps) {
   const { usuario, logout } = useUsuario()
+  const { abierto, abrirAsistente } = useAsistente()
   const items = usuario?.rol === 'medico' ? itemsMedico : itemsPaciente
   const nombreUsuario = usuario?.rol === 'medico'
     ? `Dr. ${[usuario.nombre, usuario.apellido].filter(Boolean).join(' ')}`
@@ -45,8 +54,14 @@ function Sidebar({ activeItem = 'Inicio', className = '' }: SidebarProps) {
       </SidebarHeader>
 
       <nav className="sidebar-nav">
-        {items.map(({ text, to, Icon }) => (
-          <SidebarItem key={text} text={text} to={to} active={activeItem === text}>
+        {items.map(({ text, to, Icon, abreAsistente }) => (
+          <SidebarItem
+            key={text}
+            text={text}
+            to={to}
+            onClick={abreAsistente ? abrirAsistente : undefined}
+            active={abreAsistente ? abierto : activeItem === text}
+          >
             <Icon className="Logo" />
           </SidebarItem>
         ))}
