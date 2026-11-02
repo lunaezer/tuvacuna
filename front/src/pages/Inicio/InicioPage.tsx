@@ -69,7 +69,7 @@ export default function InicioPage() {
         <Cards title="Para agendar en tu calendario" variant="white" className="inicio-card">
           <ParaAgendar />
         </Cards>
-        <Cards title="Preguntale a TuVacuna" variant="white" className="inicio-card">
+        <Cards title="Preguntale a TuVacuna" variant="white" className="inicio-card inicio-card-ajustada">
           <PreguntaAsistente />
         </Cards>
       </div>

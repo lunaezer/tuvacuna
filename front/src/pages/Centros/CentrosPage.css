@@ -6,21 +6,6 @@
   gap: 2rem;
 }
 
-.titulo-centros {
-  font-size: 2.25rem;
-  color: #0f172a;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  letter-spacing: -0.03rem;
-  display: flex;
-}
-
-.subtitulo-centros {
-  font-size: 0.9375rem;
-  color: #64748b;
-  margin-bottom: 2rem;
-}
-
 .centros-layout {
   display: grid;
   grid-template-columns: 24rem 1fr;

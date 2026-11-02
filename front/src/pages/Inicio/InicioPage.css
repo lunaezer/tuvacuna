@@ -53,6 +53,11 @@
   min-height: 0;
 }
 
+/* No se estira a la altura de la card vecina: mide lo que ocupa su contenido */
+.inicio-card-ajustada {
+  align-self: start;
+}
+
 /* la card no se levanta al pasar el mouse: en este grid hacía que parecieran desparejas */
 .inicio-card:hover {
   transform: none;
