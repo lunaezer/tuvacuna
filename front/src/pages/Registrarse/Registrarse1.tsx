@@ -105,7 +105,7 @@ function Registrarse1() {
       password: formData.password,
       fecha_de_nacimiento: formData.birthDate,
       sexo: formData.sex,
-      obra_social: formData.obraSocial,
+      id_obra_social: formData.obraSocial ? Number(formData.obraSocial) : null,
       comorbilidades: formData.comorbilidades,
       matricula: formData.matricula,
       especialidad: formData.especialidad,

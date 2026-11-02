@@ -135,5 +135,5 @@ export interface Centro {
   direccion: string
   lat: number
   lng: number
-  tipo: 'publico' | 'privado' // a confirmar con el back
+  tipo: 'publico' | 'privado'
 }

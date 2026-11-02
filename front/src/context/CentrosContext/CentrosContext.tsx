@@ -2,6 +2,7 @@ import { createContext, useCallback, useEffect, useMemo, useState, type ReactNod
 import { API_URL } from "../../config";
 import { normalizar } from "../../utils/texto";
 import type { Centro, FiltroCentros } from "../../types";
+import { useUsuario } from "../UsuarioContext/useUsuario";
 
 interface CentrosContextType {
     centros: Centro[];             // ya filtrados por la búsqueda y el filtro
@@ -19,6 +20,7 @@ interface CentrosContextType {
 export const CentrosContext = createContext<CentrosContextType | undefined>(undefined);
 
 export const CentrosProvider = ({ children }: { children: ReactNode }) => {
+    const { token } = useUsuario();
     const [centros, setCentros] = useState<Centro[]>([]);
     const [busqueda, setBusqueda] = useState("");
     const [filtro, setFiltro] = useState<FiltroCentros>("todos");
@@ -28,11 +30,16 @@ export const CentrosProvider = ({ children }: { children: ReactNode }) => {
     const [seleccionadoId, setSeleccionadoId] = useState<number | null>(null);
 
     const cargarCentros = useCallback(async () => {
+        if (!token) {   // sin sesión no hay nada que pedir
+            setCargando(false);
+            return;
+        }
         setCargando(true);
         setError("");
         try {
-            // TODO: confirmar con el back el nombre de la ruta y los campos que manda
-            const response = await fetch(`${API_URL}/api/centros`);
+            const response = await fetch(`${API_URL}/api/centros`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
             if (!response.ok) {
                 const data = await response.json().catch(() => null);
                 setError(data?.mensaje ?? "No se pudieron cargar los centros");
@@ -45,7 +52,7 @@ export const CentrosProvider = ({ children }: { children: ReactNode }) => {
         } finally {
             setCargando(false);
         }
-    }, []);
+    }, [token]);
 
     useEffect(() => {
         cargarCentros();

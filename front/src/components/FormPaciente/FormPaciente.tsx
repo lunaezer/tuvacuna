@@ -3,6 +3,7 @@ import Input from "../Input/Input";
 import type { RegistroData } from "../../types";
 import Select from "../Select/Select";
 import ComorbilidadesSelector from "../ComorbilidadesSelector/ComorbilidadesSelector";
+import ObraSocialSelector from "../ObraSocialSelector/ObraSocialSelector";
 
 interface PacienteFieldsProps {
   formData: RegistroData;
@@ -44,16 +45,9 @@ export default function FormPaciente({
           ]}
         />
       </div>
-      <Select
-      variant="large"
-      label="Obra social o prepaga"
-      name="obraSocial"
-      value={formData.obraSocial}
-      onChange={handleChange}
-      options={[
-        {value: "Swis medical", label: "swis medical"},
-        {value: "escribanos", label: "escribanos"},
-      ]}
+      <ObraSocialSelector
+        seleccionada={formData.obraSocial}
+        onChange={(id) => setFormData((prev) => ({ ...prev, obraSocial: id }))}
       />
       <ComorbilidadesSelector
         seleccionadas={formData.comorbilidades}

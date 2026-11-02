@@ -1,3 +1,4 @@
+import { CalendarDays } from "lucide-react";
 import { useCentros } from "../../hooks/useCentros";
 import Button from "../Button/Button";
 import Buscador, { type OpcionFiltro } from "../Buscador/Buscador";
@@ -52,9 +53,18 @@ export default function ListaCentros() {
                 <span className="centro-item-numero">{i + 1}</span>
                 <div className="centro-item-info">
                   <strong>{c.nombre}</strong>
-                  <span>{c.direccion}</span>
+                  <span className="centro-item-direccion">{c.direccion}</span>
+                  <span className="centro-item-tipo">
+                    {c.tipo === "publico" ? "Público" : "Privado"}
+                  </span>
                 </div>
-                {activo && <Button text="Agendar turno" />}
+                {activo && (
+                  <Button
+                    text="Agendar turno"
+                    variant="celeste"
+                    icon={<CalendarDays />}
+                  />
+                )}
               </li>
             );
           })}
