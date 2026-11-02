@@ -149,9 +149,7 @@ export default function FamiliaPage() {
             onVerCarnet={() => setFamiliarSeleccionado(familiar)}
           />
         ))}
-      </div>
-
-      <div className="familia-agregar">
+        {/* la tarjeta de agregar va a continuación del último familiar */}
         <AgregarFamiliarBoton variante="card" onClick={abrirModalAgregar} />
       </div>
 

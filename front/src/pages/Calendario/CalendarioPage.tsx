@@ -170,11 +170,16 @@ export default function CalendarioPage() {
     cargarTurnos()
   }, [anioActual])
 
-  // Viene del carnet con una vacuna elegida: se abre el modal con esa vacuna
+  // Viene del carnet (con una vacuna) o de Centros (con un lugar): se abre el modal con eso cargado
   useEffect(() => {
     const idVacuna = location.state?.idVacuna
-    if (idVacuna) {
-      setFormDataTurno((prev) => ({ ...prev, idVacuna: String(idVacuna) }))
+    const lugar = location.state?.lugar
+    if (idVacuna || lugar) {
+      setFormDataTurno((prev) => ({
+        ...prev,
+        ...(idVacuna && { idVacuna: String(idVacuna) }),
+        ...(lugar && { lugar }),
+      }))
       setModalNuevoTurnoAbierto(true)
       window.history.replaceState({}, '') // para que no se reabra al recargar
     }

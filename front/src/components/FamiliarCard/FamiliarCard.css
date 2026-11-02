@@ -1,8 +1,11 @@
 /* Estilos del componente FamiliarCard */
 .familiar-card {
-  background-color: #ffffff;
+  /* borde en degradé del diseño: el fondo va en dos capas */
+  border: 2px solid transparent;
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    var(--gradiente-borde) border-box;
   border-radius: 1rem;
-  border: 1px solid rgba(226, 232, 240, 0.8);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
   padding: 1.25rem;
   display: flex;

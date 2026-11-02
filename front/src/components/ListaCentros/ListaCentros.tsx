@@ -1,4 +1,5 @@
 import { CalendarDays } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { useCentros } from "../../hooks/useCentros";
 import Button from "../Button/Button";
 import Buscador, { type OpcionFiltro } from "../Buscador/Buscador";
@@ -12,6 +13,7 @@ const OPCIONES: OpcionFiltro<FiltroCentros>[] = [
 ];
 
 export default function ListaCentros() {
+  const navigate = useNavigate();
   const {
     centros, busqueda, setBusqueda, filtro, setFiltro,
     cargando, error, seleccionado, setSeleccionado,
@@ -63,6 +65,7 @@ export default function ListaCentros() {
                     text="Agendar turno"
                     variant="celeste"
                     icon={<CalendarDays />}
+                    onClick={() => navigate("/calendario", { state: { lugar: c.nombre } })}
                   />
                 )}
               </li>

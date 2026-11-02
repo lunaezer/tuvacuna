@@ -1,51 +1,50 @@
 .dosis-resumen {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-top: 16px;
+  grid-auto-rows: 1fr; /* los tres cuadros miden lo mismo */
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
 .dosis-cuadro {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 16px;
-  background: #fafcfd;
-  border: 2px solid;
+  gap: 0.25rem;
+  padding: 1rem;
+  /* borde en degradé (el mismo en los tres, como en el diseño): el fondo va en dos capas */
+  border: 2px solid transparent;
+  background:
+    linear-gradient(#fafcfd, #fafcfd) padding-box,
+    var(--gradiente-borde) border-box;
   border-radius: var(--border-radius-md);
 }
 
 .dosis-icono {
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
+  width: 2.75rem;
+  height: 2.75rem;
   border-radius: 50%;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 }
 
 .dosis-numero {
-  font-size: 36px;
+  font-size: 2.25rem;
   font-weight: 700;
   color: var(--text-primary);
   line-height: 1.1;
 }
 
 .dosis-texto {
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: var(--text-secondary);
 }
 
-/* Una variante por estado: borde + fondo y color del icono */
-.dosis-aplicadas { border-color: #6ed3a8; }
+/* Una variante por estado: solo cambia el color del ícono */
 .dosis-aplicadas .dosis-icono { background: #e3f6ec; color: #2f9e6e; }
-
-.dosis-recomendadas { border-color: var(--primary-cyan); }
 .dosis-recomendadas .dosis-icono { background: #fdf0dc; color: #b8791f; }
-
-.dosis-atrasadas { border-color: #6ed3a8; }
 .dosis-atrasadas .dosis-icono { background: #fde8e8; color: #c0392b; }
 
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
   .dosis-resumen { grid-template-columns: 1fr; }
 }

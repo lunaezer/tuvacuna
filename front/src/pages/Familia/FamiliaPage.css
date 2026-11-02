@@ -10,26 +10,29 @@
   gap: 1rem;
 }
 
+/* los dos botones del header miden lo mismo y son más chicos, como en el diseño */
+.familia-header-botones .btn {
+  padding: 0.9rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
 .familia-error {
   color: #b91c1c;
   text-align: center;
   margin-bottom: 1rem;
 }
 
+/* familiares + tarjeta de agregar, todas del mismo ancho y centradas:
+   al sumar un familiar la tarjeta de agregar se corre y, cuando no entra, baja a la fila siguiente */
 .familia-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 16rem);
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 1.25rem;
 }
 
-.familia-agregar {
-  display: flex;
-  justify-content: center;
-  margin-top: 1.5rem;
-}
-
-.familia-agregar .agregar-familiar-boton--card {
-  width: 100%;
-  max-width: 20rem;
+.familia-grid > * {
+  flex: 0 1 18rem;
+  min-width: 0;
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import type { FormEvent } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import PageHeader from '../../components/PageHeader/PageHeader'
 import FamilySelector from '../../components/FamilySelector/FamilySelector'
 import CarnetTimeline from '../../components/CarnetTimeline/CarnetTimeline'
@@ -24,6 +24,7 @@ const USAR_MOCK = false
 export default function CarnetPage() {
   const { token, usuario } = useUsuario()
   const navigate = useNavigate()
+  const location = useLocation()
 
   const { familiares: familiaReal, cargandoFamiliares, abrirModalAgregar } = useFamilia()
   const familiares: Familiar[] = useMemo(() => {
@@ -76,6 +77,14 @@ export default function CarnetPage() {
 
     cargarCarnet(familiarSeleccionado.esVos ? undefined : familiarSeleccionado.id)
   }, [indexFamiliarActivo, familiares])
+
+  // Viene de "Cargar vacuna" en Inicio: se abre el formulario y se limpia el state del router
+  useEffect(() => {
+    if (location.state?.cargarDosis) {
+      setModalCargarDosisAbierto(true)
+      navigate(location.pathname, { replace: true, state: null })
+    }
+  }, [location.pathname, location.state?.cargarDosis, navigate])
 
   // El turno necesita fecha: se lleva a la persona al calendario con la vacuna ya elegida
   const handleAgendar = (idVacuna: number) => {

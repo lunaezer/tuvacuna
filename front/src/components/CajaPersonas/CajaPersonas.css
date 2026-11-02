@@ -16,6 +16,16 @@
   border-color: #38bdf8;
 }
 
+/* en Médicos el botón de quitar va pegado a la etiqueta, no al borde derecho */
+.caja-personas--medicos .persona-fila-acciones {
+  margin-left: 0;
+}
+
+.caja-personas--medicos .persona-fila-acciones .btn {
+  padding: 0.375rem 1rem;
+  font-size: 0.8125rem;
+}
+
 .caja-personas-header {
   display: flex;
   align-items: center;

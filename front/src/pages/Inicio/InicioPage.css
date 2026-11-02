@@ -32,23 +32,37 @@
   color: var(--text-secondary);
 }
 
-/* Grid de cards: 2 columnas */
+/* Botones del saludo: Cargar vacuna y Agendar turno, del mismo tamaño */
+.inicio-header-botones {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Grid de cards: 2 columnas (la de la izquierda más ancha, como en el diseño) */
 .inicio-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 1.25rem;
 }
 
 /* Cards de Inicio: todo alineado a la izquierda; título grande y en negrita */
 .inicio-card {
   text-align: left;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* la card no se levanta al pasar el mouse: en este grid hacía que parecieran desparejas */
+.inicio-card:hover {
+  transform: none;
 }
 
 .inicio-card .card-titulo {
-  font-size: 28px;
+  font-size: 1.75rem;
   font-weight: 700;
-  letter-spacing: -0.5px;
-  margin-bottom: 4px;
+  letter-spacing: -0.03rem;
+  margin-bottom: 0.25rem;
 }
 
 /* Responsive: 1 columna en pantallas chicas */

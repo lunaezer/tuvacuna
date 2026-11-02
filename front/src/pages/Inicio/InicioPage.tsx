@@ -31,6 +31,11 @@ export default function InicioPage() {
     navigate("/calendario")
   }
 
+  // el formulario de cargar dosis vive en Mi carnet: se abre solo al llegar
+  const irACargarVacuna = () => {
+    navigate("/mi-carnet", { state: { cargarDosis: true } })
+  }
+
   return (
     <div className="contenedor-inicio">
       <Toast
@@ -45,7 +50,10 @@ export default function InicioPage() {
         titulo={`Hola, ${usuario?.nombre}!`}
         subtitulo="Revisá el estado de tus vacunas y próximos turnos."
       >
-        <Button text="+ Agendar turno" variant="celeste" onClick={irAlCalendario}/>
+        <div className="inicio-header-botones">
+          <Button text="Cargar vacuna" variant="primary" onClick={irACargarVacuna} />
+          <Button text="Agendar turno" variant="celeste" onClick={irAlCalendario} />
+        </div>
       </PageHeader>
 
       <UserInfo />
