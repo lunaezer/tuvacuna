@@ -18,3 +18,18 @@
   color: #64748b;
   margin-bottom: 32px;
 }
+
+.centros-layout {
+  display: grid;
+  grid-template-columns: 24rem 1fr;
+  background: var(--card-bg-light);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+@media (max-width: 48rem) {
+  .centros-layout {
+    grid-template-columns: 1fr;
+  }
+}

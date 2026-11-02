@@ -4,6 +4,7 @@ import { FamiliaProvider } from './context/FamiliaContext/FamiliaContext'
 import { DosisProvider } from './context/DosisContext/DosisContext'
 import { PacientesProvider } from './context/PacientesContext/PacientesContext'
 import { MedicosProvider } from './context/MedicosContext/MedicosContext'
+import { CentrosProvider } from './context/CentrosContext/CentrosContext'
 import Navbar from './components/Navbar/Navbar'
 import Footer from './components/Footer/Footer'
 import DashboardLayout from './components/DashboardLayout/DashboardLayout'
@@ -99,9 +100,11 @@ function App() {
         <DosisProvider>
           <PacientesProvider>
             <MedicosProvider>
-              <Router>
-                <LayoutWrapper />
-              </Router>
+              <CentrosProvider>
+                <Router>
+                  <LayoutWrapper />
+                </Router>
+              </CentrosProvider>
             </MedicosProvider>
           </PacientesProvider>
         </DosisProvider>

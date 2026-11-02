@@ -3,15 +3,10 @@ import { MapContainer, TileLayer, Marker, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import type { Centro } from "../../types";
+import { useCentros } from "../../hooks/useCentros";
 import "./MapaCentros.css";
 
 const CENTRO_CABA: [number, number] = [-34.6037, -58.3816];
-
-interface MapaCentrosProps {
-  centros: Centro[];
-  seleccionado?: Centro | null;
-  onSeleccionar?: (centro: Centro) => void;
-}
 
 // ícono propio: un círculo con el número de la lista
 function crearIcono(numero: number, activo: boolean) {
@@ -32,11 +27,9 @@ function VolarA({ centro }: { centro?: Centro | null }) {
   return null;
 }
 
-export default function MapaCentros({
-  centros,
-  seleccionado,
-  onSeleccionar,
-}: MapaCentrosProps) {
+export default function MapaCentros() {
+  const { centros, seleccionado, setSeleccionado } = useCentros();
+
   return (
     <MapContainer center={CENTRO_CABA} zoom={12} className="mapa-centros">
       <TileLayer
@@ -48,7 +41,7 @@ export default function MapaCentros({
           key={c.id}
           position={[c.lat, c.lng]}
           icon={crearIcono(i + 1, seleccionado?.id === c.id)}
-          eventHandlers={{ click: () => onSeleccionar?.(c) }}
+          eventHandlers={{ click: () => setSeleccionado(c) }}
         />
       ))}
       <VolarA centro={seleccionado} />
