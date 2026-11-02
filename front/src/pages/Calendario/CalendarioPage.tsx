@@ -201,7 +201,7 @@ export default function CalendarioPage() {
         titulo="Calendario"
         subtitulo="Turnos agendados y dosis recomendadas de todo el grupo familiar."
       >
-        <Button text="+ Nuevo turno" variant="celeste" onClick={handleNuevoTurno} />
+        <Button text="Nuevo turno" variant="celeste" onClick={handleNuevoTurno} />
       </PageHeader>
 
       <div className="calendario-layout">

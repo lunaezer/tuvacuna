@@ -31,7 +31,7 @@ export default function BotonSubirFoto({ onArchivo, text = 'Subir foto del carne
       <Button
         text={text}
         icon={<Camera size={18} />}
-        variant="rechazar"
+        variant="primary"
         onClick={() => inputRef.current?.click()}
       />
     </>
