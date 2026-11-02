@@ -5,6 +5,7 @@ const ETIQUETAS: Record<EstadoPaciente, string> = {
   atrasada: 'Atrasada',
   proxima: 'Próxima',
   'al-dia': 'AL DÍA',
+  'sin-evaluar': 'Sin evaluar',
 }
 
 export default function EstadoPacienteBadge({ estado }: { estado: EstadoPaciente }) {

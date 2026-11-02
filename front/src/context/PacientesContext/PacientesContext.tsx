@@ -2,10 +2,45 @@ import { createContext, useCallback, useEffect, useState, type ReactNode } from 
 import { API_URL } from "../../config";
 import { useUsuario } from "../UsuarioContext/useUsuario";
 import { pacientesListaMock, pacientesDetalleMock } from "../../mocks/pacientesMock";
-import type { PacienteDetalle, PacienteLista } from "../../types";
+import type { Dosis, PacienteDetalle, PacienteLista } from "../../types";
 
 // Poner en false para usar el back real
-const USAR_MOCK = true;
+const USAR_MOCK = false;
+
+// Un paciente tal cual lo manda GET /api/medico/pacientes
+interface PacienteBack {
+    id_paciente: number;
+    nombre: string;
+    apellido: string;
+    dni: number;
+    obra_social: string | null;
+    fecha_de_nacimiento: string;
+    comorbilidades: { id_comorbilidad: number; nombre: string }[];
+    dosis: Dosis[]; // solo las aplicadas, de la más reciente a la más antigua
+}
+
+// De lo que manda el back, la parte que usa la tabla
+function aLista(p: PacienteBack): PacienteLista {
+    return {
+        id: p.id_paciente,
+        nombre: p.nombre,
+        apellido: p.apellido,
+        dni: String(p.dni),
+        ultimaVacuna: p.dosis[0]?.fecha_de_aplicacion ?? null,
+        estado: "sin-evaluar", // el back todavía no lo manda
+    };
+}
+
+// Y la parte que usa el panel de detalle
+function aDetalle(p: PacienteBack): PacienteDetalle {
+    return {
+        id: p.id_paciente,
+        fechaNacimiento: p.fecha_de_nacimiento,
+        obraSocial: p.obra_social ?? "—",
+        comorbilidades: p.comorbilidades.map((c) => c.nombre),
+        dosis: p.dosis,
+    };
+}
 
 interface PacientesContextType {
     pacientes: PacienteLista[];
@@ -52,7 +87,10 @@ export const PacientesProvider = ({ children }: { children: ReactNode }) => {
                 setErrorLista(data?.mensaje ?? "No se pudieron cargar los pacientes");
                 return;
             }
-            setPacientes(await response.json());
+            // el back manda todo junto: se reparte entre la lista y los detalles
+            const data: PacienteBack[] = await response.json();
+            setPacientes(data.map(aLista));
+            setDetalles(Object.fromEntries(data.map((p) => [p.id_paciente, aDetalle(p)])));
         } catch {
             setErrorLista("No se pudo conectar con el servidor");
         } finally {
@@ -84,21 +122,9 @@ export const PacientesProvider = ({ children }: { children: ReactNode }) => {
             setDetalles((actuales) => ({ ...actuales, [id]: pacientesDetalleMock[id] }));
             return;
         }
-        try {
-            const response = await fetch(`${API_URL}/api/medico/pacientes/${id}`, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            if (!response.ok) {
-                const data = await response.json().catch(() => null);
-                setErrorDetalle(data?.mensaje ?? "No se pudo cargar la información del paciente");
-                return;
-            }
-            const data: PacienteDetalle = await response.json();
-            setDetalles((actuales) => ({ ...actuales, [id]: data }));
-        } catch {
-            setErrorDetalle("No se pudo conectar con el servidor");
-        }
-    }, [detalles, token]);
+        // Con el back real el detalle ya llegó junto con la lista (ver cargarLista).
+        // Si el back separa los pedidos, el fetch del detalle va acá.
+    }, [detalles]);
 
     // Al llegar la lista, queda seleccionado el primero (como en el diseño)
     useEffect(() => {

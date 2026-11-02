@@ -11,7 +11,7 @@ import type { SeccionHistorial } from '../../types'
 import './CarnetPacientePage.css'
 
 // Poner en false para usar el back real
-const USAR_MOCK = true
+const USAR_MOCK = false
 
 export default function CarnetPacientePage() {
   const { id = '' } = useParams()

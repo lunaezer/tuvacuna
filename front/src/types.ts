@@ -38,7 +38,8 @@ export interface Medico {
   idVinculo?: number                      // para quitar al médico (DELETE)
 }
 
-export type EstadoPaciente = 'atrasada' | 'proxima' | 'al-dia'
+// 'sin-evaluar': el back todavía no calcula las dosis atrasadas/próximas
+export type EstadoPaciente = 'atrasada' | 'proxima' | 'al-dia' | 'sin-evaluar'
 
 // GET /api/medico/pacientes: lo justo para la tabla
 export interface PacienteLista {
@@ -118,4 +119,11 @@ export interface formDataTurno {
   hora: string | null;
   lugar: string;
 
+}
+export interface Centro {
+  id: number
+  nombre: string
+  direccion: string
+  lat: number
+  lng: number
 }
