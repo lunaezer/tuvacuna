@@ -1,7 +1,8 @@
 .registro-page {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
   width: 100%;
+  overflow: hidden;
 }
 
 .registro-panel-left {
@@ -10,6 +11,7 @@
   padding: 3rem clamp(2rem, 6vw, 6rem);
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 }
 
 .registro-volver {
@@ -264,6 +266,7 @@
   justify-content: center;
   align-items: center;
   gap: 1.5rem;
+  overflow-y: auto;
 }
 
 .registro-panel-right > * {
@@ -361,6 +364,9 @@
 
 @media (max-width: 860px) {
   .registro-page {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
     flex-direction: column;
   }
 

@@ -1,7 +1,8 @@
 .login-page {
     display: flex;
-    min-height: 100vh;
+    height: 100vh;
     width: 100%;
+    overflow: hidden;
 }
 
 .login-panel-left {
@@ -10,6 +11,7 @@
     padding: 3.5rem clamp(2.5rem, 7vw, 7.5rem);
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
 }
 
 .login-back-link {
@@ -92,6 +94,7 @@
     flex-direction: column;
     justify-content: center;
     gap: 1.75rem;
+    overflow-y: auto;
 }
 
 .login-badge {
@@ -168,6 +171,9 @@
 
 @media (max-width: 860px) {
     .login-page {
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
         flex-direction: column;
     }
 
