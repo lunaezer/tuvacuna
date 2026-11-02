@@ -27,7 +27,7 @@ export default function ListaPacientes({ pacientes, seleccionadoId, onSelecciona
       <div className="lista-pacientes-encabezado">
         <span>Paciente</span>
         <span>Última vacuna</span>
-        <span>Estado</span>
+        <span>Estado vacunas</span>
         <span />
       </div>
 
