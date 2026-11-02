@@ -1,7 +1,10 @@
 /* Estilos del componente Sidebar */
 .sidebar {
   width: 260px;
-  min-height: 100vh;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
   flex-shrink: 0;
   background-color: #071521;
   color: #ffffff;
@@ -17,13 +20,13 @@
   flex-direction: column;
   gap: 8px;
   margin-top: 16px;
+  min-height: 0;
+  overflow-y: auto;
 }
 
-.titulo-sidebar{
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 1.4;
-  letter-spacing: 0;
+.logo-sidebar {
+  display: block;
+  width: 9rem;
+  height: auto;
 }
 

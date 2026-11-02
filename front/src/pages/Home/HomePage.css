@@ -113,14 +113,15 @@ html { scroll-behavior: smooth; }
     linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,.25)) bottom right / 1px 62px no-repeat;
 }
 
-.home-frasco-svg { height: 460px; filter: drop-shadow(0 20px 40px rgba(0,0,0,.5)); }
+.home-frasco-img { display: block; height: 28rem; width: auto; filter: drop-shadow(0 1.25rem 2.5rem rgba(0,0,0,.5)); }
 
-.home-ampolla { position: absolute; width: 60px; }
-.home-ampolla-svg { width: 100%; filter: drop-shadow(0 12px 20px rgba(0,0,0,.4)); }
-/* La rotación de cada ampolla la maneja framer-motion (style en HomePage.tsx) */
-.home-ampolla-a { left: 4%; top: 20px; }
-.home-ampolla-b { right: 2%; top: 20px; }
-.home-ampolla-c { right: 0; bottom: 70px; }
+/* Las imágenes ya vienen inclinadas; framer-motion solo espeja la de la izquierda y las mueve un poco */
+.home-ampolla { position: absolute; width: 7rem; }
+.home-ampolla-c { width: 8rem; }
+.home-ampolla-img { display: block; width: 100%; height: auto; filter: drop-shadow(0 0.75rem 1.25rem rgba(0,0,0,.4)); }
+.home-ampolla-a { left: 4%; top: 1.25rem; }
+.home-ampolla-b { right: 2%; top: 1.25rem; }
+.home-ampolla-c { right: 0; bottom: 4rem; }
 
 .home-dosis {
   position: absolute;
@@ -267,7 +268,8 @@ html { scroll-behavior: smooth; }
   .home-boton-vidrio { min-width: 0; flex: 1; font-size: 18px; }
   .home-linea { grid-template-columns: repeat(3, 1fr); row-gap: 40px; }
   .home-linea::before { display: none; }
-  .home-ampolla { width: 44px; }
-  .home-frasco-svg { height: 360px; }
+  .home-ampolla { width: 4.5rem; }
+  .home-ampolla-c { width: 5.5rem; }
+  .home-frasco-img { height: 22rem; }
   .home-visor { width: 240px; height: 440px; }
 }

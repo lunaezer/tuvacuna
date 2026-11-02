@@ -190,8 +190,13 @@ export default function CalendarioPage() {
 }
 
   const handleDiaClick = (dia: number, mes: number, anio: number) => {
-    // TODO: Mostrar detalle del día o abrir agenda
-    console.log(`Día clickeado: ${dia}/${mes + 1}/${anio}`)
+    // no se puede agendar en días que ya pasaron
+    if (new Date(anio, mes, dia) < new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate())) return
+
+    // el input type="date" espera "YYYY-MM-DD"; mes viene 0-indexado
+    const fecha = `${anio}-${String(mes + 1).padStart(2, "0")}-${String(dia).padStart(2, "0")}`
+    setFormDataTurno({ ...FORM_TURNO_VACIO, fecha })
+    setModalNuevoTurnoAbierto(true)
   }
 
 

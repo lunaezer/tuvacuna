@@ -9,64 +9,16 @@ import {
   UserRound,
 } from 'lucide-react'
 import inicioActual from '../../assets/inicio-actual.png'
+import frascoCeleste from '../../assets/FrascoCeleste.png'
+import frascoAmbar from '../../assets/FrascoAmbar.png'
+import ampolla from '../../assets/Ampolla.png'
 import './HomePage.css'
 
-function Ampolla({ fill }: { fill: string }) {
-  const id = `g-${fill.slice(1)}`
-  return (
-    <svg viewBox="0 0 60 200" className="home-ampolla-svg" aria-hidden="true">
-      <defs>
-        <linearGradient id={id} x1="0" x2="1">
-          <stop offset="0" stopColor="#ffffff" stopOpacity=".35" />
-          <stop offset=".5" stopColor="#ffffff" stopOpacity=".05" />
-          <stop offset="1" stopColor="#ffffff" stopOpacity=".25" />
-        </linearGradient>
-      </defs>
-      <path d="M24 0h12l4 60h-20z" fill="#2b3a46" opacity=".85" />
-      <rect x="10" y="60" width="40" height="130" rx="14" fill="#16242f" stroke="#ffffff" strokeOpacity=".25" />
-      <rect x="13" y="115" width="34" height="72" rx="11" fill={fill} />
-      <rect x="10" y="60" width="40" height="130" rx="14" fill={`url(#${id})`} />
-    </svg>
-  )
-}
-
-function Frasco() {
-  return (
-    <svg viewBox="0 0 160 330" className="home-frasco-svg" aria-hidden="true">
-      <defs>
-        <linearGradient id="frasco-tapa" x1="0" x2="1">
-          <stop offset="0" stopColor="#6b7680" />
-          <stop offset=".5" stopColor="#c9d1d8" />
-          <stop offset="1" stopColor="#6b7680" />
-        </linearGradient>
-        <linearGradient id="frasco-liquido" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#38a6e0" />
-          <stop offset="1" stopColor="#1e86c4" />
-        </linearGradient>
-        <linearGradient id="frasco-brillo" x1="0" x2="1">
-          <stop offset="0" stopColor="#ffffff" stopOpacity=".3" />
-          <stop offset=".3" stopColor="#ffffff" stopOpacity=".02" />
-          <stop offset=".85" stopColor="#ffffff" stopOpacity=".02" />
-          <stop offset="1" stopColor="#ffffff" stopOpacity=".25" />
-        </linearGradient>
-      </defs>
-      <rect x="30" y="0" width="100" height="58" rx="6" fill="url(#frasco-tapa)" />
-      <rect x="26" y="52" width="108" height="20" rx="6" fill="#8b959e" />
-      <path d="M40 72h80l22 40v190a20 20 0 0 1-20 20H38a20 20 0 0 1-20-20V112z" fill="#16242f" stroke="#ffffff" strokeOpacity=".22" />
-      <path d="M22 262V122h116v140" fill="url(#frasco-liquido)" />
-      <rect x="18" y="134" width="124" height="86" fill="#f2f6f9" />
-      <rect x="32" y="148" width="62" height="4" rx="2" fill="#6b7680" />
-      <rect x="32" y="158" width="38" height="4" rx="2" fill="#6b7680" />
-      <rect x="32" y="176" width="96" height="12" rx="2" fill="#aab4bc" />
-      <path d="M40 72h80l22 40v190a20 20 0 0 1-20 20H38a20 20 0 0 1-20-20V112z" fill="url(#frasco-brillo)" />
-    </svg>
-  )
-}
-
+// Las imágenes ya traen su inclinación; solo se espeja la ampolla de la izquierda
 const ampollas = [
-  { cls: 'home-ampolla-a', fill: '#3aa9e4', rotate: -20, scaleX: 1, delay: 0 },
-  { cls: 'home-ampolla-b', fill: '#3aa9e4', rotate: 20, scaleX: -1, delay: 0.8 },
-  { cls: 'home-ampolla-c', fill: '#d9a93d', rotate: -22, scaleX: 1, delay: 1.6 },
+  { cls: 'home-ampolla-a', src: ampolla, scaleX: -1, delay: 0 },
+  { cls: 'home-ampolla-b', src: ampolla, scaleX: 1, delay: 0.8 },
+  { cls: 'home-ampolla-c', src: frascoAmbar, scaleX: 1, delay: 1.6 },
 ]
 
 const pasos = [
@@ -163,11 +115,11 @@ export default function HomePage() {
           transition: { duration: 0.8, delay, ease: 'easeOut' as const },
         }
 
-  const flotar = (delay = 0, alto = 14, duracion = 5) =>
+  const flotar = (delay = 0, alto = 14, duracion = 5, giro = 0) =>
     reducir
       ? {}
       : {
-          animate: { y: [0, -alto, 0] },
+          animate: { y: [0, -alto, 0], rotate: [0, giro, 0] },
           transition: { duration: duracion, delay, repeat: Infinity, ease: 'easeInOut' as const },
         }
 
@@ -209,19 +161,17 @@ export default function HomePage() {
                     transition: { duration: 0.9, delay: 0.3, ease: 'easeOut' as const },
                   })}
             >
-              <motion.div {...flotar(1.2, 16, 6)}>
-                <Frasco />
-              </motion.div>
+              <img className="home-frasco-img" src={frascoCeleste} alt="" />
             </motion.div>
           </div>
           {ampollas.map((a) => (
             <motion.div
               key={a.cls}
               className={`home-ampolla ${a.cls}`}
-              style={{ rotate: a.rotate, scaleX: a.scaleX }}
-              {...flotar(a.delay, 12, 4.5 + a.delay)}
+              style={{ scaleX: a.scaleX }}
+              {...flotar(a.delay, 6, 3.5 + a.delay, 2.5)}
             >
-              <Ampolla fill={a.fill} />
+              <img className="home-ampolla-img" src={a.src} alt="" />
             </motion.div>
           ))}
           <motion.span className="home-dosis" {...aparecer(0.9)}>0,5 ml</motion.span>

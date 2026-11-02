@@ -9,6 +9,7 @@ import CentrosIcon from '../../assets/CentrosIcon.svg?react'
 import FamiliaIcon from '../../assets/FamiliaIcon.svg?react'
 import IAIcon from '../../assets/IAIcon.svg?react'
 import LogoutIcon from '../../assets/LogoutIcon.svg?react'
+import LogoTuVacuna from '../../assets/LogoHorizontalBlanco.svg'
 import Iniciales from '../Iniciales/Iniciales'
 import { useUsuario } from '../../context/UsuarioContext/useUsuario'
 import { useAsistente } from '../../hooks/useAsistente'
@@ -50,7 +51,7 @@ function Sidebar({ activeItem = 'Inicio', className = '' }: SidebarProps) {
   return (
     <aside className={`sidebar ${className}`.trim()}>
       <SidebarHeader to="/">
-        <h1 className='titulo-sidebar'>TuVacuna</h1>
+        <img className="logo-sidebar" src={LogoTuVacuna} alt="TuVacuna" />
       </SidebarHeader>
 
       <nav className="sidebar-nav">

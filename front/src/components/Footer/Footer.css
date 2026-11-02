@@ -16,10 +16,14 @@
 }
 
 .logo-pie-pagina {
-  color: #ffffff;
-  font-size: 18px;
-  font-weight: 600;
+  display: inline-flex;
   text-decoration: none;
+}
+
+.logo-pie-pagina-img {
+  display: block;
+  width: 9rem;
+  height: auto;
 }
 
 .texto-pie-pagina {

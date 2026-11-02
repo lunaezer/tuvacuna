@@ -17,11 +17,14 @@
 }
 
 .logo-marca-navegacion {
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: -0.3px;
+  display: inline-flex;
   text-decoration: none;
+}
+
+.logo-navegacion-img {
+  display: block;
+  width: 8rem;
+  height: auto;
 }
 
 .menu-enlaces-navegacion {
