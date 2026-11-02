@@ -6,6 +6,14 @@ import "./VacunasSelector.css";
 interface Vacuna {
   id_vacuna: number;
   nombre: string;
+  dosis: string;
+  en_calendario: boolean;
+}
+
+// "2ª dosis (4 meses)" -> { principal: "2ª dosis", detalle: "(4 meses)" }
+function partesDosis(dosis: string) {
+  const match = dosis.match(/^(.*?)\s*(\(.*\))$/);
+  return match ? { principal: match[1], detalle: match[2] } : { principal: dosis, detalle: "" };
 }
 
 interface Props {
@@ -47,8 +55,10 @@ export default function VacunasSelector({ value, onChange }: Props) {
     inputRef.current?.setCustomValidity(value ? "" : "Elegí una vacuna de la lista");
   }, [value]);
 
+  const etiqueta = (v: Vacuna) =>
+    `${v.nombre} — ${v.dosis}${v.en_calendario ? "" : " · fuera de calendario"}`;
   const elegida = lista.find((v) => String(v.id_vacuna) === value);
-  const filtradas = lista.filter((v) => v.nombre.toLowerCase().includes(busqueda.toLowerCase()));
+  const filtradas = lista.filter((v) => etiqueta(v).toLowerCase().includes(busqueda.toLowerCase()));
 
   const elegir = (v: Vacuna) => {
     onChange({ target: { name: "idVacuna", value: String(v.id_vacuna) } });
@@ -70,7 +80,7 @@ export default function VacunasSelector({ value, onChange }: Props) {
         type="text"
         className="input input--small"
         placeholder="Buscar vacuna"
-        value={elegida ? elegida.nombre : busqueda}
+        value={elegida ? etiqueta(elegida) : busqueda}
         onChange={(e) => escribir(e.target.value)}
         onFocus={() => setAbierto(true)}
         autoComplete="off"
@@ -80,7 +90,13 @@ export default function VacunasSelector({ value, onChange }: Props) {
           {filtradas.length === 0 && <li className="vacunas-selector-vacio">Sin resultados</li>}
           {filtradas.map((v) => (
             <li key={v.id_vacuna}>
-              <button type="button" onClick={() => elegir(v)}>{v.nombre}</button>
+              <button type="button" onClick={() => elegir(v)}>
+                {v.nombre} — {partesDosis(v.dosis).principal}
+                {partesDosis(v.dosis).detalle && (
+                  <span className="vacunas-selector-detalle"> {partesDosis(v.dosis).detalle}</span>
+                )}
+                {!v.en_calendario && " · fuera de calendario"}
+              </button>
             </li>
           ))}
         </ul>

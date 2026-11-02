@@ -6,7 +6,7 @@ interface CarnetTimelineProps {
   secciones: SeccionHistorial[]
   cargando: boolean
   error?: string
-  onAgendar?: (idDosis: string) => void // sin handler no se muestra el botón "Agendar"
+  onAgendar?: (idVacuna: number) => void // sin handler no se muestra el botón "Agendar"
   mensajeVacio?: string
 }
 
@@ -50,7 +50,11 @@ export default function CarnetTimeline({
                 <CarnetCard
                   key={dosis.id}
                   dosis={dosis}
-                  onAgendar={onAgendar && (() => onAgendar(String(dosis.id)))}
+                  onAgendar={
+                    onAgendar && dosis.id_vacuna !== undefined
+                      ? () => onAgendar(dosis.id_vacuna!)
+                      : undefined
+                  }
                 />
               ))}
             </div>

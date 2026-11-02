@@ -59,17 +59,6 @@ export default function CarnetFamiliarModal({ familiar, onClose }: CarnetFamilia
     }
   }, [familiar, token])
 
-  const handleAgendar = async (idDosis: string) => {
-    await fetch(`${API_URL}/api/turnos`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ dosisId: idDosis }),
-    })
-  }
-
   return (
     <Modal
       isOpen={familiar !== null}
@@ -81,7 +70,6 @@ export default function CarnetFamiliarModal({ familiar, onClose }: CarnetFamilia
         secciones={secciones}
         cargando={cargando}
         error={error}
-        onAgendar={handleAgendar}
       />
     </Modal>
   )

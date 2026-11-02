@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import type { FormEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 import PageHeader from '../../components/PageHeader/PageHeader'
 import FamilySelector from '../../components/FamilySelector/FamilySelector'
 import CarnetTimeline from '../../components/CarnetTimeline/CarnetTimeline'
@@ -21,6 +22,7 @@ const USAR_MOCK = false
 
 export default function CarnetPage() {
   const { token, usuario } = useUsuario()
+  const navigate = useNavigate()
 
   const { familiares: familiaReal, cargandoFamiliares, abrirModalAgregar } = useFamilia()
   const familiares: Familiar[] = useMemo(() => {
@@ -90,15 +92,9 @@ export default function CarnetPage() {
     await cargarCarnet()
   }
 
-  const handleAgendar = async (idDosis: string) => {
-    await fetch(`${API_URL}/api/turnos`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ dosisId: idDosis }),
-    })
+  // El turno necesita fecha: se lleva a la persona al calendario con la vacuna ya elegida
+  const handleAgendar = (idVacuna: number) => {
+    navigate('/calendario', { state: { idVacuna } })
   }
 
   const handleGuardarDosis = async (e?: FormEvent<HTMLFormElement>) => {

@@ -2,12 +2,14 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PageHeader from '../../components/PageHeader/PageHeader'
 import UserInfo from '../../components/UserInfo/UserInfo'
-import BuscadorPacientes, { type FiltroPacientes } from '../../components/BuscadorPacientes/BuscadorPacientes'
+import Buscador, { type OpcionFiltro } from '../../components/Buscador/Buscador'
 import ListaPacientes from '../../components/ListaPacientes/ListaPacientes'
 import PreviewPaciente from '../../components/PreviewPaciente/PreviewPaciente'
 import { usePacientes } from '../../hooks/usePacientes'
 import { normalizar } from '../../utils/texto'
 import './PacientesPage.css'
+
+type FiltroPacientes = 'todos' | 'atrasados'
 
 export default function PacientesPage() {
   const navigate = useNavigate()
@@ -25,6 +27,12 @@ export default function PacientesPage() {
     return coincide && pasaFiltro
   })
 
+  const atrasados = pacientes.filter((p) => p.estado === 'atrasada').length
+  const opciones: OpcionFiltro<FiltroPacientes>[] = [
+    { valor: 'todos', etiqueta: `Todos — ${pacientes.length}` },
+    { valor: 'atrasados', etiqueta: `Con atrasos — ${atrasados}` },
+  ]
+
   const seleccionado = pacientes.find((p) => p.id === seleccionadoId) ?? null
 
   return (
@@ -39,13 +47,13 @@ export default function PacientesPage() {
         <p className="pacientes-mensaje">Cargando pacientes...</p>
       ) : (
         <>
-          <BuscadorPacientes
+          <Buscador
             busqueda={busqueda}
             onBusqueda={setBusqueda}
+            placeholder="Buscar por nombre o documento"
+            opciones={opciones}
             filtro={filtro}
             onFiltro={setFiltro}
-            total={pacientes.length}
-            atrasados={pacientes.filter((p) => p.estado === 'atrasada').length}
           />
 
           <ListaPacientes pacientes={visibles} seleccionadoId={seleccionadoId} onSeleccionar={seleccionar} onVerCarnet={(id) => navigate(`/pacientes/${id}/carnet`)}/>

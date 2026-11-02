@@ -3,14 +3,16 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  gap: 2rem;
 }
 
 .titulo-centros {
   font-size: 36px;
   color: #0f172a;
-  font-weight: 500;
+  font-weight: bold;
   margin-bottom: 8px;
   letter-spacing: -0.5px;
+  display: flex;
 }
 
 .subtitulo-centros {

@@ -26,7 +26,7 @@ export default function ParaAgendar() {
         <CarnetCard
           key={d.id}
           dosis={d}
-          onAgendar={() => navigate('/calendario')}
+          onAgendar={() => navigate('/calendario', { state: { idVacuna: d.id_vacuna } })}
         />
       ))}
     </div>

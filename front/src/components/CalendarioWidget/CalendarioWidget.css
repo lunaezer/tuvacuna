@@ -1,9 +1,9 @@
 /* Estilos del componente CalendarioWidget */
 .calendario-widget {
   background: #ffffff;
-  border-radius: 18px;
+  border-radius: 1.125rem;
   border: 1px solid var(--border-color);
-  padding: 28px 24px;
+  padding: 1.75rem 1.5rem;
   box-shadow: var(--shadow-sm);
 }
 
@@ -12,28 +12,28 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 24px;
+  margin-bottom: 1.5rem;
 }
 
 .calendario-widget-mes {
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 600;
   color: var(--text-primary);
 }
 
 .calendario-widget-nav {
   display: flex;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .calendario-widget-nav-btn {
-  width: 34px;
-  height: 34px;
+  width: 2.125rem;
+  height: 2.125rem;
   border-radius: 50%;
   border: 1px solid var(--border-color);
   background: #ffffff;
   color: var(--text-secondary);
-  font-size: 18px;
+  font-size: 1.125rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,24 +51,24 @@
 .calendario-widget-dias-semana {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 }
 
 .calendario-widget-dia-nombre {
   text-align: center;
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 600;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 4px 0;
+  letter-spacing: 0.03125rem;
+  padding: 0.25rem 0;
 }
 
 /* Grilla de días */
 .calendario-widget-grilla {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
+  gap: 0.125rem;
 }
 
 /* Celda individual */
@@ -78,14 +78,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
+  border-radius: 0.75rem;
   background: transparent;
   border: none;
   cursor: pointer;
   position: relative;
   transition: background 0.15s ease;
   padding: 0;
-  gap: 3px;
+  gap: 0.1875rem;
 }
 
 .calendario-widget-celda:hover:not(:disabled) {
@@ -93,7 +93,7 @@
 }
 
 .calendario-widget-celda-numero {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 500;
   color: var(--text-primary);
 }
@@ -123,39 +123,72 @@
 }
 
 /* Día con turno agendado */
+.calendario-widget-celda--turno {
+  background: #dcfce7;
+}
+
 .calendario-widget-celda--turno .calendario-widget-celda-numero {
-  color: var(--primary-cyan);
-  font-weight: 600;
+  color: #16a34a;
+  font-weight: 700;
+}
+
+/* Día recomendado */
+.calendario-widget-celda--recomendado {
+  background: #fef3c7;
+}
+
+.calendario-widget-celda--recomendado .calendario-widget-celda-numero {
+  color: #d97706;
+  font-weight: 700;
 }
 
 /* Día atrasado */
+.calendario-widget-celda--atrasado {
+  background: #fee2e2;
+}
+
 .calendario-widget-celda--atrasado .calendario-widget-celda-numero {
   color: #ef4444;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 /* Puntos indicadores debajo del número */
 .calendario-widget-punto {
-  width: 5px;
-  height: 5px;
+  width: 0.3125rem;
+  height: 0.3125rem;
   border-radius: 50%;
 }
 
 .calendario-widget-punto--turno {
-  background: var(--primary-cyan);
+  background: #16a34a;
+}
+
+.calendario-widget-punto--recomendado {
+  background: #d97706;
 }
 
 .calendario-widget-punto--atrasado {
   background: #ef4444;
 }
 
+/* Si hoy además tiene un turno, gana el fondo oscuro de "hoy" */
+.calendario-widget-celda--hoy.calendario-widget-celda--turno,
+.calendario-widget-celda--hoy.calendario-widget-celda--recomendado,
+.calendario-widget-celda--hoy.calendario-widget-celda--atrasado {
+  background: var(--text-primary);
+}
+
+.calendario-widget-celda--hoy .calendario-widget-celda-numero {
+  color: #ffffff;
+}
+
 /* Responsive */
-@media (max-width: 600px) {
+@media (max-width: 37.5rem) {
   .calendario-widget {
-    padding: 20px 16px;
+    padding: 1.25rem 1rem;
   }
 
   .calendario-widget-celda-numero {
-    font-size: 13px;
+    font-size: 0.8125rem;
   }
 }

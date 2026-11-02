@@ -1,8 +1,17 @@
+.lista-centros-contenedor {
+  display: flex;
+  flex-direction: column;
+  max-height: 35rem;
+}
+
+.lista-centros-buscador {
+  padding: 1rem;
+}
+
 .lista-centros {
   list-style: none;
   margin: 0;
   padding: 0;
-  max-height: 35rem;
   overflow-y: auto;
 }
 
@@ -48,7 +57,7 @@
 }
 
 @media (max-width: 48rem) {
-  .lista-centros {
+  .lista-centros-contenedor {
     max-height: 20rem;
   }
 }

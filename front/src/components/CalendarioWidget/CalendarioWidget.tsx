@@ -1,4 +1,5 @@
 import type { DiaMarcado } from '../../types'
+import { NOMBRES_MESES } from '../../utils/fechas'
 import './CalendarioWidget.css'
 
 interface CalendarioWidgetProps {
@@ -20,10 +21,6 @@ function CalendarioWidget({
 }: CalendarioWidgetProps) {
   const hoy = new Date()
 
-  const nombresMeses = [
-    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
-  ]
   const diasSemana = ['LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB', 'DOM']
 
   // ── Generar grilla de días ──────────────────────────────
@@ -70,8 +67,12 @@ function CalendarioWidget({
     )
   }
 
+  // Un mismo día puede traer varias marcas (por ejemplo "hoy" y "turno").
+  // "hoy" ya se pinta aparte, así que acá se elige la marca que sí lleva punto.
   const obtenerMarca = (dia: number, mes: number, anio: number) => {
-    return diasMarcados.find((m) => m.dia === dia && m.mes === mes && m.anio === anio)
+    return diasMarcados.find(
+      (m) => m.dia === dia && m.mes === mes && m.anio === anio && m.tipo !== 'hoy'
+    )
   }
 
   return (
@@ -79,7 +80,7 @@ function CalendarioWidget({
       {/* Header con mes/año y flechas */}
       <div className="calendario-widget-header">
         <span className="calendario-widget-mes">
-          {nombresMeses[mesActual]} {anioActual}
+          {NOMBRES_MESES[mesActual]} {anioActual}
         </span>
         <div className="calendario-widget-nav">
           <button className="calendario-widget-nav-btn" onClick={onMesAnteriorClick} aria-label="Mes anterior">

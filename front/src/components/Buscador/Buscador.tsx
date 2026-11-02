@@ -1,50 +1,50 @@
 import { Search } from 'lucide-react'
-import './BuscadorPacientes.css'
+import Button from '../Button/Button'
+import './Buscador.css'
 
-export type FiltroPacientes = 'todos' | 'atrasados'
-
-interface BuscadorPacientesProps {
-  busqueda: string
-  onBusqueda: (texto: string) => void
-  filtro: FiltroPacientes
-  onFiltro: (filtro: FiltroPacientes) => void
-  total: number
-  atrasados: number
+export interface OpcionFiltro<T extends string> {
+  valor: T
+  etiqueta: string
 }
 
-export default function BuscadorPacientes({
+interface BuscadorProps<T extends string> {
+  busqueda: string
+  onBusqueda: (texto: string) => void
+  placeholder: string
+  opciones: OpcionFiltro<T>[]
+  filtro: T
+  onFiltro: (filtro: T) => void
+}
+
+export default function Buscador<T extends string>({
   busqueda,
   onBusqueda,
+  placeholder,
+  opciones,
   filtro,
   onFiltro,
-  total,
-  atrasados,
-}: BuscadorPacientesProps) {
+}: BuscadorProps<T>) {
   return (
-    <div className="buscador-pacientes">
-      <label className="buscador-pacientes-input">
+    <div className="buscador">
+      <label className="buscador-input">
         <Search size={16} />
         <input
           value={busqueda}
           onChange={(e) => onBusqueda(e.target.value)}
-          placeholder="Buscar por nombre o documento"
+          placeholder={placeholder}
         />
       </label>
 
-      <button
-        type="button"
-        className={`buscador-pacientes-chip ${filtro === 'todos' ? 'buscador-pacientes-chip--activo' : ''}`}
-        onClick={() => onFiltro('todos')}
-      >
-        Todos — {total}
-      </button>
-      <button
-        type="button"
-        className={`buscador-pacientes-chip ${filtro === 'atrasados' ? 'buscador-pacientes-chip--activo' : ''}`}
-        onClick={() => onFiltro('atrasados')}
-      >
-        Con atrasos — {atrasados}
-      </button>
+      {/* chip activo = variante 'aceptar', chip inactivo = variante 'rechazar' */}
+      {opciones.map((o) => (
+        <Button
+          key={o.valor}
+          text={o.etiqueta}
+          variant={filtro === o.valor ? 'aceptar' : 'rechazar'}
+          className="buscador-chip"
+          onClick={() => onFiltro(o.valor)}
+        />
+      ))}
     </div>
   )
 }

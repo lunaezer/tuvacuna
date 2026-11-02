@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import PageHeader from '../../components/PageHeader/PageHeader'
 import Button from '../../components/Button/Button'
 import CalendarioWidget from '../../components/CalendarioWidget/CalendarioWidget'
@@ -8,10 +9,15 @@ import { useUsuario } from '../../context/UsuarioContext/useUsuario'
 import './CalendarioPage.css'
 import type { formDataTurno } from '../../types'
 import AgregarTurnoModal from '../../components/AgregarTurnoModal/AgregarTurnoModal'
+import CancelarTurnoModal from '../../components/CancelarTurnoModal/CancelarTurnoModal'
+import Toast from '../../components/Toast/Toast'
 import { API_URL } from "../../config";
+
+const FORM_TURNO_VACIO: formDataTurno = { idVacuna: "", fecha: "", hora: "", lugar: "" }
 
 export default function CalendarioPage() {
   const { token } = useUsuario()
+  const location = useLocation()
 
   const hoy = new Date()
   const [mesActual, setMesActual] = useState(hoy.getMonth())
@@ -22,43 +28,88 @@ export default function CalendarioPage() {
   const [errorTurnos, setErrorTurnos] = useState(false)
   const [modalNuevoTurnoAbierto, setModalNuevoTurnoAbierto] = useState(false)
 
-  const[formDataTurno, setFormDataTurno] = useState<formDataTurno> (
-    {
-      vacuna: "",
-      fecha: "",
-      hora: "",
-      lugar: "",
-    }
-  ); 
+  const [formDataTurno, setFormDataTurno] = useState<formDataTurno>(FORM_TURNO_VACIO)
+  const [errorModal, setErrorModal] = useState("")
+  const [turnoEditando, setTurnoEditando] = useState<Turno | null>(null)
+  const [turnoACancelar, setTurnoACancelar] = useState<Turno | null>(null)
+  const [errorCancelar, setErrorCancelar] = useState(false)
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => { 
-  const { name, value } = e.target;
-  setFormDataTurno((prev) => ({ ...prev, [name]: value }));
-  } // VER SI ANDA PARA GUARDAR LOS VALORES DEL FORM
+  const handleChange = (e: { target: { name: string; value: string } }) => {
+    const { name, value } = e.target
+    setFormDataTurno((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const cerrarModal = () => {
+    setModalNuevoTurnoAbierto(false)
+    setFormDataTurno(FORM_TURNO_VACIO)
+    setErrorModal("")
+    setTurnoEditando(null)
+  }
+
+  const handleEditar = (turno: Turno) => {
+    setTurnoEditando(turno)
+    setFormDataTurno({
+      idVacuna: String(turno.id_vacuna),
+      fecha: turno.fecha,
+      hora: turno.hora ?? "",
+      lugar: turno.lugar ?? "",
+    })
+    setModalNuevoTurnoAbierto(true)
+  }
+
+  const confirmarCancelar = async () => {
+    if (!turnoACancelar) return
+    try {
+      const response = await fetch(`${API_URL}/api/turnos/${turnoACancelar.id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      if (!response.ok) throw new Error()
+      setTurnoACancelar(null)
+      cargarTurnos()
+      cargarMarcados()
+    } catch {
+      setTurnoACancelar(null)
+      setErrorCancelar(true)
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
+    setErrorModal("")
     try {
-      const response = await fetch(`${API_URL}/api/turnos`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(formDataTurno),
-      });
+      // El PUT reemplaza el turno entero: siempre se mandan todos los campos
+      const response = await fetch(
+        turnoEditando ? `${API_URL}/api/turnos/${turnoEditando.id}` : `${API_URL}/api/turnos`,
+        {
+          method: turnoEditando ? "PUT" : "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            id_vacuna: Number(formDataTurno.idVacuna),
+            fecha: formDataTurno.fecha,
+            // hora y lugar son opcionales: si están vacíos, no se mandan
+            hora: formDataTurno.hora || undefined,
+            lugar: formDataTurno.lugar.trim() || undefined,
+          }),
+        }
+      )
 
-      const data = await response.json();
+      const data = await response.json()
 
       if (!response.ok) {
-        console.error(data.message || "Error al agregar el turno");
-        return;
+        setErrorModal(data.mensaje || "No se pudo guardar el turno")
+        return
       }
-      alert("Turno agregado");
-      setModalNuevoTurnoAbierto(false);
-      cargarTurnos();
-    } catch (err) {
-      console.error("No se pudo conectar con el servidor");
+
+      cerrarModal()
+      // el turno se ve solo: se vuelven a pedir la lista y los puntos de la grilla
+      cargarTurnos()
+      cargarMarcados()
+    } catch {
+      setErrorModal("No se pudo conectar con el servidor")
     }
   }
 
@@ -80,27 +131,28 @@ export default function CalendarioPage() {
     }
   }
 
-  useEffect(() => {
-    async function cargarMarcados() {
-      try {
-        const response = await fetch(
-          `${API_URL}/api/calendario/marcados?mes=${mesActual}&anio=${anioActual}`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        )
-        if (!response.ok) throw new Error()
-        const data = await response.json()
-        setDiasMarcados(data)
-      } catch {
-        setDiasMarcados([])
-      }
+  async function cargarMarcados() {
+    try {
+      const response = await fetch(
+        `${API_URL}/api/calendario/marcados?mes=${mesActual}&anio=${anioActual}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      if (!response.ok) throw new Error()
+      const data = await response.json()
+      setDiasMarcados(data)
+    } catch {
+      setDiasMarcados([])
     }
+  }
+
+  useEffect(() => {
     cargarMarcados()
   }, [mesActual, anioActual])
 
   async function cargarTurnos() {
     try {
       const response = await fetch(
-        `${API_URL}/api/turnos?mes=${mesActual}&anio=${anioActual}`,
+        `${API_URL}/api/turnos?anio=${anioActual}`,
         { headers: { Authorization: `Bearer ${token}` } }
       )
       if (!response.ok) throw new Error()
@@ -113,9 +165,20 @@ export default function CalendarioPage() {
     }
   }
 
+  // la lista trae todos los turnos del año, así que solo depende del año
   useEffect(() => {
     cargarTurnos()
-  }, [mesActual, anioActual])
+  }, [anioActual])
+
+  // Viene del carnet con una vacuna elegida: se abre el modal con esa vacuna
+  useEffect(() => {
+    const idVacuna = location.state?.idVacuna
+    if (idVacuna) {
+      setFormDataTurno((prev) => ({ ...prev, idVacuna: String(idVacuna) }))
+      setModalNuevoTurnoAbierto(true)
+      window.history.replaceState({}, '') // para que no se reabra al recargar
+    }
+  }, [])
 
  const handleNuevoTurno = () => {
   setModalNuevoTurnoAbierto(true)
@@ -126,11 +189,6 @@ export default function CalendarioPage() {
     console.log(`Día clickeado: ${dia}/${mes + 1}/${anio}`)
   }
 
-  const handleVerTodoElAnio = () => {
-    // TODO: Navegar a vista anual o expandir calendario
-    console.log('Ver todo el año')
-  }
-  
 
   return (
     <div className="contenedor-calendario">
@@ -154,19 +212,36 @@ export default function CalendarioPage() {
           />
         </div>
 
-     <AgregarTurnoModal
-      isOpen={modalNuevoTurnoAbierto}
-      onClose={() => setModalNuevoTurnoAbierto(false)}
-      handleChange={handleChange}
-      handleSubmit={handleSubmit}
-    />
+        <AgregarTurnoModal
+          isOpen={modalNuevoTurnoAbierto}
+          onClose={cerrarModal}
+          formData={formDataTurno}
+          error={errorModal}
+          editando={turnoEditando !== null}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+        />
+
+        <CancelarTurnoModal
+          isOpen={turnoACancelar !== null}
+          nombre={turnoACancelar?.nombre ?? ""}
+          onClose={() => setTurnoACancelar(null)}
+          onConfirmar={confirmarCancelar}
+        />
+
+        <Toast
+          isOpen={errorCancelar}
+          mensaje="Error al cancelar turno"
+          variante="error"
+          onClose={() => setErrorCancelar(false)}
+        />
 
         {/* Columna derecha: próximos turnos */}
         <div className="calendario-col-der">
           <div className="calendario-turnos-header">
             <h2 className="calendario-turnos-titulo">Próximos turnos</h2>
             {!errorTurnos && (
-              <span className="calendario-turnos-count">{proximosTurnos.length} ESTE MES</span>
+              <span className="calendario-turnos-count">{proximosTurnos.length} EN {anioActual}</span>
             )}
           </div>
 
@@ -174,26 +249,24 @@ export default function CalendarioPage() {
             {errorTurnos ? (
               <p className="calendario-turnos-vacio">No se pudo conectar con el servidor.</p>
             ) : proximosTurnos.length === 0 ? (
-              <p className="calendario-turnos-vacio">No tenés turnos agendados este mes.</p>
+              <p className="calendario-turnos-vacio">No tenés turnos agendados en {anioActual}.</p>
             ) : (
-              proximosTurnos.map((turno, index) => (
+              proximosTurnos.map((turno) => (
                 <TurnoCard
-                  key={index}
+                  key={turno.id}
                   dia={turno.dia}
                   mes={turno.mes}
-                  titulo={turno.titulo}
+                  nombre={turno.nombre}
+                  dosis={turno.dosis}
                   lugar={turno.lugar}
                   hora={turno.hora}
                   estado={turno.estado}
-                  etiqueta={turno.etiqueta}
+                  onEditar={() => handleEditar(turno)}
+                  onCancelar={() => setTurnoACancelar(turno)}
                 />
               ))
             )}
           </div>
-
-          <button className="calendario-ver-anio" onClick={handleVerTodoElAnio}>
-            Ver todo el año
-          </button>
         </div>
       </div>
     </div>

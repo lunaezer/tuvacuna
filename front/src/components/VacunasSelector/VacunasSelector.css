@@ -35,6 +35,11 @@
   background: #f1f5f9;
 }
 
+.vacunas-selector-detalle {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
 .vacunas-selector-vacio {
   padding: 0.6rem 0.8rem;
   color: var(--text-muted);

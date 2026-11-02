@@ -64,7 +64,10 @@ export type EstadoDosis = 'atrasada' | 'pendiente' | 'aplicada' | 'recomendada'
 
 export interface Dosis {
   id: number
+  id_vacuna?: number      // la vacuna a la que apunta la dosis; hace falta para agendar
   nombre: string
+  dosis?: string          // cuál es y cuándo corresponde, ej: "2ª dosis (4 meses)"
+  en_calendario?: boolean // false = fuera del Calendario Nacional
   estado: EstadoDosis
   fecha_de_aplicacion?: string // solo en las aplicadas (AAAA-MM-DD)
   lote?: string
@@ -78,16 +81,20 @@ export interface SeccionHistorial {
   dosis: Dosis[]
 }
 
-export type EstadoTurno = 'agendado' | 'sin-agendar' | 'atrasado' | 'recomendado'
+export type EstadoTurno = 'pendiente' | 'aplicada' | 'atrasada' | 'recomendada'
 
 export interface Turno {
-  dia: string
-  mes: string
-  titulo: string
+  id: number
+  fecha: string // AAAA-MM-DD
+  id_vacuna: number
+  nombre: string
+  dosis: string | null
+  dia: number
+  mes: number // 0-11, igual que Date
+  anio: number
   lugar: string | null
   hora: string | null
   estado: EstadoTurno
-  etiqueta?: string
 }
 
 export interface DiaMarcado {
@@ -114,16 +121,19 @@ export interface RegistroData {
 }
 
 export interface formDataTurno {
-  vacuna: string;
+  idVacuna: string;
   fecha: string;
   hora: string | null;
   lugar: string;
 
 }
+export type FiltroCentros = 'todos' | 'publicos' | 'privados'
+
 export interface Centro {
   id: number
   nombre: string
   direccion: string
   lat: number
   lng: number
+  tipo: 'publico' | 'privado' // a confirmar con el back
 }

@@ -32,7 +32,7 @@ export default function AgregarVacunaModal({ isOpen, onClose, form, setForm, han
       <form className="modal-form" onSubmit={handleSubmit}>
         <div className="agregar-turno-fila">
           <VacunasSelector value={form.idVacuna} onChange={handleChange} />
-          <Input variant="small" name="lote" label="Lote" placeholder="1ra dosis" value={form.lote} onChange={handleChange} required />
+          <Input variant="small" name="lote" label="Lote" placeholder="12345" value={form.lote} onChange={handleChange} required />
         </div>
 
         <div className="agregar-turno-fila">

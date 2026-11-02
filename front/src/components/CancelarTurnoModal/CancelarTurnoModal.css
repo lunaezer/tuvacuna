@@ -1,0 +1,22 @@
+.cancelar-turno-titulo {
+  margin: 0 0 1rem;
+  font-size: 1.85rem;
+  font-weight: 800;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.cancelar-turno-texto {
+  margin: 0 0 1.5rem;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.cancelar-turno-acciones {
+  display: flex;
+  gap: 1rem;
+}
+
+.cancelar-turno-acciones > * {
+  flex: 1;
+}

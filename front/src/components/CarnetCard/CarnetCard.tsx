@@ -26,8 +26,13 @@ interface CarnetCardProps {
 }
 
 function CarnetCard({ dosis, onAgendar }: CarnetCardProps) {
-  const { nombre: titulo, estado, fecha_de_aplicacion, lugar } = dosis
-  const subtitulo = [fecha_de_aplicacion && formatearFecha(fecha_de_aplicacion), lugar]
+  const { nombre: titulo, dosis: detalleDosis, en_calendario, estado, fecha_de_aplicacion, lugar } = dosis
+  const subtitulo = [
+    detalleDosis,
+    en_calendario === false && 'Fuera de calendario',
+    fecha_de_aplicacion && formatearFecha(fecha_de_aplicacion),
+    lugar,
+  ]
     .filter(Boolean)
     .join(' · ')
   const etiqueta = ETIQUETA[estado]

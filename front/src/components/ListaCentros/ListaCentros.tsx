@@ -1,33 +1,65 @@
 import { useCentros } from "../../hooks/useCentros";
 import Button from "../Button/Button";
+import Buscador, { type OpcionFiltro } from "../Buscador/Buscador";
+import type { FiltroCentros } from "../../types";
 import "./ListaCentros.css";
 
-export default function ListaCentros() {
-  const { centros, cargando, error, seleccionado, setSeleccionado } = useCentros();
+const OPCIONES: OpcionFiltro<FiltroCentros>[] = [
+  { valor: "todos", etiqueta: "Todos" },
+  { valor: "publicos", etiqueta: "Públicos" },
+  { valor: "privados", etiqueta: "Privados" },
+];
 
-  if (cargando) return <p className="lista-centros-mensaje">Cargando centros...</p>;
-  if (error) return <p className="lista-centros-mensaje">{error}</p>;
-  if (centros.length === 0) return <p className="lista-centros-mensaje">No hay centros para mostrar.</p>;
+export default function ListaCentros() {
+  const {
+    centros, busqueda, setBusqueda, filtro, setFiltro,
+    cargando, error, seleccionado, setSeleccionado,
+  } = useCentros();
+
+  const mensaje = cargando
+    ? "Cargando centros..."
+    : error
+      ? error
+      : centros.length === 0
+        ? "No hay centros para mostrar."
+        : null;
 
   return (
-    <ul className="lista-centros">
-      {centros.map((c, i) => {
-        const activo = seleccionado?.id === c.id;
-        return (
-          <li
-            key={c.id}
-            className={`centro-item ${activo ? "centro-item--activo" : ""}`}
-            onClick={() => setSeleccionado(c)}
-          >
-            <span className="centro-item-numero">{i + 1}</span>
-            <div className="centro-item-info">
-              <strong>{c.nombre}</strong>
-              <span>{c.direccion}</span>
-            </div>
-            {activo && <Button text="Agendar turno" />}
-          </li>
-        );
-      })}
-    </ul>
+    <div className="lista-centros-contenedor">
+      <div className="lista-centros-buscador">
+        <Buscador
+          busqueda={busqueda}
+          onBusqueda={setBusqueda}
+          placeholder="Buscar por nombre o dirección"
+          opciones={OPCIONES}
+          filtro={filtro}
+          onFiltro={setFiltro}
+        />
+      </div>
+
+      {mensaje ? (
+        <p className="lista-centros-mensaje">{mensaje}</p>
+      ) : (
+        <ul className="lista-centros">
+          {centros.map((c, i) => {
+            const activo = seleccionado?.id === c.id;
+            return (
+              <li
+                key={c.id}
+                className={`centro-item ${activo ? "centro-item--activo" : ""}`}
+                onClick={() => setSeleccionado(c)}
+              >
+                <span className="centro-item-numero">{i + 1}</span>
+                <div className="centro-item-info">
+                  <strong>{c.nombre}</strong>
+                  <span>{c.direccion}</span>
+                </div>
+                {activo && <Button text="Agendar turno" />}
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
   );
 }

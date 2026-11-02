@@ -1,11 +1,11 @@
-.buscador-pacientes {
+.buscador {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   flex-wrap: wrap;
 }
 
-.buscador-pacientes-input {
+.buscador-input {
   flex: 1;
   min-width: 14rem;
   display: flex;
@@ -18,7 +18,7 @@
   color: #64748b;
 }
 
-.buscador-pacientes-input input {
+.buscador-input input {
   flex: 1;
   border: none;
   outline: none;
@@ -27,19 +27,7 @@
   color: #0f172a;
 }
 
-.buscador-pacientes-chip {
+.buscador .buscador-chip {
   padding: 0.6rem 1.1rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 9999px;
-  background: #fff;
-  color: #0f172a;
   font-size: 0.8125rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.buscador-pacientes-chip--activo {
-  background: #0f172a;
-  border-color: #0f172a;
-  color: #fff;
 }

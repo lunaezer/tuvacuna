@@ -1,9 +1,14 @@
 import { createContext, useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import { API_URL } from "../../config";
-import type { Centro } from "../../types";
+import { normalizar } from "../../utils/texto";
+import type { Centro, FiltroCentros } from "../../types";
 
 interface CentrosContextType {
-    centros: Centro[];
+    centros: Centro[];             // ya filtrados por la búsqueda y el filtro
+    busqueda: string;
+    setBusqueda: (texto: string) => void;
+    filtro: FiltroCentros;
+    setFiltro: (filtro: FiltroCentros) => void;
     cargando: boolean;
     error: string;
     seleccionado: Centro | null;   // el centro elegido (null si no hay ninguno)
@@ -15,6 +20,8 @@ export const CentrosContext = createContext<CentrosContextType | undefined>(unde
 
 export const CentrosProvider = ({ children }: { children: ReactNode }) => {
     const [centros, setCentros] = useState<Centro[]>([]);
+    const [busqueda, setBusqueda] = useState("");
+    const [filtro, setFiltro] = useState<FiltroCentros>("todos");
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState("");
     // guardo solo el id: así el seleccionado siempre es un centro de la lista actual
@@ -44,9 +51,22 @@ export const CentrosProvider = ({ children }: { children: ReactNode }) => {
         cargarCentros();
     }, [cargarCentros]);
 
+    const centrosFiltrados = useMemo(() => {
+        const texto = normalizar(busqueda);
+        return centros.filter((c) => {
+            const coincideTexto =
+                normalizar(c.nombre).includes(texto) || normalizar(c.direccion).includes(texto);
+            const coincideFiltro =
+                filtro === "todos" ||
+                (filtro === "publicos" && c.tipo === "publico") ||
+                (filtro === "privados" && c.tipo === "privado");
+            return coincideTexto && coincideFiltro;
+        });
+    }, [centros, busqueda, filtro]);
+
     const seleccionado = useMemo(
-        () => centros.find((c) => c.id === seleccionadoId) ?? null,
-        [centros, seleccionadoId],
+        () => centrosFiltrados.find((c) => c.id === seleccionadoId) ?? null,
+        [centrosFiltrados, seleccionadoId],
     );
 
     const setSeleccionado = useCallback((centro: Centro | null) => {
@@ -55,7 +75,11 @@ export const CentrosProvider = ({ children }: { children: ReactNode }) => {
 
     return (
         <CentrosContext.Provider
-            value={{ centros, cargando, error, seleccionado, setSeleccionado, cargarCentros }}
+            value={{
+                centros: centrosFiltrados,
+                busqueda, setBusqueda, filtro, setFiltro,
+                cargando, error, seleccionado, setSeleccionado, cargarCentros,
+            }}
         >
             {children}
         </CentrosContext.Provider>
