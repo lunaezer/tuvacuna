@@ -7,7 +7,7 @@ import { carnetsMock } from '../../mocks/carnetMock'
 import type { Familiar, SeccionHistorial } from '../../types'
 
 // Poner en false para usar el back real
-const USAR_MOCK = true
+const USAR_MOCK = false
 
 interface CarnetFamiliarModalProps {
   familiar: Familiar | null

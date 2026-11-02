@@ -3,18 +3,35 @@ export type ButtonVariant = 'primary' | 'secondary' | 'celeste' | 'outline' | 'b
 export type CardVariant = 'white' | 'dark' | 'profile' | 'compact'
 
 export interface Familiar {
-  id?: string
+  id?: number // id_paciente
   nombre: string
+  apellido?: string
   esVos?: boolean
   iniciales?: string
-  colorBg?: string
+  colorBg?: string // lo elige el front, el back no lo manda
   edad?: number
 }
 
 export interface Invitacion {
-  id: string
+  id: number
+  solicitante: { nombre: string; apellido: string; mail: string }
+  fecha: string
+}
+
+// Alguien que puede ver mi carnet (GET /api/familia/acceso). El id es el del vínculo.
+export interface AccesoFamiliar {
+  id: number
+  id_paciente: number
   nombre: string
   apellido: string
+  mail: string
+}
+
+// Solicitud que mandé y todavía no contestaron (GET /api/familia/solicitudes/enviadas)
+export interface SolicitudEnviada {
+  id: number
+  destinatario: { nombre: string; apellido: string; mail: string }
+  estado: string
 }
 
 // Solicitud que un paciente le manda al médico (el id es el de la solicitud, no el del paciente)

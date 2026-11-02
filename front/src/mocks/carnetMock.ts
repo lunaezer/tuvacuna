@@ -1,15 +1,10 @@
-import type { Familiar, Invitacion, SeccionHistorial } from '../types'
-
-// Respuesta hardcodeada de GET /api/familia/solicitudes/recibidas
-export const invitacionesMock: Invitacion[] = [
-  { id: 'i1', nombre: 'Juliana', apellido: 'Pane' },
-]
+import type { Familiar, SeccionHistorial } from '../types'
 
 // Respuesta hardcodeada de GET /api/familia
 export const familiaMock: Familiar[] = [
-  { id: '1', nombre: 'Sofi', esVos: true, iniciales: 'SG', colorBg: '#38bdf8', edad: 32 },
-  { id: '2', nombre: 'Tomi', iniciales: 'TG', colorBg: '#fbbf24', edad: 7 },
-  { id: '3', nombre: 'Maru', iniciales: 'MG', colorBg: '#34d399', edad: 68 },
+  { id: 1, nombre: 'Sofi', esVos: true, iniciales: 'SG', colorBg: '#38bdf8', edad: 32 },
+  { id: 2, nombre: 'Tomi', iniciales: 'TG', colorBg: '#fbbf24', edad: 7 },
+  { id: 3, nombre: 'Maru', iniciales: 'MG', colorBg: '#34d399', edad: 68 },
 ]
 
 // Respuesta hardcodeada de GET /api/carnet/:id (carnet propio)

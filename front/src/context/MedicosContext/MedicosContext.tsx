@@ -41,6 +41,7 @@ interface MedicosContextType {
     cargarMedicos: () => Promise<void>;
     buscarMedicos: (texto: string) => Promise<Medico[]>;     // tira un Error si falla
     enviarSolicitud: (idMedico: number) => Promise<void>;    // tira un Error si falla
+    quitarMedico: (idVinculo: number) => Promise<void>;      // cancela la solicitud o quita al médico; tira un Error si falla
     abrirModalAgregarMedico: () => void;
 }
 
@@ -158,6 +159,24 @@ export const MedicosProvider = ({ children }: { children: ReactNode }) => {
         await cargarMedicos(); // para que el pendiente aparezca al instante
     }
 
+    // Cancela una solicitud pendiente o quita a un médico que ya me atendía (el id es el del vínculo)
+    async function quitarMedico(idVinculo: number) {
+        let response: Response;
+        try {
+            response = await fetch(`${API_URL}/api/perfil/medicos/${idVinculo}`, {
+                method: "DELETE",
+                headers: { Authorization: `Bearer ${token}` },
+            });
+        } catch {
+            throw new Error("No se pudo conectar con el servidor");
+        }
+        if (!response.ok) {
+            const data = await response.json().catch(() => null);
+            throw new Error(data?.mensaje ?? "No se pudo quitar al médico");
+        }
+        setMedicos((actuales) => actuales.filter((m) => m.idVinculo !== idVinculo));
+    }
+
     return (
         <MedicosContext.Provider
             value={{
@@ -167,6 +186,7 @@ export const MedicosProvider = ({ children }: { children: ReactNode }) => {
                 cargarMedicos,
                 buscarMedicos,
                 enviarSolicitud,
+                quitarMedico,
                 abrirModalAgregarMedico: () => setModalAbierto(true),
             }}
         >

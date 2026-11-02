@@ -17,11 +17,12 @@ interface inputProps {
     max?: string;
     label: string;
     required?: boolean;
+    disabled?: boolean;
     // string: marca el campo y muestra el mensaje. true: solo marca el campo.
     error?: string | boolean;
 }
 
-function Input({ placeholder, variant, onClick, onChange, value, name, type = "text", max, required, label, error }: inputProps) {
+function Input({ placeholder, variant, onClick, onChange, value, name, type = "text", max, required, disabled, label, error }: inputProps) {
     return (
         <label className="input-label">
             {label}
@@ -34,6 +35,7 @@ function Input({ placeholder, variant, onClick, onChange, value, name, type = "t
                 value={value}
                 onChange={onChange}
                 required={required}
+                disabled={disabled}
                 className={`input input--${variant} ${error ? "input--error" : ""}`.trim()}
                 aria-invalid={!!error}
             />

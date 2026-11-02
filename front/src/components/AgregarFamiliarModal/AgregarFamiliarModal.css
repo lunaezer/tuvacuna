@@ -6,6 +6,18 @@
   color: var(--text-primary);
 }
 
+.agregar-familiar-nombres {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 30rem) {
+  .agregar-familiar-nombres {
+    grid-template-columns: 1fr;
+  }
+}
+
 .agregar-familiar-acciones {
   display: flex;
   gap: 1rem;

@@ -1,0 +1,38 @@
+.editar-perfil-titulo {
+  margin: 0 0 1rem;
+  font-size: 1.85rem;
+  font-weight: 800;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.editar-perfil-nombres {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 30rem) {
+  .editar-perfil-nombres {
+    grid-template-columns: 1fr;
+  }
+}
+
+.editar-perfil-error {
+  color: #b91c1c;
+  font-size: 0.875rem;
+}
+
+.editar-perfil-acciones {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.editar-perfil-acciones > * {
+  flex: 1;
+}
+
+.editar-perfil-acciones .btn {
+  padding: 1.1rem 1.5rem;
+}

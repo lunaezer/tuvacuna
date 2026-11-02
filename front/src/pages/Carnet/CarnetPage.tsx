@@ -48,9 +48,9 @@ export default function CarnetPage() {
   const [errorDosis, setErrorDosis] = useState('')
   const [dosisAgregada, setDosisAgregada] = useState(false)
 
-  async function cargarCarnet(idFamiliar?: string) {
+  async function cargarCarnet(idFamiliar?: number) {
     if (USAR_MOCK) {
-      setSeccionesHistorial(carnetsMock[idFamiliar ?? 'yo'] ?? [])
+      setSeccionesHistorial(carnetsMock[idFamiliar === undefined ? 'yo' : String(idFamiliar)] ?? [])
       setCargando(false)
       return
     }

@@ -2,20 +2,25 @@ import { createContext, useCallback, useEffect, useState, type ReactNode } from 
 import { API_URL } from "../../config";
 import { useUsuario } from "../UsuarioContext/useUsuario";
 import AgregarFamiliarModal from "../../components/AgregarFamiliarModal/AgregarFamiliarModal";
-import { invitacionesMock } from "../../mocks/carnetMock";
-import type { Familiar, Invitacion } from "../../types";
+import type { AccesoFamiliar, Familiar, Invitacion, SolicitudEnviada } from "../../types";
 
-// Poner en false para usar el back real
-const USAR_MOCK = true;
+interface DatosSolicitud {
+    mail: string;
+    nombre: string;
+    apellido: string;
+}
 
 interface FamiliaContextType {
     familiares: Familiar[];
     invitaciones: Invitacion[];
-    aceptarInvitacion: (id: string) => Promise<void>;
-    rechazarInvitacion: (id: string) => Promise<void>;
+    aceptarInvitacion: (id: number) => Promise<void>;
+    rechazarInvitacion: (id: number) => Promise<void>;
     cargandoFamiliares: boolean;
     cargarFamiliares: () => Promise<void>;
-    enviarSolicitud: (email: string) => Promise<void>;
+    enviarSolicitud: (datos: DatosSolicitud) => Promise<void>;
+    accesos: AccesoFamiliar[];            // quién puede ver mi carnet
+    enviadas: SolicitudEnviada[];         // solicitudes que mandé y siguen pendientes
+    quitarAcceso: (id: number) => Promise<void>;   // tira un Error si falla
     abrirModalAgregar: () => void;
 }
 
@@ -25,6 +30,8 @@ export const FamiliaProvider = ({ children }: { children: ReactNode }) => {
     const { token } = useUsuario();
     const [familiares, setFamiliares] = useState<Familiar[]>([]);
     const [invitaciones, setInvitaciones] = useState<Invitacion[]>([]);
+    const [accesos, setAccesos] = useState<AccesoFamiliar[]>([]);
+    const [enviadas, setEnviadas] = useState<SolicitudEnviada[]>([]);
     const [cargandoFamiliares, setCargandoFamiliares] = useState(true);
     const [modalAbierto, setModalAbierto] = useState(false);
 
@@ -47,10 +54,6 @@ export const FamiliaProvider = ({ children }: { children: ReactNode }) => {
     }, [token]);
 
     const cargarInvitaciones = useCallback(async () => {
-        if (USAR_MOCK) {
-            setInvitaciones(invitacionesMock);
-            return;
-        }
         if (!token) {
             setInvitaciones([]);
             return;
@@ -65,38 +68,56 @@ export const FamiliaProvider = ({ children }: { children: ReactNode }) => {
         }
     }, [token]);
 
-    async function responderInvitacion(id: string, accion: "aceptar" | "rechazar") {
-        if (!USAR_MOCK) {
-            let response: Response;
-            try {
-                response = await fetch(`${API_URL}/api/familia/solicitudes/${id}/${accion}`, {
-                    method: "POST",
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-            } catch {
-                throw new Error("No se pudo conectar con el servidor");
-            }
+    const cargarAccesosYEnviadas = useCallback(async () => {
+        if (!token) {
+            setAccesos([]);
+            setEnviadas([]);
+            return;
+        }
+        const headers = { Authorization: `Bearer ${token}` };
+        try {
+            const [resAcceso, resEnviadas] = await Promise.all([
+                fetch(`${API_URL}/api/familia/acceso`, { headers }),
+                fetch(`${API_URL}/api/familia/solicitudes/enviadas`, { headers }),
+            ]);
+            if (resAcceso.ok) setAccesos(await resAcceso.json());
+            if (resEnviadas.ok) setEnviadas(await resEnviadas.json());
+        } catch {
+            // sin conexión: quedan las listas como estaban
+        }
+    }, [token]);
 
-            if (!response.ok) {
-                const data = await response.json().catch(() => null);
-                throw new Error(data?.message ?? data?.mensaje ?? "No se pudo responder la invitación");
-            }
+    async function responderInvitacion(id: number, accion: "aceptar" | "rechazar") {
+        let response: Response;
+        try {
+            response = await fetch(`${API_URL}/api/familia/solicitudes/${id}/${accion}`, {
+                method: "POST",
+                headers: { Authorization: `Bearer ${token}` },
+            });
+        } catch {
+            throw new Error("No se pudo conectar con el servidor");
+        }
+
+        if (!response.ok) {
+            const data = await response.json().catch(() => null);
+            throw new Error(data?.mensaje ?? "No se pudo responder la invitación");
         }
 
         // Ya la respondí: sale de la lista de pendientes
         setInvitaciones((actuales) => actuales.filter((invitacion) => invitacion.id !== id));
+        if (accion === "aceptar") cargarFamiliares();   // ahora hay un familiar nuevo
     }
 
-    async function enviarSolicitud(email: string) {
+    async function enviarSolicitud(datos: DatosSolicitud) {
         let response: Response;
         try {
-            response = await fetch(`${API_URL}/api/familia/solicitud`, {
+            response = await fetch(`${API_URL}/api/familia/solicitudes`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify({ email }),
+                body: JSON.stringify(datos),
             });
         } catch {
             // fetch solo lanza si no hay conexión con el servidor
@@ -105,13 +126,38 @@ export const FamiliaProvider = ({ children }: { children: ReactNode }) => {
 
         if (!response.ok) {
             const data = await response.json().catch(() => null);
-            throw new Error(data?.message ?? data?.mensaje ?? "No se pudo enviar la solicitud");
+            throw new Error(data?.mensaje ?? "No se pudo enviar la solicitud");
         }
+
+        cargarAccesosYEnviadas();   // la solicitud nueva aparece en "enviadas"
+    }
+
+    async function quitarAcceso(id: number) {
+        let response: Response;
+        try {
+            response = await fetch(`${API_URL}/api/familia/acceso/${id}`, {
+                method: "DELETE",
+                headers: { Authorization: `Bearer ${token}` },
+            });
+        } catch {
+            throw new Error("No se pudo conectar con el servidor");
+        }
+
+        if (!response.ok) {
+            const data = await response.json().catch(() => null);
+            throw new Error(data?.mensaje ?? "No se pudo quitar el acceso");
+        }
+
+        setAccesos((actuales) => actuales.filter((a) => a.id !== id));
     }
 
     useEffect(() => {
         cargarFamiliares();
     }, [cargarFamiliares]);
+
+    useEffect(() => {
+        cargarAccesosYEnviadas();
+    }, [cargarAccesosYEnviadas]);
 
     useEffect(() => {
         cargarInvitaciones();
@@ -127,6 +173,9 @@ export const FamiliaProvider = ({ children }: { children: ReactNode }) => {
                 cargandoFamiliares,
                 cargarFamiliares,
                 enviarSolicitud,
+                accesos,
+                enviadas,
+                quitarAcceso,
                 abrirModalAgregar: () => setModalAbierto(true),
             }}
         >

@@ -9,7 +9,7 @@ import { useUsuario } from '../../context/UsuarioContext/useUsuario'
 import './CalendarioPage.css'
 import type { formDataTurno } from '../../types'
 import AgregarTurnoModal from '../../components/AgregarTurnoModal/AgregarTurnoModal'
-import CancelarTurnoModal from '../../components/CancelarTurnoModal/CancelarTurnoModal'
+import ConfirmarModal from '../../components/ConfirmarModal/ConfirmarModal'
 import Toast from '../../components/Toast/Toast'
 import { API_URL } from "../../config";
 
@@ -222,9 +222,15 @@ export default function CalendarioPage() {
           handleSubmit={handleSubmit}
         />
 
-        <CancelarTurnoModal
+        <ConfirmarModal
           isOpen={turnoACancelar !== null}
-          nombre={turnoACancelar?.nombre ?? ""}
+          titulo="Cancelar turno"
+          mensaje={
+            <>
+              ¿Seguro que querés cancelar el turno de <strong>{turnoACancelar?.nombre}</strong>? Esta acción no se puede deshacer.
+            </>
+          }
+          textoConfirmar="Cancelar turno"
           onClose={() => setTurnoACancelar(null)}
           onConfirmar={confirmarCancelar}
         />

@@ -7,18 +7,22 @@ import "./AgregarFamiliarModal.css";
 interface AgregarFamiliarModalProps {
   isOpen: boolean
   onClose: () => void
-  onEnviar: (email: string) => Promise<void>
+  onEnviar: (datos: { mail: string; nombre: string; apellido: string }) => Promise<void>
 }
 
 export default function AgregarFamiliarModal({ isOpen, onClose, onEnviar }: AgregarFamiliarModalProps) {
-  const [email, setEmail] = useState("")
+  const [nombre, setNombre] = useState("")
+  const [apellido, setApellido] = useState("")
+  const [mail, setMail] = useState("")
   const [error, setError] = useState("")
   const [enviando, setEnviando] = useState(false)
 
   // Al cerrar se limpia todo, así la próxima vez arranca vacío
   useEffect(() => {
     if (!isOpen) {
-      setEmail("")
+      setNombre("")
+      setApellido("")
+      setMail("")
       setError("")
       setEnviando(false)
     }
@@ -29,7 +33,7 @@ export default function AgregarFamiliarModal({ isOpen, onClose, onEnviar }: Agre
     setError("")
     setEnviando(true)
     try {
-      await onEnviar(email.trim())
+      await onEnviar({ mail: mail.trim(), nombre: nombre.trim(), apellido: apellido.trim() })
       onClose()
     } catch (err) {
       setError(err instanceof Error ? err.message : "No se pudo enviar la solicitud")
@@ -42,27 +46,47 @@ export default function AgregarFamiliarModal({ isOpen, onClose, onEnviar }: Agre
     <Modal isOpen={isOpen} onClose={onClose}>
       <h1 className="agregar-familiar-titulo">Agregar familiar</h1>
       <form className="modal-form" onSubmit={handleSubmit}>
+        <div className="agregar-familiar-nombres">
+          <Input
+            variant="large"
+            name="nombre"
+            label="Nombre"
+            placeholder="Ej: Joaquin"
+            required
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
+          />
+          <Input
+            variant="large"
+            name="apellido"
+            label="Apellido"
+            placeholder="Ej: Baranek"
+            required
+            value={apellido}
+            onChange={(e) => setApellido(e.target.value)}
+          />
+        </div>
         <Input
           variant="large"
           type="email"
-          name="email"  
-          label="Mail del familiar"
-          placeholder="familiar@gmail.com"
+          name="mail"
+          label="Mail"
+          placeholder="Ej: paciente@gmail.com"
           required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={mail}
+          onChange={(e) => setMail(e.target.value)}
           error={error}
         />
         <div className="agregar-familiar-acciones">
           <Button text="Cancelar" type="button" variant="primary" onClick={onClose} />
           <Button
-            text={enviando ? "Enviando..." : "Enviar solicitud"}
+            text={enviando ? "Enviando..." : "Añadir"}
             type="submit"
             variant="celeste"
             disabled={enviando}
           />
         </div>
-      </form> 
+      </form>
     </Modal>
   )
 }

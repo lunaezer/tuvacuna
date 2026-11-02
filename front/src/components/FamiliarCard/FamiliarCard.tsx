@@ -14,7 +14,7 @@ export default function FamiliarCard({ familiar, onVerCarnet }: FamiliarCardProp
       <div className="familiar-card-header">
         <Iniciales nombre={familiar.nombre} texto={familiar.iniciales} colorBg={familiar.colorBg} size="large" />
         <div className="familiar-card-info">
-          <span className="familiar-card-nombre">{familiar.nombre}</span>
+          <span className="familiar-card-nombre">{[familiar.nombre, familiar.apellido].filter(Boolean).join(' ')}</span>
           {familiar.edad !== undefined && (
             <span className="familiar-card-edad">
               {familiar.edad === 1 ? '1 año' : `${familiar.edad} años`}

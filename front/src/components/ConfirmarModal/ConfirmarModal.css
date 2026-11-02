@@ -1,4 +1,4 @@
-.cancelar-turno-titulo {
+.confirmar-titulo {
   margin: 0 0 1rem;
   font-size: 1.85rem;
   font-weight: 800;
@@ -6,17 +6,17 @@
   color: var(--text-primary);
 }
 
-.cancelar-turno-texto {
+.confirmar-texto {
   margin: 0 0 1.5rem;
   text-align: center;
   color: var(--text-secondary);
 }
 
-.cancelar-turno-acciones {
+.confirmar-acciones {
   display: flex;
   gap: 1rem;
 }
 
-.cancelar-turno-acciones > * {
+.confirmar-acciones > * {
   flex: 1;
 }

@@ -28,6 +28,11 @@
     box-shadow: 0 0 0 3px rgba(52, 179, 230, 0.15);
 }
 
+.input:disabled {
+    color: var(--text-muted);
+    cursor: not-allowed;
+}
+
 select.input {
     appearance: none;
     padding-right: 2.5rem;
