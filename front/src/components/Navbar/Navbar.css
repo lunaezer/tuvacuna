@@ -33,7 +33,18 @@
   align-items: center;
 }
 
-.barra-navegacion-espacio { width: 7.5rem; }
+/* Los botones del hero son grandes: acá se achican para que entren en la barra */
+.barra-navegacion .home-botones {
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+}
+
+.barra-navegacion .btn-vidrio {
+  min-width: 0;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
 
 .enlace-navegacion {
   color: rgba(255, 255, 255, 0.7);
@@ -46,4 +57,9 @@
 .enlace-navegacion:hover,
 .enlace-navegacion.activo {
   color: var(--blanco);
+}
+
+/* En pantallas chicas no entran logo, enlaces y botones: se ocultan los enlaces */
+@media (max-width: 64rem) {
+  .menu-enlaces-navegacion { display: none; }
 }

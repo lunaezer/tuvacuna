@@ -1,0 +1,30 @@
+/* ---------- CTA ---------- */
+.home-cta {
+  background: radial-gradient(ellipse at 50% 55%, #0f3446 0%, #09202c 45%, #061520 100%);
+  padding: 7.5rem 2.5rem 5rem;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+}
+.home-cta h2 {
+  color: var(--blanco); font-size: clamp(2.75rem, 6vw, 5.25rem); font-weight: 700;
+  letter-spacing: -2px; line-height: 1.1; max-width: 48.75rem; margin: 2.5rem 0 2.125rem;
+}
+.home-cta > p { color: rgba(255,255,255,.55); font-size: 1.25rem; max-width: 35rem; margin-bottom: 3.25rem; line-height: 1.4; }
+
+.home-linea {
+  list-style: none; display: grid; grid-template-columns: repeat(6, 1fr);
+  width: 100%; max-width: 56.25rem; margin-top: 5.625rem; position: relative;
+}
+.home-linea::before {
+  content: ''; position: absolute; left: 8%; right: 8%; top: 2.125rem; height: 2px;
+  background: linear-gradient(90deg, #2e9fd6, #3ac79c);
+}
+.home-linea li { position: relative; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
+.home-linea .vac { color: rgba(255,255,255,.9); font-size: 0.75rem; font-weight: 700; min-height: 1rem; }
+.home-linea i { width: 12px; height: 12px; border-radius: 50%; background: #071a26; border: 2px solid var(--h-celeste); position: relative; z-index: 1; box-shadow: 0 0 0 4px rgba(56,169,224,.2); }
+.home-linea .edad { color: rgba(255,255,255,.45); font-size: 0.625rem; letter-spacing: .5px; }
+
+@media (max-width: 640px) {
+  .home-cta { padding-left: 1.25rem; padding-right: 1.25rem; }
+  .home-linea { grid-template-columns: repeat(3, 1fr); row-gap: 2.5rem; }
+  .home-linea::before { display: none; }
+}

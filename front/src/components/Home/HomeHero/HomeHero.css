@@ -1,0 +1,114 @@
+/* ---------- Hero ---------- */
+.home-hero {
+  position: relative;
+  background-color: var(--h-bg);
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+  background-size: 2.75rem 2.75rem;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 5.625rem max(2.5rem, calc((100% - 75rem) / 2)) 6.875rem;
+  overflow: hidden;
+}
+
+.home-insignia {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.5rem 0.875rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255,255,255,.15);
+  background: rgba(255,255,255,.04);
+  color: rgba(255,255,255,.8);
+  font-size: 0.875rem;
+}
+.home-insignia i {
+  width: 0.75rem; height: 0.75rem; border-radius: 50%;
+  background: var(--verde-agua);
+}
+
+.home-hero h1 {
+  color: var(--blanco);
+  font-size: clamp(2.75rem, 6vw, 5.25rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -2px;
+  margin: 3rem 0 3.5rem;
+}
+
+.home-hero-texto p {
+  color: rgba(255,255,255,.65);
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.45;
+  max-width: 35rem;
+  margin-bottom: 3.5rem;
+}
+
+/* Visual del hero */
+.home-hero-visual {
+  position: relative;
+  min-height: 40rem;
+}
+
+.home-visor {
+  position: absolute;
+  left: 50%; top: 2.5rem;
+  transform: translateX(-50%);
+  width: 21.25rem; height: 35rem;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,.25)) top left / 3.875rem 1px no-repeat,
+    linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,.25)) top left / 1px 3.875rem no-repeat,
+    linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,.25)) top right / 3.875rem 1px no-repeat,
+    linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,.25)) top right / 1px 3.875rem no-repeat,
+    linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,.25)) bottom left / 3.875rem 1px no-repeat,
+    linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,.25)) bottom left / 1px 3.875rem no-repeat,
+    linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,.25)) bottom right / 3.875rem 1px no-repeat,
+    linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,.25)) bottom right / 1px 3.875rem no-repeat;
+}
+
+.home-frasco-img { display: block; height: 28rem; width: auto; filter: drop-shadow(0 1.25rem 2.5rem rgba(0,0,0,.5)); }
+
+/* Las imágenes ya vienen inclinadas; framer-motion solo espeja la de la izquierda y las mueve un poco */
+.home-ampolla { position: absolute; width: 7rem; }
+.home-ampolla-c { width: 8rem; }
+.home-ampolla-img { display: block; width: 100%; height: auto; filter: drop-shadow(0 0.75rem 1.25rem rgba(0,0,0,.4)); }
+.home-ampolla-a { left: 4%; top: 1.25rem; }
+.home-ampolla-b { right: 2%; top: 1.25rem; }
+.home-ampolla-c { right: 0; bottom: 4rem; }
+
+.home-dosis {
+  position: absolute;
+  left: 14%; bottom: 6.875rem;
+  padding: 0.375rem 0.75rem;
+  background: var(--blanco);
+  color: #071521;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+.home-lote {
+  position: absolute;
+  left: 15%; bottom: 2.5rem;
+  color: rgba(255,255,255,.65);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  letter-spacing: .2px;
+}
+.home-lote b { color: var(--blanco); }
+
+@media (max-width: 1000px) {
+  .home-hero { grid-template-columns: 1fr; padding: 3.75rem 1.5rem 5rem; }
+  .home-hero-visual { min-height: 35rem; }
+}
+@media (max-width: 640px) {
+  .home-ampolla { width: 4.5rem; }
+  .home-ampolla-c { width: 5.5rem; }
+  .home-frasco-img { height: 22rem; }
+  .home-visor { width: 15rem; height: 27.5rem; }
+}

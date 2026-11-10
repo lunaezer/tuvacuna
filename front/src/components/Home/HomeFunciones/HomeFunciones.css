@@ -1,0 +1,12 @@
+/* Las funciones llevan menos aire arriba y abajo que "Cómo funciona" */
+.home-claro.home-funciones { padding-top: 3.75rem; padding-bottom: 6.875rem; }
+
+.home-rejilla.home-grilla { gap: 1.75rem; }
+
+.home-tarjeta.home-tarjeta-funcion { padding: 1.75rem 1.875rem 2rem; }
+.home-tarjeta.home-tarjeta-funcion h3 { font-size: 1.875rem; margin-top: 1.5rem; }
+.home-icono {
+  display: grid; place-items: center; width: 4rem; height: 4rem;
+  border-radius: 0.875rem; background: #e6f5fc; color: var(--h-celeste);
+}
+.home-icono svg { width: 1.75rem; height: 1.75rem; }

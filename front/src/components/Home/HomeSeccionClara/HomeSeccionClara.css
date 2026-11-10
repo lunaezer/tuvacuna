@@ -1,0 +1,29 @@
+.home-claro { background: var(--h-claro); padding: 6.25rem 2.5rem 2.5rem; }
+.home-contenedor { max-width: 73.75rem; margin: 0 auto; }
+
+.home-encabezado { margin-bottom: 3.5rem; }
+.home-regla {
+  display: block; position: relative;
+  width: 35rem; max-width: 100%; height: 2px;
+  background: #d6e2ea; margin-bottom: 1rem;
+}
+.home-regla::after { content: ''; position: absolute; left: 0; top: 0; width: 20%; height: 100%; background: var(--h-celeste); }
+.home-etiqueta-clara { color: #1390c9; font-size: 0.875rem; font-weight: 500; letter-spacing: .3px; }
+.home-encabezado h2 {
+  color: #000; font-size: clamp(2rem, 4.4vw, 3.5rem); font-weight: 700;
+  letter-spacing: -1.5px; line-height: 1.12; max-width: 48.75rem; margin: 1.625rem 0 1.125rem;
+}
+.home-bajada { color: #5f7d93; font-size: 1.25rem; }
+
+/* Rejilla de tarjetas: 3 columnas, 2 en tablet y 1 en celular */
+.home-rejilla {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.25rem;
+}
+
+@media (max-width: 1000px) {
+  .home-rejilla { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .home-claro { padding-left: 1.25rem; padding-right: 1.25rem; }
+  .home-rejilla { grid-template-columns: 1fr; }
+}

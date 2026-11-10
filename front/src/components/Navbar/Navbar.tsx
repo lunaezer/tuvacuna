@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import './Navbar.css'
 import LogoHorizontal from '../../assets/LogoHorizontalBlanco.svg'
+import HomeBotones from '../Home/HomeBotones/HomeBotones'
 
 export default function Navbar() {
   return (
@@ -14,7 +15,7 @@ export default function Navbar() {
           <a href="#funciones" className="enlace-navegacion">Funciones</a>
           <a href="#medicos" className="enlace-navegacion">Medicos</a>
         </div>
-        <span className="barra-navegacion-espacio" aria-hidden="true" />
+        <HomeBotones />
       </nav>
     </header>
   )

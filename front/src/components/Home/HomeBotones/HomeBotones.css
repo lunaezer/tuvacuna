@@ -1,0 +1,7 @@
+.home-botones {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.home-botones-centrado { justify-content: center; }
