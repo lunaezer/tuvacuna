@@ -8,7 +8,7 @@
 
 .contenido-principal-dashboard {
   flex: 1;
-  padding: 40px;
+  padding: 2.5rem;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;

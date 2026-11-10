@@ -35,7 +35,7 @@
 /* Pill activo — fondo oscuro */
 .family-pill-activo {
   background-color: var(--card-bg-dark);
-  color: #ffffff;
+  color: var(--blanco);
   border-color: var(--card-bg-dark);
 }
 

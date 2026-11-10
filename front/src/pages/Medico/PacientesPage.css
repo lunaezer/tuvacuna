@@ -1,10 +1,10 @@
 .contenedor-pacientes {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 1.5rem;
 }
 
 .pacientes-mensaje {
   margin: 0;
-  color: #64748b;
+  color: var(--gris-medio);
 }

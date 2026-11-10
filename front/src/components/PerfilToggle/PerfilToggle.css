@@ -30,6 +30,6 @@
 
 .btn.perfil-btn.is-active {
   background-color: var(--sidebar-bg);
-  color: #ffffff;
+  color: var(--blanco);
   border-color: var(--sidebar-bg);
 }

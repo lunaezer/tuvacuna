@@ -10,7 +10,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 28px; 
+  margin-bottom: 1.75rem; 
 }
 
 .inicio-header-texto {
@@ -20,15 +20,15 @@
 }
 
 .titulo-inicio {
-  font-size: 36px;
+  font-size: 2.25rem;
   color: var(--text-primary);
   font-weight: 600;
-  margin-bottom: 6px;
+  margin-bottom: 0.375rem;
   letter-spacing: -0.5px;
 }
 
 .subtitulo-inicio {
-  font-size: 15px;
+  font-size: 0.9375rem;
   color: var(--text-secondary);
 }
 
@@ -74,7 +74,7 @@
 @media (max-width: 768px) {
   .inicio-header {
     flex-direction: column;
-    gap: 16px;
+    gap: 1rem;
   }
 
   .inicio-grid {

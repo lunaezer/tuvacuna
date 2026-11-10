@@ -1,7 +1,7 @@
 .contenedor-carnet-paciente {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 1.5rem;
   width: 100%;
   max-width: 72rem;
   margin: 0 auto;
@@ -15,10 +15,10 @@
   align-self: flex-start;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #475569;
+  color: var(--text-secondary);
   text-decoration: none;
 }
 
 .carnet-paciente-volver:hover {
-  color: #0f172a;
+  color: var(--text-primary);
 }

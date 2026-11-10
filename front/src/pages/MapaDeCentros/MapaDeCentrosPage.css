@@ -8,15 +8,15 @@
 }
 
 .titulo-mapa-centros {
-  font-size: 48px;
-  color: #0f172a;
+  font-size: 3rem;
+  color: var(--text-primary);
   font-weight: 400;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
   letter-spacing: -1px;
 }
 
 .subtitulo-mapa-centros {
-  font-size: 16px;
-  color: #64748b;
-  max-width: 600px;
+  font-size: 1rem;
+  color: var(--gris-medio);
+  max-width: 37.5rem;
 }

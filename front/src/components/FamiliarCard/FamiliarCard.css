@@ -3,7 +3,7 @@
   /* borde en degradé del diseño: el fondo va en dos capas */
   border: 2px solid transparent;
   background:
-    linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(var(--blanco), var(--blanco)) padding-box,
     var(--gradiente-borde) border-box;
   border-radius: 1rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
@@ -27,12 +27,12 @@
 }
 
 .familiar-card-edad {
-  color: #64748b;
+  color: var(--gris-medio);
   font-size: 0.875rem;
 }
 
 .familiar-card-nombre {
-  color: #0f172a;
+  color: var(--text-primary);
   font-size: 1.125rem;
   font-weight: 600;
 }
@@ -42,9 +42,9 @@
 }
 
 .familiar-card .familiar-card-boton {
-  background: #ffffff;
-  color: #0f172a;
-  border: 1px solid #cbd5e1;
+  background: var(--blanco);
+  color: var(--text-primary);
+  border: 1px solid var(--gris-borde);
 }
 
 .familiar-card .familiar-card-boton:hover {

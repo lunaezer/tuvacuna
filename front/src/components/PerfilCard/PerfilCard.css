@@ -6,7 +6,7 @@
   padding: 2rem;
   border-radius: 1.75rem;
   background: linear-gradient(135deg, #1b2b36, #0f1c24);
-  color: #fff;
+  color: var(--blanco);
 }
 
 .perfil-card-info {
@@ -18,7 +18,7 @@
 .perfil-card-label {
   font-size: 0.75rem;
   letter-spacing: 0.05em;
-  color: #38bdf8;
+  color: var(--celeste-claro);
   display: flex;
 }
 
@@ -37,8 +37,8 @@
   position: absolute;
   right: -2px;
   bottom: 0;
-  width: 14px;
-  height: 14px;
+  width: 0.875rem;
+  height: 0.875rem;
   border-radius: 50%;
   background: #2ed573;
   border: 2px solid #1b2b36;
@@ -53,7 +53,7 @@
 
 .perfil-card-detalle {
   margin: 0.25rem 0 0;
-  color: #cbd5e1;
+  color: var(--gris-borde);
   display: flex;
 }
 
@@ -88,11 +88,11 @@
 
 .perfil-card-chip {
   padding: 0.4rem 0.9rem;
-  border-radius: 999px;
+  border-radius: 62.4375rem;
   border: 1px solid rgba(255, 255, 255, 0.15);
   background: rgba(255, 255, 255, 0.05);
   font-size: 0.8rem;
-  color: #cbd5e1;
+  color: var(--gris-borde);
 }
 
 .perfil-card-chip b {

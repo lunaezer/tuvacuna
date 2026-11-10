@@ -21,7 +21,7 @@
   width: 100%;
   padding: 0;
   background: transparent;
-  color: #fff;
+  color: var(--blanco);
   text-align: left;
 }
 

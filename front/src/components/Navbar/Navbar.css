@@ -8,9 +8,9 @@
 }
 
 .barra-navegacion {
-  max-width: 1200px;
+  max-width: 75rem;
   margin: 0 auto;
-  padding: 20px 40px;
+  padding: 1.25rem 2.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -29,21 +29,21 @@
 
 .menu-enlaces-navegacion {
   display: flex;
-  gap: 64px;
+  gap: 4rem;
   align-items: center;
 }
 
-.barra-navegacion-espacio { width: 120px; }
+.barra-navegacion-espacio { width: 7.5rem; }
 
 .enlace-navegacion {
   color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 600;
   transition: color 0.2s ease;
 }
 
 .enlace-navegacion:hover,
 .enlace-navegacion.activo {
-  color: #ffffff;
+  color: var(--blanco);
 }

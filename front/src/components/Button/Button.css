@@ -30,7 +30,7 @@
 
 /* Primary variant — white background, dark text */
 .btn-primary {
-  background-color: #ffffff;
+  background-color: var(--blanco);
   color: #071521;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
    font-weight: 700;
@@ -60,7 +60,7 @@
 /* Outline variant — transparent with light border */
 .btn-outline {
   background: rgba(255, 255, 255, 0.05);
-  color: #ffffff;
+  color: var(--blanco);
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
@@ -72,7 +72,7 @@
 /* Celeste variant — sky blue action button (same as Carnet) */
 .btn-celeste {
   background-color: #3BB8E8;
-  color: #0f172a;
+  color: var(--text-primary);
   font-weight: 700;
   font-size: 1.3rem;
    padding: 1.2375rem 3rem; 
@@ -81,14 +81,14 @@
 
 .btn-celeste:hover {
   background-color: #0ea5e9;
-  color: #ffffff;
+  color: var(--blanco);
   transform: translateY(-1px);
 }
 
 /* Medium variant — centered secondary action (e.g. Invitar) */
 .btn-medium {
   align-self: center;
-  background-color: #ffffff;
+  background-color: var(--blanco);
   color: #071521;
   font-weight: 700;
   font-size: 0.95rem;
@@ -124,8 +124,8 @@
 
 /* Aceptar variant — dark solid, for use on light backgrounds */
 .btn-aceptar {
-  background-color: #0f172a;
-  color: #ffffff;
+  background-color: var(--text-primary);
+  color: var(--blanco);
 }
 
 .btn-aceptar:hover {
@@ -135,9 +135,9 @@
 
 /* Rechazar variant — white with border, for use on light backgrounds */
 .btn-rechazar {
-  background-color: #ffffff;
-  color: #0f172a;
-  border: 1px solid #cbd5e1;
+  background-color: var(--blanco);
+  color: var(--text-primary);
+  border: 1px solid var(--gris-borde);
 }
 
 .btn-rechazar:hover {
@@ -146,8 +146,8 @@
 }
 /* Peligro variant — white with red text, for destructive actions like cerrar sesión */
 .btn-peligro {
-  background-color: #ffffff;
-  color: #b91c1c;
+  background-color: var(--blanco);
+  color: var(--rojo-texto);
   border: 1px solid #fecaca;
 }
 

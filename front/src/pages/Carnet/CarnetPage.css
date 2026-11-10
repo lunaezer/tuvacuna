@@ -20,8 +20,8 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.7rem 1.25rem;
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
+  background-color: var(--blanco);
+  border: 1px solid var(--border-color);
   border-radius: 9999px;
   font-size: 0.9rem;
   font-weight: 600;
@@ -32,8 +32,8 @@
 }
 
 .btn-subir-foto:hover {
-  background-color: #f8fafc;
-  border-color: #cbd5e1;
+  background-color: var(--gris-fondo);
+  border-color: var(--gris-borde);
   transform: translateY(-1px);
 }
 

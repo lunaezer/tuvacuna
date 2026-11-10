@@ -11,7 +11,7 @@
 }
 
 .input-pregunta--claro {
-  background: #fff;
+  background: var(--blanco);
   border: 1px solid var(--primary-cyan);
 }
 
@@ -25,7 +25,7 @@
 }
 
 .input-pregunta--oscuro .input-pregunta-campo {
-  color: #fff;
+  color: var(--blanco);
 }
 
 .input-pregunta--claro .input-pregunta-campo {

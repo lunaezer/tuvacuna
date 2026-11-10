@@ -1,5 +1,5 @@
 .caja-personas {
-  background: #ffffff;
+  background: var(--blanco);
   border: 1px solid;
   border-radius: 1rem;
   padding: 1.25rem 1.75rem;
@@ -13,7 +13,7 @@
 }
 
 .caja-personas--medicos {
-  border-color: #38bdf8;
+  border-color: var(--celeste-claro);
 }
 
 /* en Médicos el botón de quitar va pegado a la etiqueta, no al borde derecho */
@@ -35,7 +35,7 @@
 
 .caja-personas-titulo {
   margin: 0;
-  color: #0f172a;
+  color: var(--text-primary);
   font-size: 1.25rem;
   font-weight: 700;
 }
@@ -50,7 +50,7 @@
 }
 
 .caja-personas--accesos {
-  border-color: #e2e8f0;
+  border-color: var(--border-color);
 }
 
 .caja-personas--accesos .caja-personas-badge {

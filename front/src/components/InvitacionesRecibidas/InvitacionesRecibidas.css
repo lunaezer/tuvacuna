@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: 1rem;
   padding: 1.5rem;
-  background: #fff;
+  background: var(--blanco);
   border: 1px solid #fcb354;
   border-radius: 1.5rem;
 }
@@ -18,7 +18,7 @@
 .invitaciones-recibidas-titulo {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-primary);
   margin: 0;
 }
 
@@ -44,13 +44,13 @@
 }
 
 .invitaciones-recibidas .persona-fila-acciones .btn-aceptar {
-  background: #dcfce7;
-  color: #047857;
+  background: var(--verde-fondo);
+  color: var(--verde-texto);
 }
 
 .invitaciones-recibidas .persona-fila-acciones .btn-rechazar {
-  background: #fee2e2;
-  color: #b91c1c;
+  background: var(--rojo-fondo);
+  color: var(--rojo-texto);
 }
 
 /* Confirmación que reemplaza a la fila un momento después de responder */
@@ -63,22 +63,22 @@
 }
 
 .invitaciones-recibidas-franja--aceptada {
-  background: #dcfce7;
-  color: #047857;
+  background: var(--verde-fondo);
+  color: var(--verde-texto);
 }
 
 .invitaciones-recibidas-franja--rechazada {
-  background: #fee2e2;
-  color: #b91c1c;
+  background: var(--rojo-fondo);
+  color: var(--rojo-texto);
 }
 
 .invitaciones-recibidas-vacio {
   margin: 0;
-  color: #64748b;
+  color: var(--gris-medio);
 }
 
 .invitaciones-recibidas-error {
   margin: 0;
-  color: #b91c1c;
+  color: var(--rojo-texto);
   font-size: 0.875rem;
 }

@@ -19,7 +19,7 @@
 }
 
 .editar-perfil-error {
-  color: #b91c1c;
+  color: var(--rojo-texto);
   font-size: 0.875rem;
 }
 

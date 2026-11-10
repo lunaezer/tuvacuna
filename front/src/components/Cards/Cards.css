@@ -1,32 +1,32 @@
 /* Estilos del componente Cards */
 .card-tarjeta {
-  background-color: #ffffff;
-  border-radius: 16px;
-  min-height: 190px;
+  background-color: var(--blanco);
+  border-radius: 1rem;
+  min-height: 11.875rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
   border: 1px solid rgba(226, 232, 240, 0.8);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  padding: 24px;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
 }
 
 .card-tarjeta:hover {
-  transform: translateY(-4px);
+  transform: translateY(-0.25rem);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
 }
 
 .card-titulo {
-  color: #0f172a;
-  font-size: 18px;
+  color: var(--text-primary);
+  font-size: 1.125rem;
   font-weight: 500;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 }
 
 .card-texto {
-  color: #64748b;
-  font-size: 14px;
+  color: var(--gris-medio);
+  font-size: 0.875rem;
   line-height: 1.5;
 }
 
@@ -37,7 +37,7 @@
 }
 
 .card-dark .card-titulo {
-  color: #ffffff;
+  color: var(--blanco);
 }
 
 .card-dark .card-texto {
@@ -52,8 +52,8 @@
 /* Variante compacta: más chica, para barras horizontales */
 .card-compact {
   min-height: 0;
-  padding: 16px 24px;
-  border-radius: 24px;
+  padding: 1rem 1.5rem;
+  border-radius: 1.5rem;
   flex-direction: row;
   align-items: center;
   background: linear-gradient(135deg, #f8fbff 0%, #eaf4fb 100%);

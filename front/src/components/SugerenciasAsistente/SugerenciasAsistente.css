@@ -20,7 +20,7 @@
   padding: 1rem;
   border-radius: var(--border-radius-md);
   background: rgba(255, 255, 255, 0.07);
-  color: #fff;
+  color: var(--blanco);
   font-size: 0.8125rem;
   text-align: left;
 }
@@ -32,7 +32,7 @@
 .sugerencias-asistente--claro .sugerencia-asistente {
   padding: 0.4rem 0.875rem;
   border-radius: var(--border-radius-pill);
-  background: #fff;
+  background: var(--blanco);
   border: 1px solid var(--primary-cyan);
   color: var(--text-primary);
   font-size: 0.75rem;

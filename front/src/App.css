@@ -2,12 +2,12 @@
 :root {
   --color-fondo-oscuro: #071521;
   --color-fondo-claro: #f2f6f9;
-  --color-tarjeta-blanca: #ffffff;
-  --color-texto-oscuro: #0f172a;
-  --color-texto-claro: #ffffff;
-  --color-texto-secundario: #64748b;
+  --color-tarjeta-blanca: var(--blanco);
+  --color-texto-oscuro: var(--text-primary);
+  --color-texto-claro: var(--blanco);
+  --color-texto-secundario: var(--gris-medio);
   --radio-borde-redondeado: 9999px;
-  --radio-borde-tarjeta: 16px;
+  --radio-borde-tarjeta: 1rem;
   --fuente-principal: 'Inter', system-ui, -apple-system, sans-serif;
 }
 

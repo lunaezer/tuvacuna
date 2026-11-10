@@ -18,8 +18,8 @@
   --text-muted: #94a3b8;
   
   --border-color: #e2e8f0;
-  --border-radius-lg: 18px;
-  --border-radius-md: 12px;
+  --border-radius-lg: 1.125rem;
+  --border-radius-md: 0.75rem;
   --border-radius-pill: 9999px;
   
   /* borde en degradé del diseño: celeste arriba, verde agua abajo */
@@ -29,6 +29,19 @@
   --shadow-md: 0 8px 24px -4px rgba(15, 23, 42, 0.08);
   --shadow-lg: 0 16px 32px -8px rgba(15, 23, 42, 0.12);
   
+  /* colores que se repetían sueltos en los css (mismo valor, ahora centralizados) */
+  --blanco: #ffffff;
+  --gris-medio: #64748b;
+  --gris-borde: #cbd5e1;
+  --gris-fondo: #f8fafc;
+  --verde-agua: #34d399;
+  --celeste-claro: #38bdf8;
+  --rojo: #ef4444;
+  --rojo-texto: #b91c1c;
+  --rojo-fondo: #fee2e2;
+  --verde-fondo: #dcfce7;
+  --verde-texto: #047857;
+
   --font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
 
@@ -67,15 +80,15 @@ input, select, textarea {
 
 /* Scrollbar styles */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 0.5rem;
+  height: 0.5rem;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
-  border-radius: 4px;
+  border-radius: 0.25rem;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;

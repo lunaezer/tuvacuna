@@ -6,7 +6,7 @@
   padding: 1rem;
   border-radius: 0.875rem;
   border: 1px solid var(--border-color);
-  background: #ffffff;
+  background: var(--blanco);
   text-align: left;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -39,7 +39,7 @@
   min-width: 3.25rem;
   height: 3.25rem;
   border-radius: 0.75rem;
-  background: #dcfce7;
+  background: var(--verde-fondo);
   flex-shrink: 0;
 }
 
@@ -48,7 +48,7 @@
 }
 
 .turno-card-fecha--atrasada {
-  background: #fee2e2;
+  background: var(--rojo-fondo);
 }
 
 .turno-card-dia {
@@ -73,7 +73,7 @@
 
 .turno-card-fecha--atrasada .turno-card-dia,
 .turno-card-fecha--atrasada .turno-card-mes {
-  color: #ef4444;
+  color: var(--rojo);
 }
 
 /* Info */
@@ -104,7 +104,7 @@
 }
 
 .turno-card-etiqueta--atrasada {
-  color: #ef4444;
+  color: var(--rojo);
 }
 
 .turno-card-dosis {
@@ -145,5 +145,5 @@
 }
 
 .turno-card-accion--cancelar {
-  color: #ef4444;
+  color: var(--rojo);
 }

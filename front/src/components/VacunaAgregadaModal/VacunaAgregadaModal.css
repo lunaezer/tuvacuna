@@ -13,7 +13,7 @@
   height: 4rem;
   border-radius: 50%;
   background-color: rgba(52, 211, 153, 0.15);
-  color: #34d399;
+  color: var(--verde-agua);
 }
 
 .vacuna-agregada-icono svg {

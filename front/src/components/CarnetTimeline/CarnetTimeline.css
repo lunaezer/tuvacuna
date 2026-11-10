@@ -14,7 +14,7 @@
   bottom: 0.75rem;
   left: 0.625rem; 
   width: 2px;
-  background: linear-gradient(to bottom, #38bdf8 0%, #34d399 50%, rgba(52, 211, 153, 0.2) 100%);
+  background: linear-gradient(to bottom, var(--celeste-claro) 0%, var(--verde-agua) 50%, rgba(52, 211, 153, 0.2) 100%);
   z-index: 1;
 }
 
@@ -38,7 +38,7 @@
   height: 1.25rem;
   border-radius: 50%;
   background-color: #ebf3f8;
-  border: 3px solid #38bdf8;
+  border: 0.1875rem solid var(--celeste-claro);
   box-sizing: border-box;
   flex-shrink: 0;
 }
@@ -50,7 +50,7 @@
 .carnet-timeline-titulo {
   font-size: 1.25rem;
   font-weight: 400;
-  color: #0f172a;
+  color: var(--text-primary);
 }
 
 /* Contenedor de Tarjetas desplazado a la derecha del timeline */

@@ -2,7 +2,7 @@
 .para-agendar {
   display: flex;
   flex-direction: column;
-  margin-top: 8px;
+  margin-top: 0.5rem;
 }
 
 .para-agendar .carnet-card {
@@ -19,7 +19,7 @@
 }
 
 .para-agendar-vacio {
-  margin-top: 8px;
-  font-size: 14px;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
   color: var(--text-secondary);
 }

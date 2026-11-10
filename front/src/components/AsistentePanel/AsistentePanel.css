@@ -19,7 +19,7 @@
   padding: 1.25rem 1.5rem 1rem;
   border-radius: 1.25rem 0 0 1.25rem;
   background: linear-gradient(180deg, #0d202c 0%, #0a3346 100%);
-  color: #fff;
+  color: var(--blanco);
   box-shadow: var(--shadow-lg);
   animation: asistenteDeslizar 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -43,7 +43,7 @@
   height: 2rem;
   border-radius: 0.5rem;
   background: rgba(255, 255, 255, 0.08);
-  color: #fff;
+  color: var(--blanco);
 }
 
 .asistente-icono--vacio {

@@ -1,16 +1,16 @@
 /* Estilos del componente Sidebar */
 .sidebar {
-  width: 260px;
+  width: 16.25rem;
   height: 100vh;
   position: sticky;
   top: 0;
   align-self: flex-start;
   flex-shrink: 0;
   background-color: #071521;
-  color: #ffffff;
+  color: var(--blanco);
   display: flex;
   flex-direction: column;
-  padding: 24px 16px;
+  padding: 1.5rem 1rem;
   box-sizing: border-box;
 }
 
@@ -18,8 +18,8 @@
 .sidebar-nav {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-top: 16px;
+  gap: 0.5rem;
+  margin-top: 1rem;
   min-height: 0;
   overflow-y: auto;
 }

@@ -45,7 +45,7 @@
   height: 2rem;
   border-radius: 50%;
   background: var(--card-bg-dark);
-  color: #fff;
+  color: var(--blanco);
   font-size: 0.8125rem;
   font-weight: 700;
 }

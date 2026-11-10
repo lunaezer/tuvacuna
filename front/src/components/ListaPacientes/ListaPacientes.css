@@ -1,6 +1,6 @@
 .lista-pacientes {
-  background: #fff;
-  border: 1px solid #e2e8f0;
+  background: var(--blanco);
+  border: 1px solid var(--border-color);
   border-radius: 1.5rem;
   overflow: hidden;
   text-align: left;
@@ -18,10 +18,10 @@
 .lista-pacientes-encabezado {
   padding-top: 1rem;
   padding-bottom: 1rem;
-  background: #f8fafc;
+  background: var(--gris-fondo);
   font-size: 0.875rem;
   font-weight: 700;
-  color: #475569;
+  color: var(--text-secondary);
 }
 
 .lista-pacientes-filas {
@@ -34,18 +34,18 @@
   padding-top: 0.85rem;
   padding-bottom: 0.85rem;
   border-top: 1px solid #f1f5f9;
-  border-left: 3px solid transparent;
+  border-left: 0.1875rem solid transparent;
   cursor: pointer;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .lista-pacientes-fila:hover {
-  background: #f8fafc;
+  background: var(--gris-fondo);
 }
 
 .lista-pacientes-fila--activa {
   background: #f0f9ff;
-  border-left-color: #38bdf8;
+  border-left-color: var(--celeste-claro);
 }
 
 .lista-pacientes-nombre {
@@ -53,18 +53,18 @@
   align-items: center;
   gap: 0.75rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-primary);
 }
 
 .lista-pacientes-fecha {
   font-size: 0.875rem;
-  color: #64748b;
+  color: var(--gris-medio);
 }
 
 .lista-pacientes-vacia {
   margin: 0;
   padding: 1.5rem;
-  color: #64748b;
+  color: var(--gris-medio);
 }
 
 @media (max-width: 640px) {

@@ -12,7 +12,7 @@
     width: 100%;
     font-family: inherit;
     color: var(--text-primary);
-    background-color: #f8fafc;
+    background-color: var(--gris-fondo);
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-md);
     outline: none;
