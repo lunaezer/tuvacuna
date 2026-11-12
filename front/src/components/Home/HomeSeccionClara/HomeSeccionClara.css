@@ -23,7 +23,29 @@
 @media (max-width: 1000px) {
   .home-rejilla { grid-template-columns: 1fr 1fr; }
 }
-@media (max-width: 640px) {
-  .home-claro { padding-left: 1.25rem; padding-right: 1.25rem; }
-  .home-rejilla { grid-template-columns: 1fr; }
+@media (max-width: 40rem) {
+  .home-claro {
+    padding: 3.5rem 1.25rem 1.5rem;
+  }
+
+  .home-encabezado {
+    margin-bottom: 2rem;
+  }
+
+  .home-bajada {
+    font-size: 1.0625rem;
+  }
+
+  .home-rejilla {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .home-claro .home-tarjeta {
+    padding: 1.25rem;
+  }
+
+  .home-claro .home-tarjeta h3 {
+    font-size: 1.25rem;
+  }
 }

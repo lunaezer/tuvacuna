@@ -169,20 +169,51 @@
     color: var(--sidebar-text);
 }
 
-@media (max-width: 860px) {
+@media (max-width: 53.75rem) {
     .login-page {
         height: auto;
         min-height: 100vh;
         overflow: visible;
         flex-direction: column;
-    }
-
-    .login-panel-right {
-        order: -1;
-        padding: 2rem;
+        background-color: var(--bg-main);
     }
 
     .login-panel-left {
-        padding: 2rem;
+        flex: none;
+        padding: 1.5rem 1rem;
+        overflow: visible;
+    }
+
+    .login-form-wrapper {
+        justify-content: flex-start;
+    }
+
+    .login-title {
+        font-size: 2rem;
+    }
+
+    .login-subtitle {
+        margin-bottom: 1.5rem;
+    }
+
+    .login-form {
+        gap: 1.25rem;
+    }
+
+    /* tarjeta oscura debajo del formulario, con margen y esquinas redondeadas */
+    .login-panel-right {
+        flex: none;
+        margin: 0 1rem 1.5rem;
+        padding: 1.5rem;
+        border-radius: var(--border-radius-lg);
+        overflow: visible;
+    }
+
+    .login-panel-title {
+        font-size: 1.5rem;
+    }
+
+    .login-calendario-row {
+        grid-template-columns: 4.5rem 1fr;
     }
 }

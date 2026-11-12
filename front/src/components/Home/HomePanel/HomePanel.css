@@ -33,6 +33,12 @@
   box-shadow: 0 2.5rem 5rem -1.25rem rgba(7,21,33,.55);
 }
 
-@media (max-width: 640px) {
-  .home-panel-seccion { padding-left: 1.25rem; padding-right: 1.25rem; }
+@media (max-width: 40rem) {
+  .home-panel-seccion {
+    padding: 3rem 1.25rem 3.5rem;
+  }
+
+  .home-panel-seccion > p {
+    margin-bottom: 2rem;
+  }
 }

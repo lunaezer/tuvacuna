@@ -368,23 +368,66 @@
   color: var(--primary-cyan);
 }
 
-@media (max-width: 860px) {
+@media (max-width: 53.75rem) {
   .registro-page {
     height: auto;
     min-height: 100vh;
     overflow: visible;
     flex-direction: column;
-  }
-
-  .registro-panel-right {
-    order: -1;
-    padding: 2rem;
+    background-color: var(--bg-main);
   }
 
   .registro-panel-left {
-    padding: 2rem;
+    flex: none;
+    padding: 1.5rem 1rem;
+    overflow: visible;
   }
 
+  .registro-form-wrapper {
+    justify-content: flex-start;
+  }
+
+  /* paso de subir carnet/matrícula: menos aire abajo y botón a ancho completo */
+  .registro-form-wrapper.is-upload {
+    padding-bottom: 1rem;
+  }
+
+  .registro-form-wrapper.is-upload .btn-big {
+    width: 100%;
+  }
+
+  .registro-title {
+    font-size: 1.75rem;
+  }
+
+  .registro-subtitle {
+    margin-bottom: 1.5rem;
+  }
+
+  .registro-form {
+    gap: 1.25rem;
+  }
+
+  .registro-panel-right {
+    flex: none;
+    margin: 0 1rem 1.5rem;
+    padding: 1.5rem;
+    border-radius: var(--border-radius-lg);
+    overflow: visible;
+  }
+
+  .registro-panel-right > .registro-badge {
+    margin-left: 0;
+  }
+
+  /* Correo y DNI (segunda fila doble) van uno debajo del otro: el correo es largo */
+  .registro-grid-2 + .registro-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* en pantallas muy angostas Nombre y Apellido sí van uno debajo del otro */
+@media (max-width: 22rem) {
   .registro-grid-2 {
     grid-template-columns: 1fr;
   }

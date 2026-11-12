@@ -63,3 +63,23 @@
 @media (max-width: 64rem) {
   .menu-enlaces-navegacion { display: none; }
 }
+
+@media (max-width: 40rem) {
+  .barra-navegacion {
+    padding: 0.875rem 1rem;
+  }
+
+  .logo-navegacion-img {
+    width: 6.5rem;
+  }
+
+  /* "Crear cuenta" ya está en el hero: en la barra queda solo el botón de ingresar */
+  .barra-navegacion .home-botones > :first-child {
+    display: none;
+  }
+
+  .barra-navegacion .btn-vidrio {
+    padding: 0.4rem 1rem;
+    font-size: 0.8125rem;
+  }
+}

@@ -19,4 +19,9 @@
   .centros-layout {
     grid-template-columns: 1fr;
   }
+
+  /* en mobile el mapa va arriba y la lista abajo */
+  .centros-layout .mapa-centros {
+    order: -1;
+  }
 }
