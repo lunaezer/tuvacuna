@@ -6,12 +6,8 @@ import CarnetTimeline from '../../components/CarnetTimeline/CarnetTimeline'
 import { useUsuario } from '../../context/UsuarioContext/useUsuario'
 import { usePacientes } from '../../hooks/usePacientes'
 import { API_URL } from '../../config'
-import { carnetsPacientesMock } from '../../mocks/pacientesMock'
 import type { SeccionHistorial } from '../../types'
 import './CarnetPacientePage.css'
-
-// Poner en false para usar el back real
-const USAR_MOCK = false
 
 export default function CarnetPacientePage() {
   const { id = '' } = useParams()
@@ -30,12 +26,6 @@ export default function CarnetPacientePage() {
     async function cargar() {
       setCargando(true)
       setError('')
-
-      if (USAR_MOCK) {
-        setSecciones(carnetsPacientesMock[Number(id)] ?? [])
-        setCargando(false)
-        return
-      }
 
       try {
         const response = await fetch(`${API_URL}/api/carnet/${id}`, {

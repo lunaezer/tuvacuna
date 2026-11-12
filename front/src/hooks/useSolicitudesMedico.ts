@@ -1,21 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { API_URL } from "../config";
 import { useUsuario } from "../context/UsuarioContext/useUsuario";
-import { solicitudesMock } from "../mocks/solicitudesMock";
 import type { SolicitudPaciente } from "../types";
-
-// Poner en false para usar el back real
-const USAR_MOCK = false;
 
 export const useSolicitudesMedico = () => {
     const { token } = useUsuario();
     const [solicitudes, setSolicitudes] = useState<SolicitudPaciente[]>([]);
 
     const cargar = useCallback(async () => {
-        if (USAR_MOCK) {
-            setSolicitudes(solicitudesMock);
-            return;
-        }
         if (!token) {
             setSolicitudes([]);
             return;
@@ -32,21 +24,19 @@ export const useSolicitudesMedico = () => {
     }, [token]);
 
     async function responder(id: number, accion: "aceptar" | "rechazar") {
-        if (!USAR_MOCK) {
-            let response: Response;
-            try {
-                response = await fetch(`${API_URL}/api/medico/solicitudes/${id}/${accion}`, {
-                    method: "POST",
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-            } catch {
-                throw new Error("No se pudo conectar con el servidor");
-            }
+        let response: Response;
+        try {
+            response = await fetch(`${API_URL}/api/medico/solicitudes/${id}/${accion}`, {
+                method: "POST",
+                headers: { Authorization: `Bearer ${token}` },
+            });
+        } catch {
+            throw new Error("No se pudo conectar con el servidor");
+        }
 
-            if (!response.ok) {
-                const data = await response.json().catch(() => null);
-                throw new Error(data?.message ?? data?.mensaje ?? "No se pudo responder la solicitud");
-            }
+        if (!response.ok) {
+            const data = await response.json().catch(() => null);
+            throw new Error(data?.message ?? data?.mensaje ?? "No se pudo responder la solicitud");
         }
 
         // Ya la respondí: queda marcada un momento (para mostrar la confirmación) y después sale de la lista

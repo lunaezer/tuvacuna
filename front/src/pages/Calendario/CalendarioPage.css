@@ -58,6 +58,18 @@
   align-items: stretch;
 }
 
+/* Separador de los turnos que ya pasaron */
+.calendario-turnos-subtitulo {
+  margin-top: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-color);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+}
+
 /* Botón "Ver todo el año" */
 .calendario-ver-anio {
   padding: 0.75rem 1.5rem;

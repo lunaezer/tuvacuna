@@ -1,13 +1,8 @@
-import { createContext, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { createContext, useCallback, useEffect, useState, type ReactNode } from "react";
 import { API_URL } from "../../config";
 import { useUsuario } from "../UsuarioContext/useUsuario";
-import { medicosMock, medicosExistentesMock } from "../../mocks/medicosMock";
-import { normalizar } from "../../utils/texto";
 import AgregarMedicoModal from "../../components/AgregarMedicoModal/AgregarMedicoModal";
 import type { Medico } from "../../types";
-
-// Poner en false para usar el back real
-const USAR_MOCK = false;
 
 // Como los manda el back (el id viene como id_medico)
 interface MedicoBack {
@@ -54,7 +49,6 @@ export const MedicosProvider = ({ children }: { children: ReactNode }) => {
     const [medicos, setMedicos] = useState<Medico[]>([]);
     const [cargandoMedicos, setCargandoMedicos] = useState(true);
     const [errorMedicos, setErrorMedicos] = useState("");
-    const solicitudesMock = useRef(new Set<number>()); // solo para simular el 409 con el mock
     const [modalAbierto, setModalAbierto] = useState(false);
 
     // Médicos que ya aceptaron al paciente
@@ -62,12 +56,6 @@ export const MedicosProvider = ({ children }: { children: ReactNode }) => {
         if (!esPaciente) return; // solo los pacientes tienen "mis médicos"
         setCargandoMedicos(true);
         setErrorMedicos("");
-
-        if (USAR_MOCK) {
-            setMedicos(medicosMock);
-            setCargandoMedicos(false);
-            return;
-        }
 
         // Trae aceptados y pendientes (cada fila trae su estado)
         let response: Response;
@@ -104,19 +92,6 @@ export const MedicosProvider = ({ children }: { children: ReactNode }) => {
     // Busca médicos por nombre, apellido, especialidad o institución (mínimo 2 caracteres).
     // Tira un Error si falla (lo muestra el modal)
     async function buscarMedicos(texto: string): Promise<Medico[]> {
-        if (USAR_MOCK) {
-            // simula al back: cada palabra tiene que aparecer en alguno de los 4 campos
-            if (texto.trim().length < 2) throw new Error("La búsqueda debe tener al menos 2 caracteres");
-            const palabras = normalizar(texto.trim()).split(/\s+/).slice(0, 5);
-            return medicosExistentesMock
-                .filter((m) => {
-                    const campos = normalizar(`${m.nombre} ${m.apellido} ${m.especialidad} ${m.institucion ?? ""}`);
-                    return palabras.every((p) => campos.includes(p));
-                })
-                .sort((a, b) => a.apellido.localeCompare(b.apellido) || a.nombre.localeCompare(b.nombre))
-                .slice(0, 20);
-        }
-
         let response: Response;
         try {
             response = await fetch(`${API_URL}/api/medicos?busqueda=${encodeURIComponent(texto.trim())}`, {
@@ -135,14 +110,6 @@ export const MedicosProvider = ({ children }: { children: ReactNode }) => {
 
     // Manda la solicitud al médico elegido. Tira un Error si falla (lo muestra el modal)
     async function enviarSolicitud(idMedico: number) {
-        if (USAR_MOCK) {
-            if (medicos.some((m) => m.id === idMedico) || solicitudesMock.current.has(idMedico)) {
-                throw new Error("Ya enviaste una solicitud a este médico o ya te atiende");
-            }
-            solicitudesMock.current.add(idMedico);
-            return;
-        }
-
         let response: Response;
         try {
             response = await fetch(`${API_URL}/api/medicos/${idMedico}/solicitud`, {

@@ -74,7 +74,7 @@ export default function InicioSesion1() {
             await login(data.token);
             navigate("/inicio");
             
-        } catch (err) {
+        } catch {
             setErrores({ general: "No se pudo conectar con el servidor" });
         }
     }

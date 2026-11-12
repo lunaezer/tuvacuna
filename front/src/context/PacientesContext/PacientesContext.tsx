@@ -1,11 +1,7 @@
 import { createContext, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { API_URL } from "../../config";
 import { useUsuario } from "../UsuarioContext/useUsuario";
-import { pacientesListaMock, pacientesDetalleMock } from "../../mocks/pacientesMock";
 import type { Dosis, PacienteDetalle, PacienteLista } from "../../types";
-
-// Poner en false para usar el back real
-const USAR_MOCK = false;
 
 // Un paciente tal cual lo manda GET /api/medico/pacientes (lista liviana)
 interface PacienteListaBack {
@@ -79,11 +75,6 @@ export const PacientesProvider = ({ children }: { children: ReactNode }) => {
         setCargandoLista(true);
         setErrorLista("");
 
-        if (USAR_MOCK) {
-            setPacientes(pacientesListaMock);
-            setCargandoLista(false);
-            return;
-        }
         try {
             const response = await fetch(`${API_URL}/api/medico/pacientes`, {
                 headers: { Authorization: `Bearer ${token}` },
@@ -121,11 +112,6 @@ export const PacientesProvider = ({ children }: { children: ReactNode }) => {
         setSeleccionadoId(id);
         setErrorDetalle("");
         if (detalles[id]) return; // ya lo tengo, no repito el pedido
-
-        if (USAR_MOCK) {
-            setDetalles((actuales) => ({ ...actuales, [id]: pacientesDetalleMock[id] }));
-            return;
-        }
 
         ultimoPedido.current = id;
         try {

@@ -10,20 +10,15 @@ import ConfirmarModal from '../../components/ConfirmarModal/ConfirmarModal'
 import Toast from '../../components/Toast/Toast'
 import { useFamilia } from '../../hooks/useFamilia'
 import { useMedicos } from '../../hooks/useMedicos'
-import { familiaMock } from '../../mocks/carnetMock'
 import type { AccesoFamiliar, Familiar, Medico } from '../../types'
 import './FamiliaPage.css'
 
-// Poner en false para usar el back real
-const USAR_MOCK = false
-
 export default function FamiliaPage() {
   const {
-    familiares: familiaReal, invitaciones, aceptarInvitacion, rechazarInvitacion, abrirModalAgregar,
+    familiares, invitaciones, aceptarInvitacion, rechazarInvitacion, abrirModalAgregar,
     accesos, enviadas, quitarAcceso,
   } = useFamilia()
   const { medicos, errorMedicos, abrirModalAgregarMedico, quitarMedico } = useMedicos()
-  const familiares = USAR_MOCK ? familiaMock : familiaReal
   const [familiarSeleccionado, setFamiliarSeleccionado] = useState<Familiar | null>(null)
   const [accesoAQuitar, setAccesoAQuitar] = useState<AccesoFamiliar | null>(null)
   const [medicoAQuitar, setMedicoAQuitar] = useState<Medico | null>(null)

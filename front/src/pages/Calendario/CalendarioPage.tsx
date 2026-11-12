@@ -26,6 +26,10 @@ export default function CalendarioPage() {
   const [diasMarcados, setDiasMarcados] = useState<DiaMarcado[]>([])
   const [proximosTurnos, setProximosTurnos] = useState<Turno[]>([])
   const [errorTurnos, setErrorTurnos] = useState(false)
+  // los turnos ya pasados no se pueden editar (el back rechaza fechas anteriores a hoy), solo cancelar
+  const hoyISO = `${hoy.getFullYear()}-${String(hoy.getMonth() + 1).padStart(2, '0')}-${String(hoy.getDate()).padStart(2, '0')}`
+  const turnosFuturos = proximosTurnos.filter((t) => t.fecha.slice(0, 10) >= hoyISO)
+  const turnosAnteriores = proximosTurnos.filter((t) => t.fecha.slice(0, 10) < hoyISO)
   const [modalNuevoTurnoAbierto, setModalNuevoTurnoAbierto] = useState(false)
 
   const [formDataTurno, setFormDataTurno] = useState<formDataTurno>(FORM_TURNO_VACIO)
@@ -257,7 +261,7 @@ export default function CalendarioPage() {
           <div className="calendario-turnos-header">
             <h2 className="calendario-turnos-titulo">Próximos turnos</h2>
             {!errorTurnos && (
-              <span className="calendario-turnos-count">{proximosTurnos.length} EN {anioActual}</span>
+              <span className="calendario-turnos-count">{turnosFuturos.length} EN {anioActual}</span>
             )}
           </div>
 
@@ -267,20 +271,44 @@ export default function CalendarioPage() {
             ) : proximosTurnos.length === 0 ? (
               <p className="calendario-turnos-vacio">No tenés turnos agendados en {anioActual}.</p>
             ) : (
-              proximosTurnos.map((turno) => (
-                <TurnoCard
-                  key={turno.id}
-                  dia={turno.dia}
-                  mes={turno.mes}
-                  nombre={turno.nombre}
-                  dosis={turno.dosis}
-                  lugar={turno.lugar}
-                  hora={turno.hora}
-                  estado={turno.estado}
-                  onEditar={() => handleEditar(turno)}
-                  onCancelar={() => setTurnoACancelar(turno)}
-                />
-              ))
+              <>
+                {turnosFuturos.length === 0 && (
+                  <p className="calendario-turnos-vacio">No tenés turnos próximos en {anioActual}.</p>
+                )}
+                {turnosFuturos.map((turno) => (
+                  <TurnoCard
+                    key={turno.id}
+                    dia={turno.dia}
+                    mes={turno.mes}
+                    nombre={turno.nombre}
+                    dosis={turno.dosis}
+                    lugar={turno.lugar}
+                    hora={turno.hora}
+                    estado={turno.estado}
+                    onEditar={() => handleEditar(turno)}
+                    onCancelar={() => setTurnoACancelar(turno)}
+                  />
+                ))}
+
+                {turnosAnteriores.length > 0 && (
+                  <>
+                    <h3 className="calendario-turnos-subtitulo">Turnos anteriores</h3>
+                    {turnosAnteriores.map((turno) => (
+                      <TurnoCard
+                        key={turno.id}
+                        dia={turno.dia}
+                        mes={turno.mes}
+                        nombre={turno.nombre}
+                        dosis={turno.dosis}
+                        lugar={turno.lugar}
+                        hora={turno.hora}
+                        estado={turno.estado}
+                        onCancelar={() => setTurnoACancelar(turno)}
+                      />
+                    ))}
+                  </>
+                )}
+              </>
             )}
           </div>
         </div>

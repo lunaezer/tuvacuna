@@ -3,11 +3,7 @@ import Modal from '../Modal/Modal'
 import CarnetTimeline from '../CarnetTimeline/CarnetTimeline'
 import { useUsuario } from '../../context/UsuarioContext/useUsuario'
 import { API_URL } from '../../config'
-import { carnetsMock } from '../../mocks/carnetMock'
 import type { Familiar, SeccionHistorial } from '../../types'
-
-// Poner en false para usar el back real
-const USAR_MOCK = false
 
 interface CarnetFamiliarModalProps {
   familiar: Familiar | null
@@ -25,12 +21,6 @@ export default function CarnetFamiliarModal({ familiar, onClose }: CarnetFamilia
 
     setCargando(true)
     setError(undefined)
-
-    if (USAR_MOCK) {
-      setSecciones(carnetsMock[familiar.esVos ? 'yo' : familiar.id ?? ''] ?? [])
-      setCargando(false)
-      return
-    }
 
     let cancelado = false
 

@@ -14,12 +14,8 @@ import AgregarVacunaModal from '../../components/AgregarVacunaModal/AgregarVacun
 import type { FormVacuna } from '../../components/AgregarVacunaModal/AgregarVacunaModal'
 import type { Familiar, SeccionHistorial } from '../../types'
 import { useUsuario } from '../../context/UsuarioContext/useUsuario'
-import { familiaMock, carnetsMock } from '../../mocks/carnetMock'
 import './CarnetPage.css'
 import { API_URL } from "../../config";
-
-// Poner en false para usar el back real
-const USAR_MOCK = false
 
 export default function CarnetPage() {
   const { token, usuario } = useUsuario()
@@ -28,14 +24,13 @@ export default function CarnetPage() {
 
   const { familiares: familiaReal, cargandoFamiliares, abrirModalAgregar } = useFamilia()
   const familiares: Familiar[] = useMemo(() => {
-    if (USAR_MOCK) return familiaMock
     if (familiaReal.length > 0) return familiaReal
     // Sin grupo familiar (o no se pudo cargar): queda solo tu propio carnet
     if (!cargandoFamiliares && usuario) return [{ nombre: usuario.nombre, esVos: true }]
     return []
   }, [familiaReal, cargandoFamiliares, usuario])
   // Terminó de cargar la lista y no vino nadie (ni vos): no hay carnet que pedir
-  const sinFamiliares = !USAR_MOCK && !cargandoFamiliares && familiares.length === 0
+  const sinFamiliares = !cargandoFamiliares && familiares.length === 0
   const [indexFamiliarActivo, setIndexFamiliarActivo] = useState(0)
   const [seccionesHistorial, setSeccionesHistorial] = useState<SeccionHistorial[]>([])
   const [cargando, setCargando] = useState(true)
@@ -51,11 +46,6 @@ export default function CarnetPage() {
   const [dosisAgregada, setDosisAgregada] = useState(false)
 
   async function cargarCarnet(idFamiliar?: number) {
-    if (USAR_MOCK) {
-      setSeccionesHistorial(carnetsMock[idFamiliar === undefined ? 'yo' : String(idFamiliar)] ?? [])
-      setCargando(false)
-      return
-    }
     setCargando(true)
 
     const url = idFamiliar

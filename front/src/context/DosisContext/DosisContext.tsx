@@ -1,11 +1,7 @@
 import { createContext, useCallback, useEffect, useState, type ReactNode } from "react";
 import { API_URL } from "../../config";
 import { useUsuario } from "../UsuarioContext/useUsuario";
-import { carnetsMock } from "../../mocks/carnetMock";
 import type { Dosis, SeccionHistorial } from "../../types";
-
-// Poner en false para usar el back real
-const USAR_MOCK = false;
 
 interface ConteoDosis {
     aplicadas: number;
@@ -29,11 +25,6 @@ export const DosisProvider = ({ children }: { children: ReactNode }) => {
     const [cargandoDosis, setCargandoDosis] = useState(true);
 
     const cargarDosis = useCallback(async () => {
-        if (USAR_MOCK) {
-            setSecciones(carnetsMock["yo"] ?? []);
-            setCargandoDosis(false);
-            return;
-        }
         if (!token) {
             setSecciones([]);
             setCargandoDosis(false);
