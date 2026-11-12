@@ -170,3 +170,21 @@
   from { opacity: 0; transform: scale(0.95) translateY(0.625rem); }
   to { opacity: 1; transform: scale(1) translateY(0); }
 }
+
+@media (max-width: 48rem) {
+  .modal-contenedor {
+    max-height: 90vh;
+  }
+
+  .modal-contenedor .modal-contenido {
+    padding: 1.25rem 1rem;
+    overflow-y: auto;
+  }
+
+  /* campos de formulario más cómodos para el dedo */
+  .modal-form-campo input,
+  .modal-form-campo select {
+    padding: 0.8rem 0.875rem;
+    font-size: 1rem; /* evita el zoom automático de iOS al enfocar */
+  }
+}

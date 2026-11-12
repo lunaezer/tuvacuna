@@ -31,9 +31,28 @@
   flex-shrink: 0;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
   .page-header {
     flex-direction: column;
     gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .page-header-texto {
+    width: 100%;
+    text-align: left;
+  }
+
+  .page-header-titulo {
+    font-size: 1.75rem;
+  }
+
+  /* "Agregar familiar", "Cargar vacuna", "Agendar turno": ancho completo */
+  .page-header-acciones {
+    width: 100%;
+  }
+
+  .page-header-acciones > * {
+    width: 100%;
   }
 }

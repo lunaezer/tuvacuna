@@ -34,9 +34,8 @@
   color: #071521;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
    font-weight: 700;
-  font-size: 1.3rem;
-   padding: 1.2375rem 3rem; 
- 
+  font-size: clamp(1rem, 0.6rem + 1vw, 1.3rem);
+  padding: clamp(0.875rem, 0.5rem + 1vw, 1.2375rem) clamp(1.5rem, 1rem + 2vw, 3rem);
 }
 
 .btn-primary:hover {
@@ -74,8 +73,8 @@
   background-color: #3BB8E8;
   color: var(--text-primary);
   font-weight: 700;
-  font-size: 1.3rem;
-   padding: 1.2375rem 3rem; 
+  font-size: clamp(1rem, 0.6rem + 1vw, 1.3rem);
+  padding: clamp(0.875rem, 0.5rem + 1vw, 1.2375rem) clamp(1.5rem, 1rem + 2vw, 3rem);
   box-shadow: 0 0.25rem 0.75rem rgba(56, 189, 248, 0.25);
 }
 
@@ -92,7 +91,7 @@
   color: #071521;
   font-weight: 700;
   font-size: 0.95rem;
-  padding: 0.85rem 3rem;
+  padding: 0.85rem clamp(1.5rem, 1rem + 2vw, 3rem);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
 
@@ -175,6 +174,6 @@
   color: var(--blanco);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 40rem) {
   .btn-vidrio { min-width: 0; flex: 1; font-size: 1.125rem; }
 }

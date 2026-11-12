@@ -57,3 +57,10 @@
   background: #e0f2fe;
   color: #0369a1;
 }
+
+@media (max-width: 48rem) {
+  .caja-personas {
+    padding: 1rem;
+    margin-bottom: 1.25rem;
+  }
+}

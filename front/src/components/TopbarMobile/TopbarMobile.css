@@ -1,0 +1,18 @@
+.topbar-mobile {
+  display: none;
+}
+
+@media (max-width: 48rem) {
+  .topbar-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .topbar-mobile-logo {
+    height: 1.5rem;
+    width: auto;
+  }
+}

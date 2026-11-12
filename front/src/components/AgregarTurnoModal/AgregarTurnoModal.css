@@ -29,6 +29,21 @@
   padding: 1.4375rem 1.5rem;
 }
 
+@media (max-width: 48rem) {
+  .agregar-turno-titulo {
+    font-size: 1.5rem;
+  }
+
+  .agregar-turno-fila {
+    flex-direction: column;
+    gap: 1.125rem;
+  }
+
+  .agregar-turno-acciones .btn {
+    padding: 1rem 0.75rem;
+  }
+}
+
 .modal-error {
   color: #c62828;
   background-color: #f1e0e0;

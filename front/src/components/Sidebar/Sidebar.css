@@ -30,3 +30,50 @@
   height: auto;
 }
 
+@media (max-width: 48rem) {
+  .sidebar {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    padding: 0.5rem 0.75rem calc(0.5rem + env(safe-area-inset-bottom));
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 100;
+  }
+
+  /* logo, cerrar sesión y perfil no van en la barra (el avatar va arriba) */
+  .sidebar .sidebar-header,
+  .sidebar .sidebar-footer,
+  .sidebar .sidebar-item-asistente {
+    display: none;
+  }
+
+  .sidebar-nav {
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 0;
+    gap: 0.25rem;
+    overflow: visible;
+  }
+
+  .sidebar .sidebar-item {
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.25rem;
+    padding: 0.5rem 0.25rem;
+    font-size: 0.6875rem;
+    text-align: center;
+  }
+
+  .sidebar .sidebar-item .Logo {
+    width: 1.375rem;
+    height: 1.375rem;
+  }
+}
+

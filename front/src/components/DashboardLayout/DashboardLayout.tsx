@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react'
 import Sidebar from '../Sidebar/Sidebar'
 import AsistentePanel from '../AsistentePanel/AsistentePanel'
+import TopbarMobile from '../TopbarMobile/TopbarMobile'
+import BotonPreguntar from '../BotonPreguntar/BotonPreguntar'
 import './DashboardLayout.css'
 
 interface DashboardLayoutProps {
@@ -13,8 +15,10 @@ function DashboardLayout({ activeItem, children }: DashboardLayoutProps) {
     <div className="layout-dashboard">
       <Sidebar activeItem={activeItem} />
       <main className="contenido-principal-dashboard">
+        <TopbarMobile />
         {children}
       </main>
+      <BotonPreguntar />
       <AsistentePanel />
     </div>
   )

@@ -60,6 +60,7 @@ function Sidebar({ activeItem = 'Inicio', className = '' }: SidebarProps) {
             key={text}
             text={text}
             to={to}
+            className={abreAsistente ? 'sidebar-item-asistente' : ''}
             onClick={abreAsistente ? abrirAsistente : undefined}
             active={abreAsistente ? abierto : activeItem === text}
           >

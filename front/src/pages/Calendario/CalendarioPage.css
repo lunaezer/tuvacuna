@@ -83,8 +83,4 @@
   .calendario-layout {
     grid-template-columns: 1fr;
   }
-
-  .calendario-col-der {
-    order: -1;
-  }
 }

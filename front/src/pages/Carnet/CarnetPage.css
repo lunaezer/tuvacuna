@@ -42,14 +42,16 @@
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
   .carnet-header-acciones {
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: stretch;
     width: 100%;
+    gap: 0.75rem;
   }
-  .btn-subir-foto,
-  .btn-cargar-dosis {
-    flex: 1;
-    justify-content: center;
+
+  /* "Subir foto del carnet" y "Cargar dosis": ancho completo */
+  .carnet-header-acciones .btn {
+    width: 100%;
   }
 }
