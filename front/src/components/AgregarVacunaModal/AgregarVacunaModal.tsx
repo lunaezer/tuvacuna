@@ -40,7 +40,7 @@ export default function AgregarVacunaModal({ isOpen, onClose, form, setForm, han
           <Input variant="small" name="marca" label="Marca" placeholder="Opcional" value={form.marca} onChange={handleChange} />
         </div>
 
-        <Input variant="large" name="lugar" label="Lugar" placeholder="Ej: Stamboulian" value={form.lugar} onChange={handleChange} required />
+        <Input variant="large" name="lugar" label="Lugar" placeholder="Ej: Stamboulian" value={form.lugar} onChange={handleChange} />
 
         {error && <p className="modal-error">{error}</p>}
 
