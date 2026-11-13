@@ -72,9 +72,15 @@
 
 /* Responsive: 1 columna en pantallas chicas */
 @media (max-width: 48rem) {
-  /* los botones de arriba y el contador no van en celular: los reemplazan las tarjetas de AccesosRapidos */
-  .page-header-acciones:has(.inicio-header-botones),
-  .inicio-card-dosis {
+  /* solo el saludo: sin subtítulo ni botones de arriba (los reemplazan las tarjetas de AccesosRapidos) */
+  .contenedor-inicio .page-header-subtitulo,
+  .page-header-acciones:has(.inicio-header-botones) {
+    display: none;
+  }
+
+  /* el centro cercano no está en el diseño, y el asistente es el botón flotante */
+  .inicio-card-donde,
+  .inicio-card-pregunta {
     display: none;
   }
 
@@ -83,7 +89,17 @@
     gap: 1rem;
   }
 
+  .inicio-card {
+    min-height: 0;
+    padding: 1rem;
+  }
+
   .inicio-card .card-titulo {
     font-size: 1.375rem;
+  }
+
+  /* el contador va sin título, como en el diseño */
+  .inicio-card-dosis .card-titulo {
+    display: none;
   }
 }

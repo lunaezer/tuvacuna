@@ -79,8 +79,46 @@
     box-shadow: 0 6px 16px rgba(56, 189, 248, 0.3);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 48rem) {
     .user-info {
-        flex-wrap: wrap;
+        gap: 0.875rem;
+        margin-bottom: 0.75rem;
+        padding: 0.875rem 1rem;
+    }
+
+    /* "TU PERFIL" → "Tu perfil" */
+    .user-info__label {
+        font-size: 0.8125rem;
+        letter-spacing: 0;
+        text-transform: lowercase;
+    }
+
+    .user-info__label::first-letter {
+        text-transform: uppercase;
+    }
+
+    .user-info__nombre {
+        font-size: 1.25rem;
+        font-weight: 700;
+    }
+
+    .user-info__detalle {
+        font-size: 0.875rem;
+    }
+
+    /* "Ver mi perfil ›" pasa a ser solo la flecha */
+    .user-info .btn-perfil {
+        padding: 0.25rem;
+        font-size: 0;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+    }
+
+    .user-info .btn-perfil::after {
+        content: '›';
+        font-size: 1.75rem;
+        line-height: 1;
+        color: var(--gris-medio);
     }
 }

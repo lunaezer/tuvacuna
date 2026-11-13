@@ -57,22 +57,22 @@ export default function InicioPage() {
         </div>
       </PageHeader>
 
-      <AccesosRapidos onAgendar={irAlCalendario} onCargar={irACargarVacuna} />
-
       <UserInfo />
+
+      <AccesosRapidos onAgendar={irAlCalendario} onCargar={irACargarVacuna} />
 
       {/* Grid de cards */}
       <div className="inicio-grid">
         <Cards title="Tus dosis" variant="white" className="inicio-card inicio-card-dosis">
           <DosisResumen />
         </Cards>
-        <Cards title="Donde vacunarte" variant="dark" className="inicio-card">
+        <Cards title="Donde vacunarte" variant="dark" className="inicio-card inicio-card-donde">
           <DondeVacunarte />
         </Cards>
         <Cards title="Para agendar en tu calendario" variant="white" className="inicio-card">
           <ParaAgendar />
         </Cards>
-        <Cards title="Preguntale a TuVacuna" variant="white" className="inicio-card inicio-card-ajustada">
+        <Cards title="Preguntale a TuVacuna" variant="white" className="inicio-card inicio-card-ajustada inicio-card-pregunta">
           <PreguntaAsistente />
         </Cards>
       </div>

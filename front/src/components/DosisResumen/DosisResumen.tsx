@@ -7,6 +7,7 @@ interface Item {
   clave: 'aplicadas' | 'recomendadas' | 'atrasadas'
   icono: ReactNode
   texto: (cantidad: number) => string
+  etiqueta: (cantidad: number) => string // versión corta, solo se muestra en celular
 }
 
 const ITEMS: Item[] = [
@@ -14,6 +15,7 @@ const ITEMS: Item[] = [
     clave: 'aplicadas',
     icono: <Check size={18} />,
     texto: (n) => (n === 1 ? 'aplicada y registrada' : 'aplicadas y registradas'),
+    etiqueta: (n) => (n === 1 ? 'Aplicada' : 'Aplicadas'),
   },
   {
     clave: 'recomendadas',
@@ -22,6 +24,7 @@ const ITEMS: Item[] = [
       n === 1
         ? 'recomendada en los próximos 60 días'
         : 'recomendadas en los próximos 60 días',
+    etiqueta: (n) => (n === 1 ? 'Próxima' : 'Próximas'),
   },
   {
     clave: 'atrasadas',
@@ -30,6 +33,7 @@ const ITEMS: Item[] = [
       if (n === 0) return 'ninguna atrasada'
       return n === 1 ? 'atrasada, conviene agendarla' : 'atrasadas, conviene agendarlas'
     },
+    etiqueta: (n) => (n === 1 ? 'Atrasada' : 'Atrasadas'),
   },
 ]
 
@@ -45,6 +49,7 @@ export default function DosisResumen() {
             <span className="dosis-icono">{item.icono}</span>
             <strong className="dosis-numero">{cantidad}</strong>
             <span className="dosis-texto">{item.texto(cantidad)}</span>
+            <span className="dosis-etiqueta">{item.etiqueta(cantidad)}</span>
           </div>
         )
       })}
