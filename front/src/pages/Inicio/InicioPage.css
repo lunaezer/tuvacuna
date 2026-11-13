@@ -72,14 +72,10 @@
 
 /* Responsive: 1 columna en pantallas chicas */
 @media (max-width: 48rem) {
-  .inicio-header-botones {
-    flex-direction: column;
-    width: 100%;
-    gap: 0.75rem;
-  }
-
-  .inicio-header-botones .btn {
-    width: 100%;
+  /* los botones de arriba y el contador no van en celular: los reemplazan las tarjetas de AccesosRapidos */
+  .page-header-acciones:has(.inicio-header-botones),
+  .inicio-card-dosis {
+    display: none;
   }
 
   .inicio-grid {

@@ -11,6 +11,7 @@ import DosisResumen from '../../components/DosisResumen/DosisResumen'
 import ParaAgendar from '../../components/ParaAgendar/ParaAgendar'
 import DondeVacunarte from '../../components/DondeVacunarte/DondeVacunarte'
 import PreguntaAsistente from '../../components/PreguntaAsistente/PreguntaAsistente'
+import AccesosRapidos from '../../components/AccesosRapidos/AccesosRapidos'
 
 export default function InicioPage() {
   const { usuario } = useUsuario()
@@ -56,11 +57,13 @@ export default function InicioPage() {
         </div>
       </PageHeader>
 
+      <AccesosRapidos onAgendar={irAlCalendario} onCargar={irACargarVacuna} />
+
       <UserInfo />
 
       {/* Grid de cards */}
       <div className="inicio-grid">
-        <Cards title="Tus dosis" variant="white" className="inicio-card">
+        <Cards title="Tus dosis" variant="white" className="inicio-card inicio-card-dosis">
           <DosisResumen />
         </Cards>
         <Cards title="Donde vacunarte" variant="dark" className="inicio-card">
