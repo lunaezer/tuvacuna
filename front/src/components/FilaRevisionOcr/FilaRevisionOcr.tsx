@@ -67,8 +67,8 @@ export default function FilaRevisionOcr({ fila, onCambio, onQuitar }: FilaRevisi
 
           <div className="fila-ocr-grilla">
             <Input variant="small" name="fecha" label="Fecha" placeholder="" type="date" required value={fila.fecha} onChange={handleChange} />
-            <Input variant="small" name="lote" label="Lote" placeholder="12345" required value={fila.lote} onChange={handleChange} />
-            <Input variant="small" name="marca" label="Marca" placeholder="Ej: Pzifer" required value={fila.marca} onChange={handleChange} />
+            <Input variant="small" name="lote" label="Lote" placeholder="Opcional" value={fila.lote} onChange={handleChange} />
+            <Input variant="small" name="marca" label="Marca" placeholder="Opcional" value={fila.marca} onChange={handleChange} />
             <Input variant="small" name="lugar" label="Lugar" placeholder="Ej: Stamboulian" required value={fila.lugar} onChange={handleChange} />
           </div>
         </>
